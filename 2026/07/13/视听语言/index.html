@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/07/13/视听语言/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴南南">
+<meta property="og:url" content="http://example.com/2026/07/13/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-07-13T02:46:09.122Z">
+<meta property="article:modified_time" content="2026-07-13T03:25:14.859Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            吴南南 - Redefine Your  Journey.
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3"></h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-07-13 10:46:09</span>
+        <span class="mobile">2026-07-13 10:46:09</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-07-13 11:25:14</span>
+            <span class="mobile">2026-07-13 11:25:14</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="视听语言：从经典影视美学、符号学到人工智能时代的重构与演进"><a href="#视听语言：从经典影视美学、符号学到人工智能时代的重构与演进" class="headerlink" title="视听语言：从经典影视美学、符号学到人工智能时代的重构与演进"></a>视听语言：从经典影视美学、符号学到人工智能时代的重构与演进</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>视听语言是利用视觉与听觉元素的合理编排，向受众传播信息、表达情感与建构意义的一种复合型感性符号系统与艺术语言。作为影视、动画、游戏以及数字媒体艺术的专业基础，视听语言绝非单纯的技术规范或设备操作指引，而是一门深度融合了美学、心理学、结构主义符号学与媒介环境学的复杂交叉学科。在教学与研究体系中，视听语言的探索遵循着“以学生为中心”与“知行合一”的指导思想，从底层机位图设计、分镜头脚本绘制，延伸至影片拉片分析与实景拍摄剪辑，不仅旨在培养创作者的影像艺术素养与创意表达技法，更承担着提升文化自信与思想认知的价值引领作用。</p>
+<p>从早期默片时代的纯视觉奇观探索，到有声电影确立声画契约，再到当代数字技术、算法生成影像（AI Video）与移动互联网竖屏媒介催生的新语境，视听语言的演进史实质上是人类感知世界、重塑空间与时间方式的演化史。深入剖析视听语言的视觉建构、蒙太奇重组、听觉本体论、符号学认同机制以及新媒体环境下的形态突变，对于理解现代视觉文化逻辑及数字时代的媒介权力转移具有决定性的学术价值与实践指导意义。</p>
+<hr>
+<h2 id="第一部分-视觉维度的物理建构与心理映射"><a href="#第一部分-视觉维度的物理建构与心理映射" class="headerlink" title="第一部分 视觉维度的物理建构与心理映射"></a>第一部分 视觉维度的物理建构与心理映射</h2><p>视觉系统是视听语言中最为直观且历史最悠久的表意维度。构图、景别、摄像机角度、运动轨迹以及光影色彩，共同构筑了影像的表层质感与深层心理隐喻。</p>
+<h3 id="构图、景别与视点法则"><a href="#构图、景别与视点法则" class="headerlink" title="构图、景别与视点法则"></a>构图、景别与视点法则</h3><p>影像构图的核心在于解决一个画格内各项视觉元素的位置与权力分配关系。景别的变化建立起了观众与被摄主体之间的心理距离与情感羁绊。</p>
+<ul>
+<li><strong>远景与全景</strong>：提供客观的时空环境与人物的社会关系。</li>
+<li><strong>中景与近景</strong>：贴近日常人际交往的视觉习惯。</li>
+<li><strong>特写</strong>：具有强烈的心理强制性，能够放大局部细节，形成视觉焦点并穿透角色的心理防御。</li>
+</ul>
+<p>在视点选择上，客观视点保持旁观者的冷静，而主观视点则直接将观众缝合进角色的眼眸中。摄像机角度（平拍、仰拍、俯拍）的细微调整，往往暗含着创作者对被摄主体的道德评价或权力阶层界定。</p>
+<p>在多角色互动的空间建构中，**“轴线原则”（即180度法则）**是维持空间连续性、避免观众产生方向认知混乱的核心机制。该法则要求在拍摄两个角色对话等场景时，确立一条连接二者的假想关系轴线。摄像机必须始终保持在该线的同一侧（即180度半圆弧内）进行机位调度，以确保镜头切换后人物的视线方向和相对空间位置保持一致，如台湾电影《海角七号》中的对话场景便严格遵循了这一视线与空间的现实逻辑。在片场实践中，创作者通常使用“绳索法”——在两名演员之间拉一条绳索，并在中点垂直连接到摄像机，以此物理手段限制拍摄区域，或通过严密的机位图（Storyboard）来避免意外越轴。</p>
+<p>然而，180度法则并非不可逾越的铁律。在特定的叙事语境中，创作者会刻意“越线”，以制造观众的空间迷失感或心理不安。卡尔·西奥多·德莱叶（Carl Theodor Dreyer）在《圣女贞德蒙难记》中率先打破这一规则以凸显受审时的精神压迫；斯坦利·库布里克（Stanley Kubrick）在《闪灵》的浴室场景中通过反常规调度放大了惊悚氛围；而在日本动画电影《红辣椒》（Paprika）中，越轴甚至被用作直接表现潜意识梦境混乱的先锋视觉修辞。</p>
+<h3 id="三点布光与光影的叙事修辞"><a href="#三点布光与光影的叙事修辞" class="headerlink" title="三点布光与光影的叙事修辞"></a>三点布光与光影的叙事修辞</h3><p>在视觉元素的塑造中，照明不仅决定了画面的能见度，更是塑造影像基调、引导视线与外化人物心理的重要手段。经典影视工业确立了**“三点布光”（Three-Point Lighting）**这一标准化的照明范式，它在可控性与人造美学之间达到了完美的平衡，与不可预测的自然光形成了电影摄影光谱的两端。</p>
+<table>
+<thead>
+<tr>
+<th align="left">光源类型</th>
+<th align="left">物理位置与光质特性</th>
+<th align="left">核心叙事与美学功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>主光 (Key Light)</strong></td>
+<td align="left">置于主体正侧边及仰角30至45度。光质通常较硬，是场景中最主要的光源。</td>
+<td align="left">照亮主体，突显物体表面细节并投射主要阴影。决定了场景的核心曝光基准与气氛走向。</td>
+</tr>
+<tr>
+<td align="left"><strong>辅光 (Fill Light)</strong></td>
+<td align="left">位于主光的相对侧，高度略高。光质较柔和，强度弱于主光。</td>
+<td align="left">淡化主光投射的阴影浓度，模拟环境间接反射光。决定了画面的亮暗比（光比），控制戏剧化程度。</td>
+</tr>
+<tr>
+<td align="left"><strong>逆光 (Back Light)</strong></td>
+<td align="left">置于主体后上方，直接射向主体边缘，即摄像机的对面。</td>
+<td align="left">勾勒主体轮廓，使其与背景分离，增强画面的层次感、深度感与三维立体错觉。</td>
+</tr>
+</tbody></table>
+<p>通过精准调整主光与辅光的亮暗比，创作者可以衍生出迥异的视觉情感。</p>
+<ul>
+<li><strong>高调照明（High-key lighting）</strong>：使用明亮的辅光，将阴影区域提亮至接近主光的亮度，产生均匀、低对比的画面，常用于表现喜剧、美妆商业广告或积极的情感。</li>
+<li><strong>低调照明（Low-key lighting）</strong>：则大幅减弱甚至取消辅光，使亮暗比达到8:1甚至更高，留下深邃的阴影，从而营造出充满戏剧性、悬疑感或阴郁的视觉张力。</li>
+</ul>
+<p>在当前人工智能视频生成的提示词（Prompt）工程中，引入三点布光及亮暗比的参数描述，能够显著提升AI生成影像的空间立体感与专业电影级质感。</p>
+<h3 id="场面调度与场面布置的区别与进化"><a href="#场面调度与场面布置的区别与进化" class="headerlink" title="场面调度与场面布置的区别与进化"></a>场面调度与场面布置的区别与进化</h3><p>“场面调度”（Mise-en-scène）源自法语，原意为“置于舞台之上”，在视听语言体系中，它指的是在单一未剪辑的画面内部，创作者有意安排的一切视觉元素的综合空间排布。</p>
+<p>在严谨的制片流程中，必须区分“场面布置”（Staging）与“场面调度”（Blocking）的概念。</p>
+<ul>
+<li><strong>场面布置</strong>：是一个更为宽泛的范畴，涵盖了布景设计、服装、道具以及整体环境光效的视觉安排。</li>
+<li><strong>场面调度</strong>：则特指在已经布置妥当的环境中，演员与摄像机的规划移动。场面调度主要分为三类：角色场面调度（定义演员走位）、摄像机场面调度（定义镜头如何相对动作而移动），以及机械式场面调度（规划演员与门、道具等物理环境的互动）。</li>
+</ul>
+<p>场面调度的核心美学在于在镜头内部创造意义，从而保留场景在空间与时间上的绝对完整性。这一特质被法国电影理论家安德烈·巴赞（André Bazin）视作更具“写实主义”精神的电影语言本体，与表现主义的蒙太奇美学形成了相对的理论阵营。基于此，衍生出了多种调度风格：</p>
+<ul>
+<li><strong>浅焦场面调度</strong>：通过景深控制剥离环境语境以集中注意力。</li>
+<li><strong>长镜头场面调度</strong>：通过持续不断的镜头运动，构建出不断演变的空间关系。</li>
+<li><strong>表现主义场面调度</strong>：则刻意扭曲视觉元素（如极端机位、高对比灯光）以外化角色的病态心理状态。</li>
+</ul>
+<p>在当代AI视频创作中，应用场面调度原理（在提示词中明确描述主体的空间位置、彼此朝向与物理移动轨迹），是避免画面内主体发生瞬移等连续性错误，撰写高流畅度多角色场景的核心技术。</p>
+<h3 id="作者风格的视觉显影：以希区柯克与韦斯·安德森为例"><a href="#作者风格的视觉显影：以希区柯克与韦斯·安德森为例" class="headerlink" title="作者风格的视觉显影：以希区柯克与韦斯·安德森为例"></a>作者风格的视觉显影：以希区柯克与韦斯·安德森为例</h3><p>大师级导演往往通过极具辨识度的场面调度与视觉设计确立其作者属性。</p>
+<p>**阿尔弗雷德·希区柯克（Alfred Hitchcock）**的视听语言深谙空间心理学与精神分析学机制。他敏锐地捕捉到了惊悚（瞬间的惊吓）与悬疑（持续的心理预期）之间的本质区别。在《惊魂记》（Psycho）中，他将“百叶窗”作为室内外边界的过渡空间，巧妙建构了隐秘偷窥的悬疑感，并将凶手与母亲病态的情感关系外化于逼仄孤僻的汽车旅馆空间中；为了让女主演琼·芳登在片场表现出极致的焦虑与不安，希区柯克甚至刻意孤立她，实施了一场真实的心理操控实验。</p>
+<p>著名的“希区柯克变焦”（滑动变焦）在《迷魂记》（Vertigo）中被发挥到极致：摄像机后退的同时拉长焦距，使主角的大小保持不变，但背景却产生剧烈的形变与拉伸。这一违反日常生理视觉的镜头语言，完美外化了主人公站在高塔上的眩晕感，成为生活世界与死后世界过渡的绝佳隐喻。此外，在《夺魂索》（Rope）中，希区柯克摒弃了蒙太奇的切割，几乎将整部电影处理为一个连续的长镜头。犯罪的计划与执行在绝对连续的时间与封闭空间中展开，使建筑空间本身具有了令人窒息的压迫感，如同古希腊戏剧般完成了“平静-动作开始-高潮”的结构闭环。其另一部作品《爱德华大夫》则大量借鉴了超现实主义画派（如达利）的视觉元素，以极其扭曲和荒诞的梦境意象，揭示了男主角童年误杀弟弟的潜意识创伤。</p>
+<p>相比之下，**韦斯·安德森（Wes Anderson）**的视听风格则走向了对沉浸感的刻意反叛。他反向剥离了传统电影追求的现实主义代入感，故意打破“第四堵墙”。安德森大量使用极其严整的轴对称构图、高饱和度且对比浓烈的色彩调色盘，以及机械式的横移或推拉镜头，构建出一种微缩模型式的景观与戏剧化间离效果（Alienation effect）。这种将形式感推向极致的手法，不仅塑造了其神经质、荒诞的喜剧内核，也通过高度人工化的场面调度，造就了当代影坛最具辨识度的作家电影风格。</p>
+<hr>
+<h2 id="第二部分-蒙太奇理论与剪辑美学：时空的重组与意义的爆炸"><a href="#第二部分-蒙太奇理论与剪辑美学：时空的重组与意义的爆炸" class="headerlink" title="第二部分 蒙太奇理论与剪辑美学：时空的重组与意义的爆炸"></a>第二部分 蒙太奇理论与剪辑美学：时空的重组与意义的爆炸</h2><p>如果说场面调度是在时空连续体内做文章，那么蒙太奇（Montage）则是通过镜头的断裂、拼贴与重组，赋予电影超越物理现实的“第三种意义”。</p>
+<h3 id="蒙太奇的理论奠基与演变"><a href="#蒙太奇的理论奠基与演变" class="headerlink" title="蒙太奇的理论奠基与演变"></a>蒙太奇的理论奠基与演变</h3><p>蒙太奇一词源自法语建筑学术语，意为“装配”与“构成”。大卫·沃克·格里菲斯（D.W. Griffith）在《一个国家的诞生》与《党同伐异》中，首创了连贯叙事的语法，开创了平行剪接（交叉剪接）等叙事蒙太奇手法，使电影能够多线索并进，打破了戏剧舞台的时空限制。然而，真正将蒙太奇从技术手段提升至哲学与美学理论高度的，是20世纪20年代的苏联蒙太奇学派，其代表人物为谢尔盖·爱森斯坦（Sergei Eisenstein）与弗谢沃洛德·普多夫金（Vsevolod Pudovkin）。</p>
+<p>在理论争锋中：</p>
+<ul>
+<li><strong>普多夫金</strong>：倾向于认为蒙太奇是“砖块”，强调镜头与镜头之间的逻辑连贯、对比与隐喻，通过顺理成章的累加来引导观众的情绪；</li>
+<li><strong>爱森斯坦</strong>：则提出了极具革命性与攻击性的“冲突论”（杂耍蒙太奇，Montage of Attractions）。爱森斯坦认为，蒙太奇绝不是温和的连接，而是“电影的神经”。他借用生物学细胞分裂的隐喻，指出一个静止的镜头宛如一个发展的细胞，当它膨胀到极限时就会发生爆炸并分裂为二；剪辑正是这种爆炸，是两个截然对立、充满矛盾的镜头在视觉大小、长短、光线强弱上的剧烈冲撞。</li>
+</ul>
+<h3 id="爱森斯坦的蒙太奇分类体系与实践"><a href="#爱森斯坦的蒙太奇分类体系与实践" class="headerlink" title="爱森斯坦的蒙太奇分类体系与实践"></a>爱森斯坦的蒙太奇分类体系与实践</h3><p>爱森斯坦根据冲突的性质与生理、情绪反应，将蒙太奇进行了科学而细腻的分类：</p>
+<table>
+<thead>
+<tr>
+<th align="left">蒙太奇类型</th>
+<th align="left">核心机制与表现原理</th>
+<th align="left">经典案例与视听作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>尺度蒙太奇 (Metric Montage)</strong></td>
+<td align="left">完全基于镜头的物理长度（画格数量）进行剪接，无视镜头内动作的性质。</td>
+<td align="left">通过逐渐缩短镜头的持续时间来按正比例加速节奏，制造单纯的生理性紧张与压迫感。</td>
+</tr>
+<tr>
+<td align="left"><strong>节奏蒙太奇 (Rhythmic Montage)</strong></td>
+<td align="left">结合镜头的绝对长度与镜头内部的运动轨迹（动作速度）进行复杂剪接。</td>
+<td align="left">《战舰波将金号》中奥德萨阶梯段落，沙皇士兵整齐划一的机械步伐与平民惊恐逃窜的混乱节奏形成强烈的动静冲突。</td>
+</tr>
+<tr>
+<td align="left"><strong>情调蒙太奇 (Tonal Montage)</strong></td>
+<td align="left">基于镜头的光影明暗、色彩饱和度、氛围或情感基调进行组合。</td>
+<td align="left">表现从静谧到哀伤的情感递进，统合为“生理的与情绪的蒙太奇”，使观众产生共振。</td>
+</tr>
+<tr>
+<td align="left"><strong>理性蒙太奇 (Intellectual Montage)</strong></td>
+<td align="left">极端的表现蒙太奇，通过将毫无叙事关联的画面并置，迫使观众进行抽象的逻辑思考与概念缝合。</td>
+<td align="left">《罢工》中，工人被军队射杀的画面与屠宰场杀牛的镜头交叉剪辑，产生“平民如草芥般被无情宰割”的强烈政治隐喻。在《十月》中，连切九幅不同的神像以探讨神的本质。</td>
+</tr>
+</tbody></table>
+<p>蒙太奇原则同样延伸到了平面摄影与当代AI后期制作领域。在摄影中，色调蒙太奇与内容蒙太奇通过拼贴不同语境的照片创造视觉冲击。在人工智能视频制作中，蒙太奇成为了统合生成片段的核心逻辑。创作者利用时光流逝蒙太奇（Training Montage）压缩叙事时间，通过音乐蒙太奇使AI生成素材的节奏与配乐速度对齐，并通过改变片段长度建立内在动势，从而使看似随机生成的素材构建出明确的情感弧线。</p>
+<h3 id="剪辑技巧与无技巧转场的隐喻"><a href="#剪辑技巧与无技巧转场的隐喻" class="headerlink" title="剪辑技巧与无技巧转场的隐喻"></a>剪辑技巧与无技巧转场的隐喻</h3><p>在具体的剪辑实践中，时空的转换分为技巧转场与无技巧转场。</p>
+<ul>
+<li><strong>技巧转场</strong>：依赖于光学冲印或数字特效，如淡入淡出（表现时间流逝或情绪分隔）、叠化（前后画面短暂重合，适合抒情与回忆）、划像（画面从特定方向推出，适用于内容差异大的段落）以及定格转场（静态停顿增强节奏感）。</li>
+<li><strong>无技巧转场</strong>：则依靠画面内容的视觉连续性（“直接切”）来实现自然过渡。常见的无技巧转场包括两极镜头转场（极端对比的景别产生视觉冲击）与特写转场（放大局部细节作为万能过渡）。</li>
+</ul>
+<p>其中，**“匹配剪辑”（Match Cut）**往往能产生深远的表意功能。影史上最经典的匹配剪辑当属库布里克的《2001：太空漫游》。原始人将作为杀戮武器的骨头抛向空中，镜头直接切至太空中形状高度相似的宇宙航天器。这一极致的视听语言，在几十分之一秒内跨越了数百万年的时间与浩瀚的星际空间，更深刻地隐喻了人类文明的技术进化并未改变其好战与杀戮的物种本能。</p>
+<p>此外，蒙太奇与场面调度在不同类型的影视作品中具有不同的侧重。在纪录片创作中，如《丝路上的钢铁驼队》，长镜头被大量用于保持事件的原生态与客观真实性；但在一些政论纪录片或具有悬疑色彩的社会纪录片中，交叉蒙太奇（如将城管修井盖、警察拦截车辆与孩子放学面临危险的画面并行剪辑）被用来营造紧张感，是对纪录片视听叙事的一种创新尝试。</p>
+<hr>
+<h2 id="第三部分-听觉本体论与视听关系的重塑"><a href="#第三部分-听觉本体论与视听关系的重塑" class="headerlink" title="第三部分 听觉本体论与视听关系的重塑"></a>第三部分 听觉本体论与视听关系的重塑</h2><p>在影视艺术发展早期，声音（人声、音乐、音效）长期被视为视觉影像的附属与补充元素。然而，随着电影声音理论的演进，声音不仅确立了其独立的本体地位，更彻底重塑了人类对影像的认知维度。</p>
+<h3 id="电影声音的分类与叙事功能"><a href="#电影声音的分类与叙事功能" class="headerlink" title="电影声音的分类与叙事功能"></a>电影声音的分类与叙事功能</h3><p>影视声音通常被划分为三大子类：人声语言、音乐与效果音响。</p>
+<ul>
+<li><strong>人声语言</strong>：不仅是传递语义信息、推动情节的基础工具，更是刻画人物性格、反映社会阶层属性与人际关系的核心元素。</li>
+<li><strong>效果音响</strong>：负责建构环境的物理真实感，赋予不可见事物以物质形态。</li>
+<li><strong>电影音乐</strong>：分为客观音乐（Diegetic music，画内音乐，即画面中能够找到发声源，如角色正在收听的收音机）与主观音乐（Non-diegetic music，画外音乐，无物理声源，由作曲家专门创作）。主观音乐作为一种介质，能够补充、解释甚至评价画面，深化主题思想。例如在宫崎骏的动画片《龙猫》开场中，主观音乐迅速建立起欢快的儿童世界基调；客观音乐与主观音乐也可发生转化，人物极度痛苦时，既可播放悲伤音乐渲染，也可利用欢快音乐形成强烈的反差。</li>
+</ul>
+<p>声画关系主要表现为三种形态：<strong>声画同步</strong>（发声动作与声音绝对一致，强化现实质感）、<strong>音画并行</strong>（声音不直接解释画面，而是营造气氛）与<strong>音画对立</strong>（声画对位，声音的情绪与画面的内容截然相反）。在定格动画《僵尸新娘》中，阴森恐怖的地下世界画面与轻快活泼的爵士乐结合，便通过强烈的音画对位制造了独特的反讽幽默与视觉感官冲击。</p>
+<h3 id="米歇尔·希翁与“视听契约”"><a href="#米歇尔·希翁与“视听契约”" class="headerlink" title="米歇尔·希翁与“视听契约”"></a>米歇尔·希翁与“视听契约”</h3><p>法国声音理论家米歇尔·希翁（Michel Chion）在《声音》（<em>Le Son</em>）等系列著作中，系统性地颠覆了“视觉中心主义”，确立了第二代电影声音理论体系。他指出，随着杜比（Dolby）和THX等技术的应用，观众所深信的“用眼看到的画面”，实际上在极大程度上是由声音建构出的大脑幻觉。</p>
+<p>希翁的核心理论基石是**“视听契约”（Audiovisual Contract）<strong>，即观众在观影时，默认听到的声音与看到的影像属于同一个实体或世界。因为这层隐秘的心理契约，听觉与视觉感知会相互污染、相互投射。在此基础上，他提出了</strong>“增值”（Added Value）**理论。增值是指声音在表现力与信息传递上赋予影像的时间感与空间感。文字的人声中心会产生意义增值；而音乐与声响则会产生情感共鸣与非情感共鸣的增值。例如，一个静止的树林画面，若配以狂风的音效，观众便会“看”到风的运动；若配以急速的鼓点，画面内部的视觉速度就会被听觉强制加速。</p>
+<p>此外，希翁将听觉文化研究从被动接收转向主体参与的反馈系统，提出**“埃尔格听觉”（Ergo-audition）**与对声音物质化的深度探讨。这种理论不仅适用于现代电影，同样能够解释中国古代美学。在古代文人画（如宗炳的《画山水序》）的“无声诗”意境中，通过描绘“抚琴”等行为，琴音的加入彰显了声音的“物质化”，实现了肉身与环境之间的血肉连接，在虚实相生中敞开了幽深的意境深度。这一方法论转向，要求研究者从“何谓声音”转向“如何聆听”，揭示了声音如何主导受众的潜意识，实施一种近乎催眠的“幻听术”。</p>
+<hr>
+<h2 id="第四部分-电影符号学与心理认同的建构"><a href="#第四部分-电影符号学与心理认同的建构" class="headerlink" title="第四部分 电影符号学与心理认同的建构"></a>第四部分 电影符号学与心理认同的建构</h2><p>视听语言不仅是物理层面声与光的刺激，更是符号传递与深层心理投射的过程。20世纪60年代，克里斯蒂安·麦茨（Christian Metz）借用索绪尔（Saussure）的结构主义语言学，创立了<strong>第一电影符号学</strong>，试图分析电影影像中的“能指”（音响形象与画面本体）与“所指”（概念与意义）之间的语法规则，将电影视作一种可被解码的语言文本。</p>
+<p>随着理论的深化，第一电影符号学因过度依赖语言学而暴露其局限性。进入70年代后，麦茨在弗洛伊德与拉康的精神分析学基础上，发表了标志性的著作《想象的能指》，宣告了<strong>第二电影符号学</strong>的诞生。研究视角发生转移，从对文本结构的客观分析，转向了探讨主体在幽暗影院中观影时的“认同机制”与“窥视机制”。</p>
+<h3 id="认同机制与视角的倒错"><a href="#认同机制与视角的倒错" class="headerlink" title="认同机制与视角的倒错"></a>认同机制与视角的倒错</h3><p>在视听语言的心理学体系中，**“认同”（Identification）**占据着特殊的核心位置。受众通过摄像机的视点，去认同主角的情感体验，决定用哪个角色的角度来看待世界。通常，“视线的认同”是缝合机制中最有效的一环（如正反打镜头让观众与角色视线重合）。然而，当面临特殊角色设定时，传统的视听语言面临着叙事技法的失效与重构。</p>
+<ul>
+<li><strong>案例《视线之外》</strong>：以台湾艺术大学的动画短片《视线之外》为例，主角是一名盲人小女孩。由于主角丧失了视觉，“主观视角”在物理上无法成立。影片创造性地舍弃了传统的视线认同，转而使用听觉、触觉乃至嗅觉作为画面的“触发器”与想象媒介。女孩在黑暗中探索，当树枝在地上发出声响并最终被她触摸到的那一刻，画面中才通过视觉显现出树枝的实体。这种“非真实环境”的想象图景的视觉化呈现，精准模拟了盲人感知世界的方式，从而引起了超越常规视听语言的强烈心理认同。</li>
+<li><strong>案例《合金装备：食蛇者》</strong>：在游戏《合金装备：食蛇者》（<em>Metal Gear Solid: Snake Eater</em>）的一段过场动画中，角色被蒙住黑色头套面临拷问。创作者直接使用长时间的“黑场”配合极其丰富的环境音效，强制剥夺玩家的视觉，</li>
+</ul>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> </li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-07-13 10:46:09</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-07-13 11:25:14
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/07/13/视听语言/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/04/10/%E6%9B%9D%E5%85%893%E8%A6%81%E7%B4%A0%E9%A1%B5%E9%9D%A2%E4%BC%98%E5%8C%96%E7%89%88%E6%9C%AC/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">📸曝光三要素 (The Exposure Triangle)</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title"></div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80%EF%BC%9A%E4%BB%8E%E7%BB%8F%E5%85%B8%E5%BD%B1%E8%A7%86%E7%BE%8E%E5%AD%A6%E3%80%81%E7%AC%A6%E5%8F%B7%E5%AD%A6%E5%88%B0%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%97%B6%E4%BB%A3%E7%9A%84%E9%87%8D%E6%9E%84%E4%B8%8E%E6%BC%94%E8%BF%9B"><span class="nav-text">视听语言：从经典影视美学、符号学到人工智能时代的重构与演进</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86-%E8%A7%86%E8%A7%89%E7%BB%B4%E5%BA%A6%E7%9A%84%E7%89%A9%E7%90%86%E5%BB%BA%E6%9E%84%E4%B8%8E%E5%BF%83%E7%90%86%E6%98%A0%E5%B0%84"><span class="nav-text">第一部分 视觉维度的物理建构与心理映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%9B%BE%E3%80%81%E6%99%AF%E5%88%AB%E4%B8%8E%E8%A7%86%E7%82%B9%E6%B3%95%E5%88%99"><span class="nav-text">构图、景别与视点法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%82%B9%E5%B8%83%E5%85%89%E4%B8%8E%E5%85%89%E5%BD%B1%E7%9A%84%E5%8F%99%E4%BA%8B%E4%BF%AE%E8%BE%9E"><span class="nav-text">三点布光与光影的叙事修辞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%BA%E9%9D%A2%E8%B0%83%E5%BA%A6%E4%B8%8E%E5%9C%BA%E9%9D%A2%E5%B8%83%E7%BD%AE%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%BF%9B%E5%8C%96"><span class="nav-text">场面调度与场面布置的区别与进化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E8%80%85%E9%A3%8E%E6%A0%BC%E7%9A%84%E8%A7%86%E8%A7%89%E6%98%BE%E5%BD%B1%EF%BC%9A%E4%BB%A5%E5%B8%8C%E5%8C%BA%E6%9F%AF%E5%85%8B%E4%B8%8E%E9%9F%A6%E6%96%AF%C2%B7%E5%AE%89%E5%BE%B7%E6%A3%AE%E4%B8%BA%E4%BE%8B"><span class="nav-text">作者风格的视觉显影：以希区柯克与韦斯·安德森为例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-%E8%92%99%E5%A4%AA%E5%A5%87%E7%90%86%E8%AE%BA%E4%B8%8E%E5%89%AA%E8%BE%91%E7%BE%8E%E5%AD%A6%EF%BC%9A%E6%97%B6%E7%A9%BA%E7%9A%84%E9%87%8D%E7%BB%84%E4%B8%8E%E6%84%8F%E4%B9%89%E7%9A%84%E7%88%86%E7%82%B8"><span class="nav-text">第二部分 蒙太奇理论与剪辑美学：时空的重组与意义的爆炸</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%92%99%E5%A4%AA%E5%A5%87%E7%9A%84%E7%90%86%E8%AE%BA%E5%A5%A0%E5%9F%BA%E4%B8%8E%E6%BC%94%E5%8F%98"><span class="nav-text">蒙太奇的理论奠基与演变</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%B1%E6%A3%AE%E6%96%AF%E5%9D%A6%E7%9A%84%E8%92%99%E5%A4%AA%E5%A5%87%E5%88%86%E7%B1%BB%E4%BD%93%E7%B3%BB%E4%B8%8E%E5%AE%9E%E8%B7%B5"><span class="nav-text">爱森斯坦的蒙太奇分类体系与实践</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AA%E8%BE%91%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%97%A0%E6%8A%80%E5%B7%A7%E8%BD%AC%E5%9C%BA%E7%9A%84%E9%9A%90%E5%96%BB"><span class="nav-text">剪辑技巧与无技巧转场的隐喻</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86-%E5%90%AC%E8%A7%89%E6%9C%AC%E4%BD%93%E8%AE%BA%E4%B8%8E%E8%A7%86%E5%90%AC%E5%85%B3%E7%B3%BB%E7%9A%84%E9%87%8D%E5%A1%91"><span class="nav-text">第三部分 听觉本体论与视听关系的重塑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%BD%B1%E5%A3%B0%E9%9F%B3%E7%9A%84%E5%88%86%E7%B1%BB%E4%B8%8E%E5%8F%99%E4%BA%8B%E5%8A%9F%E8%83%BD"><span class="nav-text">电影声音的分类与叙事功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%B3%E6%AD%87%E5%B0%94%C2%B7%E5%B8%8C%E7%BF%81%E4%B8%8E%E2%80%9C%E8%A7%86%E5%90%AC%E5%A5%91%E7%BA%A6%E2%80%9D"><span class="nav-text">米歇尔·希翁与“视听契约”</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86-%E7%94%B5%E5%BD%B1%E7%AC%A6%E5%8F%B7%E5%AD%A6%E4%B8%8E%E5%BF%83%E7%90%86%E8%AE%A4%E5%90%8C%E7%9A%84%E5%BB%BA%E6%9E%84"><span class="nav-text">第四部分 电影符号学与心理认同的建构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E5%90%8C%E6%9C%BA%E5%88%B6%E4%B8%8E%E8%A7%86%E8%A7%92%E7%9A%84%E5%80%92%E9%94%99"><span class="nav-text">认同机制与视角的倒错</span></a></li></ol></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        8 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
