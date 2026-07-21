@@ -1,0 +1,172 @@
+/* Tags overview: compact, editorial cards that work in both theme modes. */
+.page-template-container:has(.tagcloud-content) {
+  padding: clamp(24px, 3vw, 42px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--primary-color) 12%, transparent), transparent 34%),
+    var(--default-background-color);
+}
+
+.page-template-container:has(.tagcloud-content) .page-title-header {
+  position: relative;
+  margin: 0 0 28px;
+  padding-bottom: 18px;
+  font-size: clamp(2rem, 4vw, 2.65rem);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.page-template-container:has(.tagcloud-content) .page-title-header::after {
+  content: "按主题探索文章";
+  display: block;
+  margin-top: 10px;
+  color: var(--third-text-color);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.page-template-container:has(.tagcloud-content) .tagcloud-content {
+  text-align: left;
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+  list-style: none;
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list li {
+  min-width: 0;
+  --tag-accent: #8b5cf6;
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list li:nth-child(8n + 2) { --tag-accent: #38bdf8; }
+.page-template-container:has(.tagcloud-content) .tag-list li:nth-child(8n + 3) { --tag-accent: #34d399; }
+.page-template-container:has(.tagcloud-content) .tag-list li:nth-child(8n + 4) { --tag-accent: #f59e0b; }
+.page-template-container:has(.tagcloud-content) .tag-list li:nth-child(8n + 5) { --tag-accent: #f472b6; }
+.page-template-container:has(.tagcloud-content) .tag-list li:nth-child(8n + 6) { --tag-accent: #22d3ee; }
+.page-template-container:has(.tagcloud-content) .tag-list li:nth-child(8n + 7) { --tag-accent: #a3e635; }
+.page-template-container:has(.tagcloud-content) .tag-list li:nth-child(8n) { --tag-accent: #fb7185; }
+
+.page-template-container:has(.tagcloud-content) .tag-list a[data-weight] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 74px;
+  margin: 0;
+  padding: 16px 18px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--tag-accent) 25%, var(--border-color));
+  border-radius: 16px;
+  background: var(--default-background-color);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--tag-accent) 10%, var(--default-background-color)),
+    var(--default-background-color) 72%
+  );
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--shadow-color) 45%, transparent);
+  color: var(--default-text-color);
+  filter: none !important;
+  font-size: 1.08rem;
+  font-weight: 650;
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list a[data-weight]::before {
+  content: "";
+  position: absolute;
+  top: -34px;
+  right: -28px;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tag-accent) 14%, transparent);
+  transition: transform 180ms ease;
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list[data-show-value] a[data-weight]::after {
+  content: attr(data-weight);
+  position: relative;
+  min-width: 30px;
+  margin-left: auto;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--tag-accent) 24%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tag-accent) 12%, var(--third-background-color));
+  color: var(--tag-accent);
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1;
+  text-align: center;
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list a[data-weight] .fa-hashtag {
+  position: relative;
+  margin-right: 10px;
+  color: var(--tag-accent);
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list a[data-weight]:hover {
+  border-color: color-mix(in srgb, var(--tag-accent) 70%, var(--border-color));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--tag-accent) 17%, var(--default-background-color)),
+    var(--default-background-color) 78%
+  );
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--tag-accent) 20%, transparent);
+  color: var(--default-text-color);
+  transform: translateY(-4px);
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list a[data-weight]:hover::before {
+  transform: scale(1.2);
+}
+
+.page-template-container:has(.tagcloud-content) .tag-list a[data-weight]:active {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .page-template-container:has(.tagcloud-content) {
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+
+  .page-template-container:has(.tagcloud-content) .page-title-header {
+    margin-bottom: 22px;
+  }
+
+  .page-template-container:has(.tagcloud-content) .tag-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .page-template-container:has(.tagcloud-content) .tag-list a[data-weight] {
+    min-height: 66px;
+    padding: 13px 14px;
+    border-radius: 14px;
+    font-size: 0.96rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .page-template-container:has(.tagcloud-content) .tag-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-template-container:has(.tagcloud-content) .tag-list a[data-weight],
+  .page-template-container:has(.tagcloud-content) .tag-list a[data-weight]::before {
+    transition: none;
+  }
+}
