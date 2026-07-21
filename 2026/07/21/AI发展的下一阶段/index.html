@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/07/21/ai发展的下一阶段/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🤖 AI发展的下一阶段：从生成内容到理解世界">
+<meta property="og:url" content="http://example.com/2026/07/21/AI%E5%8F%91%E5%B1%95%E7%9A%84%E4%B8%8B%E4%B8%80%E9%98%B6%E6%AE%B5/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-07-21T02:05:00.000Z">
+<meta property="article:modified_time" content="2026-07-21T02:02:36.235Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="AIGC">
+<meta property="article:tag" content="影像创作">
+<meta property="article:tag" content="未来趋势">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🤖 AI发展的下一阶段：从生成内容到理解世界 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">11</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">🤖 AI发展的下一阶段：从生成内容到理解世界</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-07-21 10:05</span>
+        <span class="mobile">2026-07-21 10:05</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-07-21 10:02:36</span>
+            <span class="mobile">2026-07-21 10:02:36</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/AI/">AI</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/AIGC/">AIGC</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%BD%B1%E5%83%8F%E5%88%9B%E4%BD%9C/">影像创作</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/">未来趋势</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心观点</strong>：人工智能的发展已经不只是“让机器回答问题”，而是逐渐走向理解文字、图像、声音、视频和现实环境，并根据目标完成一连串任务。对于影像创作者而言，AI不会简单地代替摄像机、剪辑软件或导演，而会重新组织从创意、分镜、拍摄到后期的整个生产流程。</p>
+</blockquote>
+<h2 id="一、AI为什么突然发展得这么快？"><a href="#一、AI为什么突然发展得这么快？" class="headerlink" title="一、AI为什么突然发展得这么快？"></a>一、AI为什么突然发展得这么快？</h2><p>人工智能并不是近几年才出现的概念。早期的AI依赖人工编写规则，机器只能在预先设定的范围内判断；机器学习出现后，系统开始从数据中寻找规律；深度学习进一步提升了图像识别、语音识别和自然语言处理能力。真正让普通人明显感受到变化的，是生成式AI的大规模普及。</p>
+<p>过去的AI更像一个分类器：它能判断照片里有没有猫、邮件是不是垃圾信息，却不擅长创造新的内容。新一代生成式AI则能根据自然语言生成文章、图片、音乐、代码和视频，并在对话中不断修改结果。人与机器的交互方式由“学习软件按钮”逐渐转变为“描述目标和意图”。</p>
+<p>AI快速发展的背后，主要有四个原因：</p>
+<ol>
+<li><strong>数据规模扩大</strong>：互联网积累了大量文字、图片、声音和视频，为模型学习提供了基础。</li>
+<li><strong>计算能力提高</strong>：芯片、云计算和分布式训练，让更大规模的模型成为可能。</li>
+<li><strong>模型架构进步</strong>：新的训练方法让模型能够理解更长的上下文，并处理多种媒体形式。</li>
+<li><strong>产品化速度加快</strong>：AI从实验室进入搜索、办公、编程、设计和视频工具，真实用户的使用又推动了模型改进。</li>
+</ol>
+<p>斯坦福大学《2026 AI Index》显示，生成式AI在三年内已达到约53%的采用率，接受调查的组织中有88%在使用某种形式的AI。这说明AI正在从少数技术人员使用的专业工具，变成类似搜索引擎和智能手机一样的基础能力。</p>
+<hr>
+<h2 id="二、从“单一模型”走向“多模态理解”"><a href="#二、从“单一模型”走向“多模态理解”" class="headerlink" title="二、从“单一模型”走向“多模态理解”"></a>二、从“单一模型”走向“多模态理解”</h2><p>早期AI系统往往只能处理一种信息：文字模型看不见图片，图像模型听不懂声音，语音系统也不了解画面。多模态AI的发展，正在打破这些边界。</p>
+<p>现在的模型可以同时分析：</p>
+<ul>
+<li>文字中的语义和逻辑；</li>
+<li>图片中的人物、物体、构图和色彩；</li>
+<li>音频中的语言、情绪、节奏和环境声；</li>
+<li>视频中的动作、镜头变化与时间关系；</li>
+<li>屏幕界面中的按钮、表格和操作流程。</li>
+</ul>
+<p>这意味着AI不再只是“接收一句提示词并返回一段文字”，而是可以看懂一组素材，理解创作者的修改要求，再把结果转换成另一种媒体。</p>
+<p>例如，创作者可以提供一段文案，让AI生成分镜表；再把分镜转换为参考图；根据参考图生成动态预演；最后分析成片中的字幕、声音和节奏问题。文字、图片、声音和视频不再是彼此分离的工具环节，而会被同一套智能系统连接起来。</p>
+<p>多模态的真正意义，不是输入形式变多，而是AI开始建立不同信息之间的关系。它需要理解“人物向门口看”与“下一个镜头展示门外”之间的视线逻辑，也要理解“脚步声提前出现”为什么能够制造悬念。这类能力越强，AI就越接近对完整视听语言的理解。</p>
+<hr>
+<h2 id="三、AI视频正在经历三个阶段"><a href="#三、AI视频正在经历三个阶段" class="headerlink" title="三、AI视频正在经历三个阶段"></a>三、AI视频正在经历三个阶段</h2><h3 id="1-从文字生成短片段"><a href="#1-从文字生成短片段" class="headerlink" title="1. 从文字生成短片段"></a>1. 从文字生成短片段</h3><p>最初的AI视频更像会动的图片。人物容易变形，物体前后不一致，镜头运动也缺少空间逻辑。它的价值主要是制造视觉奇观，尚不能稳定承担连续叙事。</p>
+<h3 id="2-从“能动”走向“可控制”"><a href="#2-从“能动”走向“可控制”" class="headerlink" title="2. 从“能动”走向“可控制”"></a>2. 从“能动”走向“可控制”</h3><p>随着模型升级，创作者开始能够用参考图固定人物与美术风格，指定首尾帧、镜头运动和物体轨迹，并延长已有片段。当前的视频模型也在加强物理规律、角色一致性和提示词遵循能力。</p>
+<p>Google DeepMind公开的Veo 3.1能力已经包括原生声音、角色参考、场景延长、运动控制，以及1080p和4K输出。AI视频的竞争重点由“能不能生成”转向“创作者能不能准确控制”。</p>
+<h3 id="3-从无声画面走向完整视听生成"><a href="#3-从无声画面走向完整视听生成" class="headerlink" title="3. 从无声画面走向完整视听生成"></a>3. 从无声画面走向完整视听生成</h3><p>过去生成视频后，还需要分别寻找配乐、环境音、音效和对白。新一代模型开始在生成画面的同时生成同步声音，让动作、口型、对白和环境声出现在同一时间轴上。</p>
+<p>这一步对影视制作影响很大，因为声音并不是附属装饰。声音能够交代画外空间、制造情绪、控制节奏，也能让原本普通的画面产生新的意义。当AI同时处理画面和声音时，它才真正进入“视听生成”阶段。</p>
+<p>不过，当前模型仍可能出现人物身份漂移、动作失真、对白不自然、长时间连续性不足等问题。AI视频已经适合概念预演、广告创意、短镜头和风格实验，但距离完全自动完成复杂长片仍有明显距离。</p>
+<hr>
+<h2 id="四、AI发展的下一步：智能体与工作流"><a href="#四、AI发展的下一步：智能体与工作流" class="headerlink" title="四、AI发展的下一步：智能体与工作流"></a>四、AI发展的下一步：智能体与工作流</h2><p>生成内容只是AI能力的一部分。下一阶段的重要方向，是让AI成为能够围绕目标连续行动的“智能体”。</p>
+<p>普通对话模型通常是一问一答；智能体则会把目标拆成多个步骤，读取资料、调用工具、检查结果，并根据失败原因继续调整。例如，制作一条探店短视频时，一个完整的AI工作流可能包括：</p>
+<ol>
+<li>分析店铺定位和目标观众；</li>
+<li>生成选题、标题与前三秒钩子；</li>
+<li>根据场地信息整理拍摄清单；</li>
+<li>设计全景、中景、特写和空镜头；</li>
+<li>根据素材自动完成初剪和字幕；</li>
+<li>检查节奏、重复画面与字幕遮挡；</li>
+<li>为横屏、竖屏和不同平台输出多个版本。</li>
+</ol>
+<p>这里真正发生变化的，不是某个按钮变得更智能，而是多个原本分散的软件环节被串联起来。创作者的主要工作也会从“亲手完成每一次机械操作”，转向“确定目标、提供素材、制定标准并审核结果”。</p>
+<p>因此，未来的AI竞争不仅取决于单次生成质量，还取决于记忆能力、工具调用、任务规划和自我检查。一个偶尔生成惊艳画面的模型，不一定比一个能够稳定完成整个流程的系统更有价值。</p>
+<hr>
+<h2 id="五、AI会不会取代影像创作者？"><a href="#五、AI会不会取代影像创作者？" class="headerlink" title="五、AI会不会取代影像创作者？"></a>五、AI会不会取代影像创作者？</h2><p>AI会替代一部分重复工作，但“替代工作环节”与“替代创作者”并不是同一件事。</p>
+<p>容易被自动化的任务通常具有几个特点：标准明确、结果容易检查、重复次数多。例如批量生成字幕、整理素材、降噪、粗剪、改变画幅、制作多个文案版本，都非常适合AI处理。</p>
+<p>而导演和创作者的核心价值，往往存在于难以标准化的判断中：</p>
+<ul>
+<li>这个故事为什么值得讲？</li>
+<li>观众应该先知道什么，后知道什么？</li>
+<li>人物此刻真正的情绪是什么？</li>
+<li>一个镜头应该靠近还是远离？</li>
+<li>哪些内容虽然漂亮，却破坏了整体表达？</li>
+<li>作品最终代表怎样的审美和价值立场？</li>
+</ul>
+<p>AI可以快速给出许多方案，却不知道创作者究竟愿意为哪个方案负责。它能够模仿成熟风格，但风格的形成不只是滤镜和构图，更来自一个人长期稳定的选择。</p>
+<p>在AI时代，导演思维反而更加重要。当生成素材的成本下降，真正稀缺的就不再是“有没有画面”，而是选择什么画面、如何组织画面，以及为什么这样组织。</p>
+<hr>
+<h2 id="六、创作者需要建立的新能力"><a href="#六、创作者需要建立的新能力" class="headerlink" title="六、创作者需要建立的新能力"></a>六、创作者需要建立的新能力</h2><h3 id="1-把想法描述得足够具体"><a href="#1-把想法描述得足够具体" class="headerlink" title="1. 把想法描述得足够具体"></a>1. 把想法描述得足够具体</h3><p>提示词不是堆砌“电影感、8K、高级感”等形容词，而是把创作意图转换为可执行的视听指令。景别、角度、主体位置、动作轨迹、光线方向、色彩基调、声音环境和情绪目的，都应该尽量清楚。</p>
+<h3 id="2-学会用参考素材控制结果"><a href="#2-学会用参考素材控制结果" class="headerlink" title="2. 学会用参考素材控制结果"></a>2. 学会用参考素材控制结果</h3><p>单纯文字很难稳定定义角色长相、服装、空间和风格。参考图、首尾帧、动作视频和声音样本，会逐渐成为AI影像生产中的重要控制手段。</p>
+<h3 id="3-建立审核标准"><a href="#3-建立审核标准" class="headerlink" title="3. 建立审核标准"></a>3. 建立审核标准</h3><p>AI生成得越快，审核越重要。创作者需要检查人物一致性、物理错误、口型、文字、品牌元素、版权风险和事实准确性，不能因为画面足够逼真就默认它是正确的。</p>
+<h3 id="4-保留真实拍摄能力"><a href="#4-保留真实拍摄能力" class="headerlink" title="4. 保留真实拍摄能力"></a>4. 保留真实拍摄能力</h3><p>真实世界中的人物表演、偶然事件、现场声音和光线变化，仍然拥有不可复制的价值。更现实的工作方式不是在AI与实拍之间二选一，而是让AI负责预演、补充和扩展，让实拍承担最重要的真实信息与情感。</p>
+<h3 id="5-从软件操作者升级为流程设计者"><a href="#5-从软件操作者升级为流程设计者" class="headerlink" title="5. 从软件操作者升级为流程设计者"></a>5. 从软件操作者升级为流程设计者</h3><p>过去熟练意味着记住大量按钮和快捷键；未来熟练更意味着知道什么环节交给AI、什么环节必须人工判断，以及如何让不同工具协同工作。</p>
+<hr>
+<h2 id="七、AI发展不能忽略的风险"><a href="#七、AI发展不能忽略的风险" class="headerlink" title="七、AI发展不能忽略的风险"></a>七、AI发展不能忽略的风险</h2><p>AI能力越强，生成内容与真实记录之间的边界越模糊。主要风险包括：</p>
+<ol>
+<li><strong>肖像与声音被滥用</strong>：未经允许复制他人外貌和声音，可能造成欺骗与伤害。</li>
+<li><strong>版权归属不清</strong>：训练数据、参考素材和生成结果之间的权利关系仍在持续讨论。</li>
+<li><strong>虚假信息更逼真</strong>：低成本生成视频会增加公众判断新闻和证据真伪的难度。</li>
+<li><strong>审美趋同</strong>：大量创作者依赖相似模型与提示词，可能产生统一而缺少个性的视觉风格。</li>
+<li><strong>能力退化</strong>：如果学习者把思考、写作和判断全部交给AI，短期效率可能提高，长期却可能失去基础能力。</li>
+<li><strong>技术差距扩大</strong>：掌握数据、算力和先进模型的少数机构，可能获得更大的内容生产优势。</li>
+</ol>
+<p>监管也正在从原则讨论进入具体执行。例如，欧盟《人工智能法案》第50条的部分透明度义务从2026年8月2日起适用，涉及对特定AI生成或操纵内容进行机器可读标记，以及在深度伪造等场景中告知用户。</p>
+<p>对普通创作者来说，即使所在地区没有完全相同的规定，也应该主动标注重要的AI生成内容，谨慎处理真人肖像、声音和品牌素材。透明不会降低作品价值，反而能建立长期信任。</p>
+<hr>
+<h2 id="八、未来三种值得关注的发展方向"><a href="#八、未来三种值得关注的发展方向" class="headerlink" title="八、未来三种值得关注的发展方向"></a>八、未来三种值得关注的发展方向</h2><h3 id="1-AI从理解互联网走向理解现实世界"><a href="#1-AI从理解互联网走向理解现实世界" class="headerlink" title="1. AI从理解互联网走向理解现实世界"></a>1. AI从理解互联网走向理解现实世界</h3><p>视频、空间数据和机器人训练会帮助模型学习物体运动、因果关系与真实环境。AI不仅要知道“杯子是什么”，还要理解杯子被推到桌边后可能掉落。这种世界理解能力将影响视频生成、自动驾驶、机器人和虚拟环境。</p>
+<h3 id="2-内容从统一成片走向实时个性化"><a href="#2-内容从统一成片走向实时个性化" class="headerlink" title="2. 内容从统一成片走向实时个性化"></a>2. 内容从统一成片走向实时个性化</h3><p>未来同一个故事可能根据观众的语言、兴趣、设备和观看时长生成不同版本。广告、教育和互动影视会更早采用这种方式。创作者设计的可能不再是唯一成片，而是一套能够动态组合的叙事规则。</p>
+<h3 id="3-人机协作从“使用工具”走向“共同创作”"><a href="#3-人机协作从“使用工具”走向“共同创作”" class="headerlink" title="3. 人机协作从“使用工具”走向“共同创作”"></a>3. 人机协作从“使用工具”走向“共同创作”</h3><p>AI会参与讨论选题、提出镜头方案、发现素材缺口和模拟不同剪辑版本。创作者仍然掌握方向，但反馈过程将更加即时。AI像一个速度极快、知识广泛却需要明确指导的协作者，而不是拥有最终决定权的导演。</p>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>AI发展的核心变化，可以概括为从识别到生成、从单一媒体到多模态、从回答问题到执行任务、从虚拟内容到理解现实世界。</p>
+<p>技术进步会不断降低画面、声音和文字的生产门槛，但不会自动产生有意义的作品。当所有人都能快速生成内容时，观察力、判断力、叙事能力、审美和责任感会变得更加珍贵。</p>
+<p>对于影像创作者，最值得做的不是追逐每一个新工具，也不是因为担心被替代而拒绝AI，而是理解它正在改变哪些环节，主动建立新的工作流，同时保留对真实人物、真实空间和真实情绪的敏感。AI可以扩展创作的边界，但作品最终走向哪里，仍然取决于人的选择。</p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://hai.stanford.edu/ai-index/2026-ai-index-report" >Stanford HAI：2026 AI Index Report<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://deepmind.google/models/veo/" >Google DeepMind：Veo 3.1<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" >European Commission：AI Act<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act" >European Commission：AI生成内容透明度义务<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+</ul>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 🤖 AI发展的下一阶段：从生成内容到理解世界</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-07-21 10:05:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-07-21 10:02:36
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/07/21/AI发展的下一阶段/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/AI/">#AI</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/AIGC/">#AIGC</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%BD%B1%E5%83%8F%E5%88%9B%E4%BD%9C/">#影像创作</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/">#未来趋势</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/07/21/%E5%89%AA%E8%BE%91%E7%82%B9%E7%9A%84%E5%8F%99%E4%BA%8B%E9%80%BB%E8%BE%91/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">🎞️ 剪辑点的叙事逻辑：什么时候切，为什么切</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">🤖 AI发展的下一阶段：从生成内容到理解世界</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81AI%E4%B8%BA%E4%BB%80%E4%B9%88%E7%AA%81%E7%84%B6%E5%8F%91%E5%B1%95%E5%BE%97%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F"><span class="nav-text">一、AI为什么突然发展得这么快？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%8E%E2%80%9C%E5%8D%95%E4%B8%80%E6%A8%A1%E5%9E%8B%E2%80%9D%E8%B5%B0%E5%90%91%E2%80%9C%E5%A4%9A%E6%A8%A1%E6%80%81%E7%90%86%E8%A7%A3%E2%80%9D"><span class="nav-text">二、从“单一模型”走向“多模态理解”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81AI%E8%A7%86%E9%A2%91%E6%AD%A3%E5%9C%A8%E7%BB%8F%E5%8E%86%E4%B8%89%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="nav-text">三、AI视频正在经历三个阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%8E%E6%96%87%E5%AD%97%E7%94%9F%E6%88%90%E7%9F%AD%E7%89%87%E6%AE%B5"><span class="nav-text">1. 从文字生成短片段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BB%8E%E2%80%9C%E8%83%BD%E5%8A%A8%E2%80%9D%E8%B5%B0%E5%90%91%E2%80%9C%E5%8F%AF%E6%8E%A7%E5%88%B6%E2%80%9D"><span class="nav-text">2. 从“能动”走向“可控制”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BB%8E%E6%97%A0%E5%A3%B0%E7%94%BB%E9%9D%A2%E8%B5%B0%E5%90%91%E5%AE%8C%E6%95%B4%E8%A7%86%E5%90%AC%E7%94%9F%E6%88%90"><span class="nav-text">3. 从无声画面走向完整视听生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81AI%E5%8F%91%E5%B1%95%E7%9A%84%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%8E%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-text">四、AI发展的下一步：智能体与工作流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81AI%E4%BC%9A%E4%B8%8D%E4%BC%9A%E5%8F%96%E4%BB%A3%E5%BD%B1%E5%83%8F%E5%88%9B%E4%BD%9C%E8%80%85%EF%BC%9F"><span class="nav-text">五、AI会不会取代影像创作者？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%88%9B%E4%BD%9C%E8%80%85%E9%9C%80%E8%A6%81%E5%BB%BA%E7%AB%8B%E7%9A%84%E6%96%B0%E8%83%BD%E5%8A%9B"><span class="nav-text">六、创作者需要建立的新能力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8A%8A%E6%83%B3%E6%B3%95%E6%8F%8F%E8%BF%B0%E5%BE%97%E8%B6%B3%E5%A4%9F%E5%85%B7%E4%BD%93"><span class="nav-text">1. 把想法描述得足够具体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AD%A6%E4%BC%9A%E7%94%A8%E5%8F%82%E8%80%83%E7%B4%A0%E6%9D%90%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%9C"><span class="nav-text">2. 学会用参考素材控制结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%BB%BA%E7%AB%8B%E5%AE%A1%E6%A0%B8%E6%A0%87%E5%87%86"><span class="nav-text">3. 建立审核标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BF%9D%E7%95%99%E7%9C%9F%E5%AE%9E%E6%8B%8D%E6%91%84%E8%83%BD%E5%8A%9B"><span class="nav-text">4. 保留真实拍摄能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E4%BB%8E%E8%BD%AF%E4%BB%B6%E6%93%8D%E4%BD%9C%E8%80%85%E5%8D%87%E7%BA%A7%E4%B8%BA%E6%B5%81%E7%A8%8B%E8%AE%BE%E8%AE%A1%E8%80%85"><span class="nav-text">5. 从软件操作者升级为流程设计者</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81AI%E5%8F%91%E5%B1%95%E4%B8%8D%E8%83%BD%E5%BF%BD%E7%95%A5%E7%9A%84%E9%A3%8E%E9%99%A9"><span class="nav-text">七、AI发展不能忽略的风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%9C%AA%E6%9D%A5%E4%B8%89%E7%A7%8D%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="nav-text">八、未来三种值得关注的发展方向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-AI%E4%BB%8E%E7%90%86%E8%A7%A3%E4%BA%92%E8%81%94%E7%BD%91%E8%B5%B0%E5%90%91%E7%90%86%E8%A7%A3%E7%8E%B0%E5%AE%9E%E4%B8%96%E7%95%8C"><span class="nav-text">1. AI从理解互联网走向理解现实世界</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%86%85%E5%AE%B9%E4%BB%8E%E7%BB%9F%E4%B8%80%E6%88%90%E7%89%87%E8%B5%B0%E5%90%91%E5%AE%9E%E6%97%B6%E4%B8%AA%E6%80%A7%E5%8C%96"><span class="nav-text">2. 内容从统一成片走向实时个性化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C%E4%BB%8E%E2%80%9C%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E2%80%9D%E8%B5%B0%E5%90%91%E2%80%9C%E5%85%B1%E5%90%8C%E5%88%9B%E4%BD%9C%E2%80%9D"><span class="nav-text">3. 人机协作从“使用工具”走向“共同创作”</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        11 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
