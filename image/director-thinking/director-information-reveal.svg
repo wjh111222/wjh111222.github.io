@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">导演控制信息出现顺序的三镜头示意</title>
+  <desc id="desc">用建立空间、突出线索和展示人物反应三个镜头解释叙事递进。</desc>
+  <defs>
+    <linearGradient id="darkBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="panelShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="11" flood-color="#000" flood-opacity=".3"/>
+    </filter>
+    <marker id="whiteArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0 0L12 6L0 12Z" fill="#f8fafc"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="675" fill="url(#darkBg)"/>
+  <text x="600" y="65" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" font-weight="700">导演控制的不是镜头数量，而是信息出现的顺序</text>
+  <text x="600" y="102" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="19">示例：人物回家后发现一把陌生钥匙</text>
+
+  <g filter="url(#panelShadow)" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <rect x="55" y="150" width="330" height="350" rx="20" fill="#f8fafc"/>
+    <rect x="75" y="170" width="290" height="190" rx="10" fill="#cbd5e1"/>
+    <rect x="95" y="190" width="250" height="150" fill="#475569"/>
+    <rect x="220" y="235" width="105" height="105" fill="#1e293b"/>
+    <rect x="100" y="315" width="240" height="25" fill="#94a3b8"/>
+    <circle cx="165" cy="270" r="27" fill="#f59e0b"/>
+    <rect x="143" y="295" width="44" height="45" rx="16" fill="#f59e0b"/>
+    <path d="M315 205v80" stroke="#fde68a" stroke-width="12" opacity=".8"/>
+    <text x="220" y="405" text-anchor="middle" fill="#0f172a" font-size="25" font-weight="700">① 建立空间</text>
+    <text x="220" y="444" text-anchor="middle" fill="#475569" font-size="18">人物停下，客厅灯异常亮着</text>
+    <text x="220" y="474" text-anchor="middle" fill="#64748b" font-size="16">观众获得问题：发生了什么？</text>
+
+    <rect x="435" y="150" width="330" height="350" rx="20" fill="#f8fafc"/>
+    <rect x="455" y="170" width="290" height="190" rx="10" fill="#d6d3d1"/>
+    <path d="M455 290h290v70H455z" fill="#78716c"/>
+    <ellipse cx="600" cy="273" rx="48" ry="16" fill="#f1f5f9"/>
+    <circle cx="588" cy="272" r="12" fill="none" stroke="#f59e0b" stroke-width="7"/>
+    <rect x="598" y="267" width="55" height="11" rx="5" fill="#f59e0b"/>
+    <path d="M635 267v-15M648 267v-15" stroke="#f59e0b" stroke-width="7"/>
+    <circle cx="600" cy="273" r="67" fill="none" stroke="#ef4444" stroke-width="4" stroke-dasharray="8 8"/>
+    <text x="600" y="405" text-anchor="middle" fill="#0f172a" font-size="25" font-weight="700">② 突出线索</text>
+    <text x="600" y="444" text-anchor="middle" fill="#475569" font-size="18">特写展示桌上的陌生钥匙</text>
+    <text x="600" y="474" text-anchor="middle" fill="#64748b" font-size="16">观众得到答案，同时产生新问题</text>
+
+    <rect x="815" y="150" width="330" height="350" rx="20" fill="#f8fafc"/>
+    <rect x="835" y="170" width="290" height="190" rx="10" fill="#334155"/>
+    <circle cx="980" cy="255" r="64" fill="#f2c6a0"/>
+    <path d="M915 235q65-100 130 0v-48H915z" fill="#1e293b"/>
+    <path d="M947 258h19M994 258h19" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+    <path d="M965 294q15 8 30 0" stroke="#7c2d12" stroke-width="5" fill="none"/>
+    <path d="M1035 185l70-5M1040 205l60 12M925 190l-65-15" stroke="#fbbf24" stroke-width="5" stroke-linecap="round"/>
+    <text x="980" y="405" text-anchor="middle" fill="#0f172a" font-size="25" font-weight="700">③ 展示反应</text>
+    <text x="980" y="444" text-anchor="middle" fill="#475569" font-size="18">近景保留迟疑与屏住呼吸</text>
+    <text x="980" y="474" text-anchor="middle" fill="#64748b" font-size="16">线索因为人物反应获得意义</text>
+  </g>
+
+  <path d="M390 323h30" stroke="#f8fafc" stroke-width="5" marker-end="url(#whiteArrow)"/>
+  <path d="M770 323h30" stroke="#f8fafc" stroke-width="5" marker-end="url(#whiteArrow)"/>
+  <rect x="175" y="555" width="850" height="64" rx="32" fill="#334155" stroke="#64748b"/>
+  <text x="600" y="596" text-anchor="middle" fill="#e2e8f0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="22" font-weight="700">问题 → 线索 → 情绪：每次切换都让观众进入下一层理解</text>
+</svg>

@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/07/22/导演思维的四层设计法/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🎬 导演思维的四层设计法：从内容目标到观众感受">
+<meta property="og:url" content="http://example.com/2026/07/22/%E5%AF%BC%E6%BC%94%E6%80%9D%E7%BB%B4%E7%9A%84%E5%9B%9B%E5%B1%82%E8%AE%BE%E8%AE%A1%E6%B3%95/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-07-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-22T06:42:05.611Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="场面调度">
+<meta property="article:tag" content="导演思维">
+<meta property="article:tag" content="拍摄">
+<meta property="article:tag" content="视听语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🎬 导演思维的四层设计法：从内容目标到观众感受 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">🎬 导演思维的四层设计法：从内容目标到观众感受</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-07-22 10:00</span>
+        <span class="mobile">2026-07-22 10:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-07-22 14:42:05</span>
+            <span class="mobile">2026-07-22 14:42:05</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8B%8D%E6%91%84/">拍摄</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%8B%8D%E6%91%84/">拍摄</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">视听语言</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%AF%BC%E6%BC%94%E6%80%9D%E7%BB%B4/">导演思维</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%9C%BA%E9%9D%A2%E8%B0%83%E5%BA%A6/">场面调度</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：导演思维不是给普通画面添加几个运镜，也不是把现场拍得越多越好，而是从内容目标出发，依次设计空间关系、镜头选择和观众感受。真正有效的导演判断，会让人物走位、构图、声音、剪辑与情绪指向同一个表达目标。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/director-thinking/director-thinking-framework.svg"
+                      alt="导演思维的四层设计框架"
+                ></p>
+<p><em>图 1：导演把抽象内容逐层转化为空间、镜头和观众感受。</em></p>
+<h2 id="一、导演思维与“把事情拍下来”有什么区别？"><a href="#一、导演思维与“把事情拍下来”有什么区别？" class="headerlink" title="一、导演思维与“把事情拍下来”有什么区别？"></a>一、导演思维与“把事情拍下来”有什么区别？</h2><p>普通记录关注的是事件是否完整：人物有没有进入房间、有没有坐下、有没有说出台词。导演思维关注的则是观众如何理解这件事：先看到谁、何时发现线索、人物关系如何变化、最终留下什么情绪。</p>
+<p>例如，文案只有一句：“小林回家后，发现桌上放着一把陌生钥匙。”</p>
+<p>如果只是记录，可以用一个全景拍完人物开门、进屋、走向桌子和拿起钥匙。故事虽然讲清楚了，但观众没有参与发现过程。</p>
+<p>如果用导演思维设计，就会先提出几个问题：</p>
+<ul>
+<li>小林回家前是否已经感到不安？</li>
+<li>客厅灯亮着，是正常状态还是异常信号？</li>
+<li>观众应该先看到钥匙，还是先看到小林的反应？</li>
+<li>这把钥匙代表危险、背叛，还是一个意外惊喜？</li>
+<li>此刻应该用安静的长镜头，还是快速切换制造紧张？</li>
+</ul>
+<p>这些问题没有唯一答案，但答案必须统一。假如故事想表现危险，画面、声音和节奏都应该逐渐收紧；如果想表现惊喜，镜头就不能用过度压迫的光线和音效误导观众。</p>
+<p>导演工作的本质，是在许多可行方案中选择最符合内容的一种，并让各部门围绕这个选择协同执行。</p>
+<hr>
+<h2 id="二、第一层：先确定内容目标"><a href="#二、第一层：先确定内容目标" class="headerlink" title="二、第一层：先确定内容目标"></a>二、第一层：先确定内容目标</h2><p>在考虑景别、运镜和设备之前，先用一句话写清楚这场戏的目标。它通常包含三部分：</p>
+<ol>
+<li><strong>人物目标</strong>：人物想得到什么？</li>
+<li><strong>阻力来源</strong>：什么阻止他得到？</li>
+<li><strong>状态变化</strong>：这场戏结束后，人物与开始时有什么不同？</li>
+</ol>
+<p>例如，两个人在咖啡馆见面。只写“甲和乙聊天”没有明确的戏剧方向；如果改成“甲想隐瞒离职，乙却已经知道真相”，导演就能据此设计视线、距离和信息出现顺序。</p>
+<p>甲的目标是维持表面正常，乙的目标是确认真相。阻力来自双方掌握的信息不同。场景开始时，两人仍像普通朋友；场景结束时，信任已经产生裂缝。这时，桌子、杯子、沉默和视线回避都可以成为叙事工具。</p>
+<p>一个实用方法，是给每场戏写一个“情绪动词”，例如：靠近、试探、隐藏、逼迫、逃离、和解。名词只能说明场景是什么，动词才能告诉导演场景将如何变化。</p>
+<hr>
+<h2 id="三、第二层：用空间关系表达人物关系"><a href="#三、第二层：用空间关系表达人物关系" class="headerlink" title="三、第二层：用空间关系表达人物关系"></a>三、第二层：用空间关系表达人物关系</h2><p>场面调度不是让演员随便走动，而是利用人物位置和移动过程表达关系。人物之间的距离、高低、遮挡和方向，都在向观众传递信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/director-thinking/director-blocking-diagram.svg"
+                      alt="双人对话的导演调度示意"
+                ></p>
+<p><em>图 2：在关系轴线不变的基础上，人物靠近和机位变化可以放大压力或亲密感。</em></p>
+<h3 id="1-距离代表心理关系"><a href="#1-距离代表心理关系" class="headerlink" title="1. 距离代表心理关系"></a>1. 距离代表心理关系</h3><p>两个人并肩坐着，通常比隔桌对视更亲密；一个人不断靠近，另一个人后退，会形成压迫与防御；两个人原本分处画面两端，最终站到一起，可以表现关系缓和。</p>
+<p>导演不必依赖台词说“我不信任你”。让人物始终隔着门框、桌子或玻璃，就能把阻隔变成可见的视觉关系。</p>
+<h3 id="2-高低代表力量变化"><a href="#2-高低代表力量变化" class="headerlink" title="2. 高低代表力量变化"></a>2. 高低代表力量变化</h3><p>站立者面对坐着的人，天然会获得更强的视觉优势。人物从坐姿突然站起，可以成为关系转折；强势人物最终坐下，反而可能表示他开始认真倾听。</p>
+<p>高低关系不能机械理解为“高处一定强大”。一个人物站在空旷高处，也可能显得孤立。意义取决于构图、表演和故事语境。</p>
+<h3 id="3-走位必须由行动触发"><a href="#3-走位必须由行动触发" class="headerlink" title="3. 走位必须由行动触发"></a>3. 走位必须由行动触发</h3><p>人物不能为了让画面好看而无缘无故走动。拿水、关门、躲避视线、靠近某人、离开争执，都可以成为走位动机。动作有了现实理由，调度才不会显得刻意。</p>
+<h3 id="4-环境也在参与表演"><a href="#4-环境也在参与表演" class="headerlink" title="4. 环境也在参与表演"></a>4. 环境也在参与表演</h3><p>窗户、门、镜子、走廊、桌面和前景遮挡，不只是背景装饰。门可以表示边界，镜子可以同时展示人物正面与背面，狭窄走廊可以限制行动，空旷客厅可以强调疏离。</p>
+<p>导演在勘景时，不只看场地是否漂亮，还要看空间能否帮助人物完成动作和关系变化。</p>
+<hr>
+<h2 id="四、第三层：决定观众站在哪里看"><a href="#四、第三层：决定观众站在哪里看" class="headerlink" title="四、第三层：决定观众站在哪里看"></a>四、第三层：决定观众站在哪里看</h2><p>机位是导演为观众安排的位置。镜头靠近谁，观众就更容易认同谁；镜头隐藏什么，观众就会对什么产生好奇；镜头保持距离，观众会更理性地观察人物与环境。</p>
+<h3 id="1-全景负责建立规则"><a href="#1-全景负责建立规则" class="headerlink" title="1. 全景负责建立规则"></a>1. 全景负责建立规则</h3><p>全景适合交代人物位置、环境结构和动作方向。双人对话开始前，用全景建立两人的座位与关系轴线，后续近景切换才不会造成空间混乱。</p>
+<p>但全景并不是每场戏都必须首先出现。如果导演想让观众和人物一样迷失，也可以先用局部细节，稍后才揭示完整空间。</p>
+<h3 id="2-中景负责展示行动"><a href="#2-中景负责展示行动" class="headerlink" title="2. 中景负责展示行动"></a>2. 中景负责展示行动</h3><p>中景能够同时容纳表情、手势和部分环境，适合对话、工作和日常动作。它既不会像全景那样疏远，也不会像特写那样过度强调情绪，是叙事最稳定的景别。</p>
+<h3 id="3-特写必须留给真正重要的瞬间"><a href="#3-特写必须留给真正重要的瞬间" class="headerlink" title="3. 特写必须留给真正重要的瞬间"></a>3. 特写必须留给真正重要的瞬间</h3><p>如果从开头到结尾都在使用特写，观众会失去空间参照，情绪也没有进一步靠近的余地。特写最有力量的时候，是前面已经建立了距离，而关键线索或情绪出现时才突然靠近。</p>
+<h3 id="4-运镜应该改变信息"><a href="#4-运镜应该改变信息" class="headerlink" title="4. 运镜应该改变信息"></a>4. 运镜应该改变信息</h3><p>推镜不只是让主体变大，它还意味着观众心理上接近人物；拉镜不只是扩大画面，它可以揭示人物被环境包围；横移可以利用视差展示空间层次；跟拍则让观众与人物共同经历动作。</p>
+<p>判断是否需要运镜，可以问：“镜头移动前后，观众新知道了什么？”如果答案只是“画面看起来更高级”，这次运动很可能没有必要。</p>
+<hr>
+<h2 id="五、第四层：设计信息与情绪的递进"><a href="#五、第四层：设计信息与情绪的递进" class="headerlink" title="五、第四层：设计信息与情绪的递进"></a>五、第四层：设计信息与情绪的递进</h2><p>导演不是一次把所有信息交给观众，而是控制信息出现的顺序。好的叙事往往遵循“提出问题—提供线索—产生新问题—给出反应”的过程。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/director-thinking/director-information-reveal.svg"
+                      alt="导演控制信息出现顺序"
+                ></p>
+<p><em>图 3：建立空间、突出线索和展示人物反应，分别承担不同的叙事任务。</em></p>
+<p>在“发现陌生钥匙”的场景中，可以这样设计：</p>
+<ol>
+<li><strong>建立空间</strong>：人物进门后突然停下，镜头先展示异常亮着的客厅灯。</li>
+<li><strong>提出问题</strong>：人物看向画外，但暂时不展示他看到的东西。</li>
+<li><strong>突出线索</strong>：切到桌面特写，让陌生钥匙进入画面。</li>
+<li><strong>赋予意义</strong>：回到人物近景，保留迟疑、呼吸和眼神变化。</li>
+<li><strong>增加压力</strong>：卧室传来脚步声，画面却暂时不切向声源。</li>
+</ol>
+<p>钥匙本身只是一个物体。只有人物对它产生反应，观众才知道它“不应该出现在这里”；只有脚步声继续增加新信息，钥匙才从普通疑问升级为潜在危险。</p>
+<p>因此，导演真正控制的是观众的认知过程：此刻知道多少、比人物多知道还是少知道，以及什么时候获得答案。</p>
+<hr>
+<h2 id="六、声音是导演看不见的调度"><a href="#六、声音是导演看不见的调度" class="headerlink" title="六、声音是导演看不见的调度"></a>六、声音是导演看不见的调度</h2><p>导演思维不能只停留在画面。声音可以让观众注意画外空间，也能在画面不动时推动情绪。</p>
+<p>常见的声音设计包括：</p>
+<ul>
+<li><strong>环境音建立空间</strong>：空调、钟表、远处车辆和邻居声音，让场景拥有生活感。</li>
+<li><strong>关键音效引导视线</strong>：钥匙落桌、门锁转动、手机震动，可以成为切镜动机。</li>
+<li><strong>声音先行连接场景</strong>：下一个场景的声音提前出现，让转场更加自然。</li>
+<li><strong>突然安静制造重点</strong>：在情绪转折前撤掉音乐或环境声，观众会更加关注人物呼吸与台词。</li>
+<li><strong>声画对位产生反差</strong>：平静音乐搭配冲突画面，可能形成讽刺、荒诞或压抑感。</li>
+</ul>
+<p>导演在拍摄前就应该思考需要哪些现场声音。后期可以补充音效，但演员脚步、衣物摩擦和空间混响往往会直接影响真实感与表演节奏。</p>
+<hr>
+<h2 id="七、实战：把一句文案拆成一组导演方案"><a href="#七、实战：把一句文案拆成一组导演方案" class="headerlink" title="七、实战：把一句文案拆成一组导演方案"></a>七、实战：把一句文案拆成一组导演方案</h2><p><strong>文案</strong>：“装修结束后，屋主第一次走进新家，发现设计师保留了旧房里那扇有身高刻度的门框。”</p>
+<h3 id="内容目标"><a href="#内容目标" class="headerlink" title="内容目标"></a>内容目标</h3><p>这场戏不是单纯展示装修效果，而是表现“新空间保留了旧记忆”。人物目标是观看新家，真正的情绪转折来自意外发现门框。</p>
+<h3 id="空间调度"><a href="#空间调度" class="headerlink" title="空间调度"></a>空间调度</h3><p>让屋主从明亮客厅进入相对安静的走廊。设计师不急着解释，只停在稍远的位置观察。屋主看到门框后放慢脚步，伸手触摸刻度，空间距离从“参观者与讲解者”变成“人物独自面对记忆”。</p>
+<h3 id="镜头设计"><a href="#镜头设计" class="headerlink" title="镜头设计"></a>镜头设计</h3><ol>
+<li>广角跟拍屋主进入新家，交代完整空间。</li>
+<li>中景拍摄屋主经过走廊后突然停下。</li>
+<li>顺着视线切到门框，但先不立刻使用大特写。</li>
+<li>手指触碰刻度时切到细节，保留材质和动作声音。</li>
+<li>切屋主近景，让情绪从眼神和呼吸中发生。</li>
+<li>最后拉开画面，把设计师和屋主重新放回同一空间。</li>
+</ol>
+<h3 id="声音设计"><a href="#声音设计" class="headerlink" title="声音设计"></a>声音设计</h3><p>前半段保留轻松交谈与脚步声；人物停下时让对话自然结束；触摸门框时突出指尖摩擦木材的声音；最后才让音乐缓慢进入。音乐不是提前告诉观众“这里要感动”，而是在真实反应发生后承接情绪。</p>
+<h3 id="剪辑节奏"><a href="#剪辑节奏" class="headerlink" title="剪辑节奏"></a>剪辑节奏</h3><p>空间展示可以相对流畅，发现门框后明显放慢。导演通过节奏变化告诉观众：房子的面积和装修只是信息，人物与记忆的重新相遇才是这一段真正的重点。</p>
+<hr>
+<h2 id="八、拍摄前的导演检查表"><a href="#八、拍摄前的导演检查表" class="headerlink" title="八、拍摄前的导演检查表"></a>八、拍摄前的导演检查表</h2><h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><ul>
+<li>这场戏的核心动作和情绪动词是什么？</li>
+<li>人物开始与结束时发生了什么变化？</li>
+<li>哪条信息必须由画面表达，而不是台词解释？</li>
+</ul>
+<h3 id="空间"><a href="#空间" class="headerlink" title="空间"></a>空间</h3><ul>
+<li>人物的初始位置和最终位置在哪里？</li>
+<li>走位是否有现实动机？</li>
+<li>门窗、桌椅、前景和光线能否参与叙事？</li>
+</ul>
+<h3 id="镜头"><a href="#镜头" class="headerlink" title="镜头"></a>镜头</h3><ul>
+<li>第一个镜头建立什么规则？</li>
+<li>哪一刻应该靠近人物？</li>
+<li>每次运镜或切换带来什么新信息？</li>
+<li>起幅和落幅是否为剪辑预留了停顿？</li>
+</ul>
+<h3 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h3><ul>
+<li>观众需要听见哪些画外信息？</li>
+<li>哪个声音可以触发人物动作或镜头切换？</li>
+<li>音乐应该进入、停止还是保持克制？</li>
+</ul>
+<h3 id="观众"><a href="#观众" class="headerlink" title="观众"></a>观众</h3><ul>
+<li>观众此刻最想看什么？</li>
+<li>观众比人物多知道还是少知道？</li>
+<li>这一段最终应该留下怎样的感受？</li>
+</ul>
+<hr>
+<h2 id="九、常见误区"><a href="#九、常见误区" class="headerlink" title="九、常见误区"></a>九、常见误区</h2><ol>
+<li><strong>先想设备，后想内容</strong>：稳定器、无人机和昂贵镜头只能扩大执行能力，不能替代叙事目标。</li>
+<li><strong>每场戏都追求复杂运镜</strong>：运动越多不代表导演感越强。固定镜头有时更能保留表演压力。</li>
+<li><strong>演员走位没有动机</strong>：为了构图让人物反复移动，会让表演失去真实感。</li>
+<li><strong>过度依赖台词解释</strong>：人物说出所有想法，画面就只剩记录功能。尝试让位置、动作和道具承担信息。</li>
+<li><strong>镜头很多但没有递进</strong>：全景、中景和特写只是重复同一信息，不会自动形成节奏。</li>
+<li><strong>音乐从头铺到尾</strong>：持续音乐会削弱声音层次。安静、停顿和现场声同样是导演工具。</li>
+<li><strong>只关注单个漂亮镜头</strong>：一个镜头再好看，如果破坏前后方向、情绪和信息顺序，也应该被调整或删除。</li>
+</ol>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>导演思维可以归纳为一条清晰路径：先明确内容目标，再设计人物与环境的空间关系，然后选择观众观看的位置和时间，最终控制信息与情绪如何抵达观众。</p>
+<p>设备解决“能不能拍到”，导演解决“为什么这样拍”。当每一个景别、走位、运镜、声音和剪辑点都服务于同一个表达目标时，画面才不会只是漂亮素材的集合，而会成为有方向、有层次、有情绪的叙事。</p>
+<p>下次面对一段文案，不要急着问“这里用什么运镜”，先问四个问题：这场戏要表达什么？人物关系如何变化？观众应该从哪里看？最后希望观众感受到什么？这四个答案，才是一组镜头真正的起点。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 🎬 导演思维的四层设计法：从内容目标到观众感受</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-07-22 10:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-07-22 14:42:05
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/07/22/导演思维的四层设计法/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E6%8B%8D%E6%91%84/">#拍摄</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">#视听语言</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%AF%BC%E6%BC%94%E6%80%9D%E7%BB%B4/">#导演思维</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%9C%BA%E9%9D%A2%E8%B0%83%E5%BA%A6/">#场面调度</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/07/21/AI%E5%8F%91%E5%B1%95%E7%9A%84%E4%B8%8B%E4%B8%80%E9%98%B6%E6%AE%B5/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">🤖 AI发展的下一阶段：从生成内容到理解世界</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">🎬 导演思维的四层设计法：从内容目标到观众感受</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AF%BC%E6%BC%94%E6%80%9D%E7%BB%B4%E4%B8%8E%E2%80%9C%E6%8A%8A%E4%BA%8B%E6%83%85%E6%8B%8D%E4%B8%8B%E6%9D%A5%E2%80%9D%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">一、导演思维与“把事情拍下来”有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%85%88%E7%A1%AE%E5%AE%9A%E5%86%85%E5%AE%B9%E7%9B%AE%E6%A0%87"><span class="nav-text">二、第一层：先确定内容目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E7%94%A8%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB%E8%A1%A8%E8%BE%BE%E4%BA%BA%E7%89%A9%E5%85%B3%E7%B3%BB"><span class="nav-text">三、第二层：用空间关系表达人物关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B7%9D%E7%A6%BB%E4%BB%A3%E8%A1%A8%E5%BF%83%E7%90%86%E5%85%B3%E7%B3%BB"><span class="nav-text">1. 距离代表心理关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%AB%98%E4%BD%8E%E4%BB%A3%E8%A1%A8%E5%8A%9B%E9%87%8F%E5%8F%98%E5%8C%96"><span class="nav-text">2. 高低代表力量变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%B5%B0%E4%BD%8D%E5%BF%85%E9%A1%BB%E7%94%B1%E8%A1%8C%E5%8A%A8%E8%A7%A6%E5%8F%91"><span class="nav-text">3. 走位必须由行动触发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%8E%AF%E5%A2%83%E4%B9%9F%E5%9C%A8%E5%8F%82%E4%B8%8E%E8%A1%A8%E6%BC%94"><span class="nav-text">4. 环境也在参与表演</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%86%B3%E5%AE%9A%E8%A7%82%E4%BC%97%E7%AB%99%E5%9C%A8%E5%93%AA%E9%87%8C%E7%9C%8B"><span class="nav-text">四、第三层：决定观众站在哪里看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%85%A8%E6%99%AF%E8%B4%9F%E8%B4%A3%E5%BB%BA%E7%AB%8B%E8%A7%84%E5%88%99"><span class="nav-text">1. 全景负责建立规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%AD%E6%99%AF%E8%B4%9F%E8%B4%A3%E5%B1%95%E7%A4%BA%E8%A1%8C%E5%8A%A8"><span class="nav-text">2. 中景负责展示行动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%89%B9%E5%86%99%E5%BF%85%E9%A1%BB%E7%95%99%E7%BB%99%E7%9C%9F%E6%AD%A3%E9%87%8D%E8%A6%81%E7%9A%84%E7%9E%AC%E9%97%B4"><span class="nav-text">3. 特写必须留给真正重要的瞬间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%BF%90%E9%95%9C%E5%BA%94%E8%AF%A5%E6%94%B9%E5%8F%98%E4%BF%A1%E6%81%AF"><span class="nav-text">4. 运镜应该改变信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E8%AE%BE%E8%AE%A1%E4%BF%A1%E6%81%AF%E4%B8%8E%E6%83%85%E7%BB%AA%E7%9A%84%E9%80%92%E8%BF%9B"><span class="nav-text">五、第四层：设计信息与情绪的递进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%A3%B0%E9%9F%B3%E6%98%AF%E5%AF%BC%E6%BC%94%E7%9C%8B%E4%B8%8D%E8%A7%81%E7%9A%84%E8%B0%83%E5%BA%A6"><span class="nav-text">六、声音是导演看不见的调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%AE%9E%E6%88%98%EF%BC%9A%E6%8A%8A%E4%B8%80%E5%8F%A5%E6%96%87%E6%A1%88%E6%8B%86%E6%88%90%E4%B8%80%E7%BB%84%E5%AF%BC%E6%BC%94%E6%96%B9%E6%A1%88"><span class="nav-text">七、实战：把一句文案拆成一组导演方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E7%9B%AE%E6%A0%87"><span class="nav-text">内容目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E8%B0%83%E5%BA%A6"><span class="nav-text">空间调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4%E8%AE%BE%E8%AE%A1"><span class="nav-text">镜头设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E9%9F%B3%E8%AE%BE%E8%AE%A1"><span class="nav-text">声音设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AA%E8%BE%91%E8%8A%82%E5%A5%8F"><span class="nav-text">剪辑节奏</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%8B%8D%E6%91%84%E5%89%8D%E7%9A%84%E5%AF%BC%E6%BC%94%E6%A3%80%E6%9F%A5%E8%A1%A8"><span class="nav-text">八、拍摄前的导演检查表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-text">内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4"><span class="nav-text">空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4"><span class="nav-text">镜头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E9%9F%B3"><span class="nav-text">声音</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%82%E4%BC%97"><span class="nav-text">观众</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="nav-text">九、常见误区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        12 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
