@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">剪辑节奏的张弛曲线</title>
+  <desc id="desc">展示铺垫、加速、停顿、爆发和回落五个阶段，以及镜头和声音如何配合。</desc>
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="curve" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset=".55" stop-color="#fbbf24"/>
+      <stop offset=".8" stop-color="#f43f5e"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg3)"/>
+  <text x="600" y="70" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" font-weight="700">真正的节奏不是一直快，而是张弛交替</text>
+  <text x="600" y="110" text-anchor="middle" fill="#c4b5fd" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="19">铺垫让加速有意义，停顿让爆发更有力量</text>
+
+  <g stroke="#475569" stroke-width="1.5" opacity=".7">
+    <line x1="105" y1="170" x2="105" y2="515"/>
+    <line x1="105" y1="515" x2="1095" y2="515"/>
+    <line x1="105" y1="430" x2="1095" y2="430" stroke-dasharray="6 8"/>
+    <line x1="105" y1="345" x2="1095" y2="345" stroke-dasharray="6 8"/>
+    <line x1="105" y1="260" x2="1095" y2="260" stroke-dasharray="6 8"/>
+  </g>
+  <g fill="#94a3b8" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="16">
+    <text x="75" y="520" text-anchor="end">低</text>
+    <text x="75" y="350" text-anchor="end">情绪强度</text>
+    <text x="75" y="180" text-anchor="end">高</text>
+  </g>
+
+  <path d="M105 455 C210 440 250 415 310 395 C390 370 435 310 495 280 C540 260 565 385 625 390 C690 395 725 225 805 185 C865 155 900 245 950 305 C1000 365 1040 405 1095 430" fill="none" stroke="url(#curve)" stroke-width="12" stroke-linecap="round" filter="url(#glow)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif" text-anchor="middle">
+    <circle cx="180" cy="440" r="12" fill="#22d3ee"/>
+    <text x="180" y="565" fill="#cffafe" font-size="23" font-weight="700">铺垫</text>
+    <text x="180" y="593" fill="#67e8f9" font-size="16">较长镜头 · 完整环境声</text>
+    <circle cx="405" cy="350" r="12" fill="#60a5fa"/>
+    <text x="405" y="565" fill="#dbeafe" font-size="23" font-weight="700">加速</text>
+    <text x="405" y="593" fill="#93c5fd" font-size="16">缩短镜头 · 动作密度上升</text>
+    <circle cx="600" cy="388" r="12" fill="#fbbf24"/>
+    <text x="600" y="565" fill="#fef3c7" font-size="23" font-weight="700">停顿</text>
+    <text x="600" y="593" fill="#fde68a" font-size="16">少切或不切 · 声音收窄</text>
+    <circle cx="815" cy="180" r="12" fill="#f43f5e"/>
+    <text x="815" y="565" fill="#ffe4e6" font-size="23" font-weight="700">爆发</text>
+    <text x="815" y="593" fill="#fda4af" font-size="16">动作点切换 · 强音效进入</text>
+    <circle cx="1040" cy="395" r="12" fill="#a78bfa"/>
+    <text x="1040" y="565" fill="#ede9fe" font-size="23" font-weight="700">回落</text>
+    <text x="1040" y="593" fill="#c4b5fd" font-size="16">拉长镜头 · 留出余韵</text>
+  </g>
+  <rect x="335" y="625" width="530" height="34" rx="17" fill="#ffffff" opacity=".1"/>
+  <text x="600" y="649" text-anchor="middle" fill="#e2e8f0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="17">让观众有时间期待、紧张、释放，再重新呼吸</text>
+</svg>

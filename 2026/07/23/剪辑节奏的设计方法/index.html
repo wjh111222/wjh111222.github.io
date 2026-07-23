@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/07/23/剪辑节奏的设计方法/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="✂️ 剪辑节奏的设计方法：让镜头有快慢、有停顿、有呼吸">
+<meta property="og:url" content="http://example.com/2026/07/23/%E5%89%AA%E8%BE%91%E8%8A%82%E5%A5%8F%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-07-23T02:35:00.000Z">
+<meta property="article:modified_time" content="2026-07-23T02:34:30.031Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="剪辑">
+<meta property="article:tag" content="剪辑节奏">
+<meta property="article:tag" content="短视频">
+<meta property="article:tag" content="视听语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            ✂️ 剪辑节奏的设计方法：让镜头有快慢、有停顿、有呼吸 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">✂️ 剪辑节奏的设计方法：让镜头有快慢、有停顿、有呼吸</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-07-23 10:35</span>
+        <span class="mobile">2026-07-23 10:35</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-07-23 10:34:30</span>
+            <span class="mobile">2026-07-23 10:34:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8B%8D%E6%91%84/">拍摄</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%AA%E8%BE%91/">剪辑</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">视听语言</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%89%AA%E8%BE%91%E8%8A%82%E5%A5%8F/">剪辑节奏</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%9F%AD%E8%A7%86%E9%A2%91/">短视频</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：剪辑节奏不是单纯把镜头切短，也不是让每一个切点都踩在音乐鼓点上。真正的节奏来自信息、动作、声音和情绪的共同变化。快节奏提高刺激与效率，慢节奏保留观察与压力，停顿则让下一次变化更有力量。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/editing-rhythm/editing-rhythm-timeline.svg"
+                      alt="剪辑节奏与镜头时长示意"
+                ></p>
+<p><em>图 1：同样是 12 秒，镜头数量和时长不同，观看感受也会完全不同。</em></p>
+<h2 id="一、为什么“切得快”不等于节奏好？"><a href="#一、为什么“切得快”不等于节奏好？" class="headerlink" title="一、为什么“切得快”不等于节奏好？"></a>一、为什么“切得快”不等于节奏好？</h2><p>很多短视频教程会把节奏理解为“平均两秒切一次”或“所有动作都踩点”。这种方法在少数音乐卡点视频里有效，但放到剧情、口播、探店或人物纪录中，很容易让画面变得机械。</p>
+<p>观众感受到的节奏，至少由四个因素组成：</p>
+<ol>
+<li><strong>镜头外部节奏</strong>：每个镜头保留多长时间，何时切到下一个镜头。</li>
+<li><strong>镜头内部节奏</strong>：人物动作、摄像机运动、光线与环境变化的速度。</li>
+<li><strong>声音节奏</strong>：台词、音乐、音效、停顿和环境声如何交替。</li>
+<li><strong>信息节奏</strong>：观众多久获得一次新信息，新信息的重要程度如何变化。</li>
+</ol>
+<p>一个长镜头里，如果人物快速移动、不断完成动作、环境持续变化，节奏仍然可以很快。相反，即使一秒切换三次，如果三个镜头都在重复同一个意思，观众依然会觉得拖沓。</p>
+<p>因此，判断是否需要切镜头，不能只看时间长度，而要问：“这个画面还有没有新的动作、信息或情绪正在发生？”</p>
+<hr>
+<h2 id="二、镜头时长决定观众有多少时间感受"><a href="#二、镜头时长决定观众有多少时间感受" class="headerlink" title="二、镜头时长决定观众有多少时间感受"></a>二、镜头时长决定观众有多少时间感受</h2><p>镜头时长不是固定公式，而是观众完成“看见—理解—感受”所需要的时间。</p>
+<h3 id="1-短镜头：制造速度与冲击"><a href="#1-短镜头：制造速度与冲击" class="headerlink" title="1. 短镜头：制造速度与冲击"></a>1. 短镜头：制造速度与冲击</h3><p>短镜头适合动作爆发、快速展示步骤、压缩时间和制造紧张。例如装修拆除、运动比赛、产品组装和追逐场景，都可以用连续短镜头放大动作力量。</p>
+<p>但短镜头必须提供新变化。连续切换“锤子举起—墙面破裂—碎屑落下—工人反应”，每个画面承担不同信息；如果只是换四个角度重复拍锤子落下，节奏虽然快，内容却没有前进。</p>
+<h3 id="2-中等镜头：保证叙事清楚"><a href="#2-中等镜头：保证叙事清楚" class="headerlink" title="2. 中等镜头：保证叙事清楚"></a>2. 中等镜头：保证叙事清楚</h3><p>中等长度的镜头适合人物对话、工作流程和信息讲解。它能让观众看清动作，又不会保留过多无效过程，是口播、探店和教程中最常用的节奏基础。</p>
+<h3 id="3-长镜头：保留表演与压力"><a href="#3-长镜头：保留表演与压力" class="headerlink" title="3. 长镜头：保留表演与压力"></a>3. 长镜头：保留表演与压力</h3><p>长镜头适合人物情绪、空间展示、沉默和等待。人物听见坏消息后没有立即回答，镜头多停留一两秒，观众才有机会观察呼吸、眼神和身体反应。</p>
+<p>长镜头的价值不只是“慢”，而是拒绝替观众跳过这一段时间。它让等待本身成为内容，也让演员真实完成情绪变化。</p>
+<hr>
+<h2 id="三、剪辑节奏来自“长短对比”"><a href="#三、剪辑节奏来自“长短对比”" class="headerlink" title="三、剪辑节奏来自“长短对比”"></a>三、剪辑节奏来自“长短对比”</h2><p>如果所有镜头都只有两秒，最初可能显得紧凑，时间一长却会形成单调的机械感。节奏需要对比：短镜头之后出现长镜头，长时间安静之后突然切换，稳定画面之后进入手持运动，观众才会感受到变化。</p>
+<p>常见的节奏组合包括：</p>
+<ul>
+<li><strong>短—短—长</strong>：连续动作后停在结果或人物反应上。</li>
+<li><strong>长—短—短</strong>：先建立平静，再突然加速制造事件。</li>
+<li><strong>快—停—爆发</strong>：加快剪辑后故意保持一个静止镜头，再用强动作释放压力。</li>
+<li><strong>慢—快—慢</strong>：适合完整段落，从铺垫进入高潮，再留下结尾余韵。</li>
+</ul>
+<p>例如人物准备打开一扇可能藏有危险的门，可以先用较长镜头跟随他靠近，再用手部、门锁和眼神的短镜头逐渐加速。当门即将打开时，突然保留一个不切换的静止画面，让动作和声音停顿片刻，最后再用开门声和快速切换完成爆发。</p>
+<p>真正制造紧张的，不只是最后那声巨响，而是前面不断加速后出现的短暂停顿。</p>
+<hr>
+<h2 id="四、动作点：在力量最明确的位置切换"><a href="#四、动作点：在力量最明确的位置切换" class="headerlink" title="四、动作点：在力量最明确的位置切换"></a>四、动作点：在力量最明确的位置切换</h2><p>动作剪辑能够利用运动掩盖镜头变化。人物起身、转头、抬手、开门、落座和放下道具，都可以成为自然切点。</p>
+<p>一个动作通常可以分为三个阶段：</p>
+<ol>
+<li><strong>准备</strong>：人物产生意图，身体开始蓄力。</li>
+<li><strong>执行</strong>：动作速度最快，方向最明确。</li>
+<li><strong>完成</strong>：动作落下，人物进入新的状态。</li>
+</ol>
+<p>在执行阶段切换，画面通常更流畅有力；在准备阶段提前切换，会让观众期待动作完成；在完成后才切，则会强调动作带来的结果。</p>
+<p>例如人物重重放下水杯：</p>
+<ul>
+<li>手臂下落过程中切到杯子特写，动作连续、冲击直接。</li>
+<li>先切桌面空位，再让杯子突然进入画面，可以制造突发感。</li>
+<li>杯子落下后继续停留，再切人物表情，可以强调沉默和关系压力。</li>
+</ul>
+<p>同一个动作的切点不同，表达重点也不同。剪辑师不是机械寻找“最顺”的位置，而是选择最符合情绪的位置。</p>
+<hr>
+<h2 id="五、声音可以提前或延后切换"><a href="#五、声音可以提前或延后切换" class="headerlink" title="五、声音可以提前或延后切换"></a>五、声音可以提前或延后切换</h2><p>如果每句台词结束后才切画面，每次场景转换都等声音完全停止，视频会像一张张幻灯片。让声音与画面适度错开，可以使剪辑更加自然流动。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/editing-rhythm/editing-jl-cut.svg"
+                      alt="J Cut 与 L Cut 声画剪辑示意"
+                ></p>
+<p><em>图 2：J Cut 让声音先进入，L Cut 让声音继续保留，两者都能跨越画面边界。</em></p>
+<h3 id="1-J-Cut：声音先行"><a href="#1-J-Cut：声音先行" class="headerlink" title="1. J Cut：声音先行"></a>1. J Cut：声音先行</h3><p>下一个场景的声音先出现，随后画面才切过去。它像一只看不见的手，提前把观众的注意力带向新空间。</p>
+<p>例如人物还坐在办公室，画面没有变化，却先听到海浪声，随后才切到海边回忆。声音让两个相距很远的时空产生心理连接。</p>
+<p>在采访视频中，也可以先听到下一位人物的回答，再切到他的画面，避免每次切换都显得生硬。</p>
+<h3 id="2-L-Cut：声音延续"><a href="#2-L-Cut：声音延续" class="headerlink" title="2. L Cut：声音延续"></a>2. L Cut：声音延续</h3><p>画面已经切到下一个场景，上一场的台词、环境声或音乐仍然继续。它能够保留前一个场景的情绪，让新画面成为这句话的补充或结果。</p>
+<p>例如人物说“这里以后不会有人回来了”，画面提前切到空房间，而声音仍然持续。观众同时听见决定、看见结果，情绪会比停在说话者脸上更完整。</p>
+<h3 id="3-声音也是切点"><a href="#3-声音也是切点" class="headerlink" title="3. 声音也是切点"></a>3. 声音也是切点</h3><p>敲门、手机震动、脚步、玻璃破裂和音乐重拍，都可以触发画面变化。声音出现时切镜头，观众会自然认为画面变化是由事件引起的。</p>
+<p>但不要滥用强音效。每一次切换都加入“嗖”“砰”等效果，会很快产生疲劳。真正重要的动作才需要声音强调，普通衔接应尽量保持克制。</p>
+<hr>
+<h2 id="六、音乐节拍只是参考，不是剪辑命令"><a href="#六、音乐节拍只是参考，不是剪辑命令" class="headerlink" title="六、音乐节拍只是参考，不是剪辑命令"></a>六、音乐节拍只是参考，不是剪辑命令</h2><p>音乐能够帮助建立速度，但画面不必每一拍都切。常见做法有三种：</p>
+<ol>
+<li><strong>踩强拍</strong>：在鼓点、重音或乐句开头切换，画面有明确冲击。</li>
+<li><strong>切在拍前</strong>：画面稍早发生，制造向前推动的急迫感。</li>
+<li><strong>切在拍后</strong>：画面略微延迟，形成放松、沉稳或拖拽感。</li>
+</ol>
+<p>如果每个镜头都严格踩拍，观众很快会预测下一次切换，节奏反而失去惊喜。可以让小动作跟随节拍，而把重要的镜头变化留在乐句、情绪或信息发生转折的位置。</p>
+<p>音乐段落也有起伏：主歌适合建立信息，预副歌可以逐渐加速，高潮使用更强的动作与切换，结尾再拉长镜头。剪辑应该理解音乐结构，而不是只寻找鼓点。</p>
+<hr>
+<h2 id="七、短视频开头的节奏设计"><a href="#七、短视频开头的节奏设计" class="headerlink" title="七、短视频开头的节奏设计"></a>七、短视频开头的节奏设计</h2><p>短视频开头需要快速建立观看理由，但并不代表第一秒必须出现大量切换。有效的开头通常在三秒内完成以下任务之一：</p>
+<ul>
+<li>展示结果，让观众想知道过程；</li>
+<li>提出明确问题，让观众等待答案；</li>
+<li>出现异常动作或视觉反差；</li>
+<li>用声音或台词建立冲突；</li>
+<li>直接给出与观众相关的利益点。</li>
+</ul>
+<p>例如装修视频可以先展示完工后的最强对比画面，再用一句“这个客厅原来只有十平方米”制造信息差，随后才进入改造过程。这里的节奏来自结果与问题快速出现，而不是毫无目的地连续切十个镜头。</p>
+<p>开头之后需要适度稳定。如果整条视频始终维持前三秒的刺激强度，观众会快速疲劳。可以在核心讲解处使用较长镜头，让信息真正被理解，再在案例或结果出现时重新加速。</p>
+<hr>
+<h2 id="八、用情绪曲线规划整段节奏"><a href="#八、用情绪曲线规划整段节奏" class="headerlink" title="八、用情绪曲线规划整段节奏"></a>八、用情绪曲线规划整段节奏</h2><p>剪辑前可以先画一条简单的情绪曲线，标出铺垫、加速、停顿、爆发和回落。这样做比逐个镜头凭感觉调整更容易保持整体方向。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/editing-rhythm/editing-tension-curve.svg"
+                      alt="剪辑节奏的张弛曲线"
+                ></p>
+<p><em>图 3：高潮需要铺垫和停顿，结束后也需要回落，让观众重新获得呼吸。</em></p>
+<h3 id="1-铺垫"><a href="#1-铺垫" class="headerlink" title="1. 铺垫"></a>1. 铺垫</h3><p>用相对完整的镜头建立人物、环境与目标。声音层次清楚，切换不必太快。</p>
+<h3 id="2-加速"><a href="#2-加速" class="headerlink" title="2. 加速"></a>2. 加速</h3><p>随着任务难度、冲突或动作密度上升，逐渐缩短镜头，减少无效停留，并加强动作与音效连接。</p>
+<h3 id="3-停顿"><a href="#3-停顿" class="headerlink" title="3. 停顿"></a>3. 停顿</h3><p>在关键结果出现前，故意减少切换、降低音乐或保留一个静止画面。停顿让观众集中注意力，也积累期待。</p>
+<h3 id="4-爆发"><a href="#4-爆发" class="headerlink" title="4. 爆发"></a>4. 爆发</h3><p>让最重要的动作、台词、结果或反转进入画面。这里可以使用强切、动作匹配、音乐重音和更明显的景别变化。</p>
+<h3 id="5-回落"><a href="#5-回落" class="headerlink" title="5. 回落"></a>5. 回落</h3><p>高潮结束后拉长镜头，让人物反应、结果画面或环境声音保留片刻。没有回落，观众只会感到突然结束；有了余韵，段落才真正完成。</p>
+<hr>
+<h2 id="九、实战拆解：30-秒装修短视频"><a href="#九、实战拆解：30-秒装修短视频" class="headerlink" title="九、实战拆解：30 秒装修短视频"></a>九、实战拆解：30 秒装修短视频</h2><p><strong>主题</strong>：把狭小昏暗的旧客厅改造成通透明亮的多功能空间。</p>
+<h3 id="0—3-秒：结果钩子"><a href="#0—3-秒：结果钩子" class="headerlink" title="0—3 秒：结果钩子"></a>0—3 秒：结果钩子</h3><p>用完工后的广角画面快速进入，再切改造前的同机位对比。配合一句：“这个客厅，我们没有拆墙，却让它看起来大了一倍。”</p>
+<p>节奏要快，但镜头数量不宜过多，确保观众能看清前后差异。</p>
+<h3 id="3—10-秒：问题建立"><a href="#3—10-秒：问题建立" class="headerlink" title="3—10 秒：问题建立"></a>3—10 秒：问题建立</h3><p>使用较稳定的中景和细节镜头，展示采光不足、家具拥挤和动线受阻。旁白解释问题，声音与画面适度错开，不必一句话对应一个镜头。</p>
+<h3 id="10—20-秒：方案加速"><a href="#10—20-秒：方案加速" class="headerlink" title="10—20 秒：方案加速"></a>10—20 秒：方案加速</h3><p>用拆除、测量、木作、灯光安装和家具进入的动作镜头压缩施工过程。根据动作力度切换，音乐节奏逐渐增强。</p>
+<h3 id="20—24-秒：结果前停顿"><a href="#20—24-秒：结果前停顿" class="headerlink" title="20—24 秒：结果前停顿"></a>20—24 秒：结果前停顿</h3><p>在最后一块遮挡物移开前稍作停顿，降低音乐，保留现场动作声。让观众等待最终空间出现。</p>
+<h3 id="24—30-秒：揭示与回落"><a href="#24—30-秒：揭示与回落" class="headerlink" title="24—30 秒：揭示与回落"></a>24—30 秒：揭示与回落</h3><p>先用宽幅移动镜头展示整体空间，再用材质和收纳细节补充信息。音乐进入完整乐句，最后停在屋主使用空间的生活画面，而不是立即黑场。</p>
+<p>这条视频的节奏并非从头快到尾，而是“快钩子—稳解释—快过程—停顿—慢展示”。不同速度承担不同任务，观众既能被吸引，也能真正看懂改造逻辑。</p>
+<hr>
+<h2 id="十、剪辑节奏检查表"><a href="#十、剪辑节奏检查表" class="headerlink" title="十、剪辑节奏检查表"></a>十、剪辑节奏检查表</h2><p>完成初剪后，可以逐项检查：</p>
+<h3 id="镜头"><a href="#镜头" class="headerlink" title="镜头"></a>镜头</h3><ul>
+<li>每个镜头是否仍有新动作或新信息？</li>
+<li>相邻镜头的长度是否过于平均？</li>
+<li>关键情绪是否获得足够停留时间？</li>
+<li>高潮之前是否有铺垫或停顿？</li>
+</ul>
+<h3 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h3><ul>
+<li>切点是在准备、执行还是完成阶段？</li>
+<li>动作方向、速度和位置是否连续？</li>
+<li>是否删掉了过多过程，导致人物像突然跳动？</li>
+</ul>
+<h3 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h3><ul>
+<li>台词是否总在画面切换前完整结束？</li>
+<li>能否使用声音先行或声音延续改善转场？</li>
+<li>音效是否真正强调重点，而不是每处都出现？</li>
+<li>安静和停顿是否被音乐完全覆盖？</li>
+</ul>
+<h3 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h3><ul>
+<li>相邻镜头是否重复同一个意思？</li>
+<li>观众每隔一段时间能否获得新的问题或答案？</li>
+<li>开头有吸引力之后，中段是否仍然清楚？</li>
+<li>结尾是否给结果和情绪留下足够时间？</li>
+</ul>
+<hr>
+<h2 id="十一、常见误区"><a href="#十一、常见误区" class="headerlink" title="十一、常见误区"></a>十一、常见误区</h2><ol>
+<li><strong>固定每两秒切一次</strong>：镜头内容不同，理解时间也不同，统一时长会显得机械。</li>
+<li><strong>所有切点都踩鼓点</strong>：观众很快能预测变化，画面也会失去叙事自主性。</li>
+<li><strong>只加速，不停顿</strong>：持续刺激会造成疲劳，高潮也失去对比。</li>
+<li><strong>忽略镜头内部动作</strong>：画面本身已经在快速运动时，再连续切换可能过于混乱。</li>
+<li><strong>音乐从头铺到尾</strong>：缺少声音层次，人物呼吸、环境和关键音效都被削弱。</li>
+<li><strong>舍不得删除重复素材</strong>：拍摄成本不等于叙事价值，重复信息会直接拖慢节奏。</li>
+<li><strong>结尾切得太急</strong>：结果刚出现就结束，观众来不及理解和感受。</li>
+</ol>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>剪辑节奏是对观众时间感的设计。镜头时长决定观众能看多久，动作点决定切换是否有力量，声音决定场景如何流动，信息密度决定观众是否愿意继续观看。</p>
+<p>好的节奏不是一直快，而是知道什么时候应该快、什么时候必须慢，以及什么时候什么都不做，只让一个眼神、一口呼吸或一段安静留在画面中。</p>
+<p>剪辑时不要只问“这里能不能再短一点”，还要问：“观众是否已经看懂？情绪是否已经发生？下一次变化是否值得等待？”当镜头的快慢、声音的进退和信息的出现顺序共同服务于内容，视频才会真正拥有呼吸。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> ✂️ 剪辑节奏的设计方法：让镜头有快慢、有停顿、有呼吸</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-07-23 10:35:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-07-23 10:34:30
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/07/23/剪辑节奏的设计方法/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%89%AA%E8%BE%91/">#剪辑</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">#视听语言</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%89%AA%E8%BE%91%E8%8A%82%E5%A5%8F/">#剪辑节奏</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E7%9F%AD%E8%A7%86%E9%A2%91/">#短视频</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/07/22/%E5%AF%BC%E6%BC%94%E6%80%9D%E7%BB%B4%E7%9A%84%E5%9B%9B%E5%B1%82%E8%AE%BE%E8%AE%A1%E6%B3%95/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">🎬 导演思维的四层设计法：从内容目标到观众感受</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">✂️ 剪辑节奏的设计方法：让镜头有快慢、有停顿、有呼吸</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9C%E5%88%87%E5%BE%97%E5%BF%AB%E2%80%9D%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%8A%82%E5%A5%8F%E5%A5%BD%EF%BC%9F"><span class="nav-text">一、为什么“切得快”不等于节奏好？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%95%9C%E5%A4%B4%E6%97%B6%E9%95%BF%E5%86%B3%E5%AE%9A%E8%A7%82%E4%BC%97%E6%9C%89%E5%A4%9A%E5%B0%91%E6%97%B6%E9%97%B4%E6%84%9F%E5%8F%97"><span class="nav-text">二、镜头时长决定观众有多少时间感受</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%9F%AD%E9%95%9C%E5%A4%B4%EF%BC%9A%E5%88%B6%E9%80%A0%E9%80%9F%E5%BA%A6%E4%B8%8E%E5%86%B2%E5%87%BB"><span class="nav-text">1. 短镜头：制造速度与冲击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%AD%E7%AD%89%E9%95%9C%E5%A4%B4%EF%BC%9A%E4%BF%9D%E8%AF%81%E5%8F%99%E4%BA%8B%E6%B8%85%E6%A5%9A"><span class="nav-text">2. 中等镜头：保证叙事清楚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%95%BF%E9%95%9C%E5%A4%B4%EF%BC%9A%E4%BF%9D%E7%95%99%E8%A1%A8%E6%BC%94%E4%B8%8E%E5%8E%8B%E5%8A%9B"><span class="nav-text">3. 长镜头：保留表演与压力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%89%AA%E8%BE%91%E8%8A%82%E5%A5%8F%E6%9D%A5%E8%87%AA%E2%80%9C%E9%95%BF%E7%9F%AD%E5%AF%B9%E6%AF%94%E2%80%9D"><span class="nav-text">三、剪辑节奏来自“长短对比”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8A%A8%E4%BD%9C%E7%82%B9%EF%BC%9A%E5%9C%A8%E5%8A%9B%E9%87%8F%E6%9C%80%E6%98%8E%E7%A1%AE%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%88%87%E6%8D%A2"><span class="nav-text">四、动作点：在力量最明确的位置切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%A3%B0%E9%9F%B3%E5%8F%AF%E4%BB%A5%E6%8F%90%E5%89%8D%E6%88%96%E5%BB%B6%E5%90%8E%E5%88%87%E6%8D%A2"><span class="nav-text">五、声音可以提前或延后切换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-J-Cut%EF%BC%9A%E5%A3%B0%E9%9F%B3%E5%85%88%E8%A1%8C"><span class="nav-text">1. J Cut：声音先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-L-Cut%EF%BC%9A%E5%A3%B0%E9%9F%B3%E5%BB%B6%E7%BB%AD"><span class="nav-text">2. L Cut：声音延续</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%A3%B0%E9%9F%B3%E4%B9%9F%E6%98%AF%E5%88%87%E7%82%B9"><span class="nav-text">3. 声音也是切点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%9F%B3%E4%B9%90%E8%8A%82%E6%8B%8D%E5%8F%AA%E6%98%AF%E5%8F%82%E8%80%83%EF%BC%8C%E4%B8%8D%E6%98%AF%E5%89%AA%E8%BE%91%E5%91%BD%E4%BB%A4"><span class="nav-text">六、音乐节拍只是参考，不是剪辑命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E7%9F%AD%E8%A7%86%E9%A2%91%E5%BC%80%E5%A4%B4%E7%9A%84%E8%8A%82%E5%A5%8F%E8%AE%BE%E8%AE%A1"><span class="nav-text">七、短视频开头的节奏设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E7%94%A8%E6%83%85%E7%BB%AA%E6%9B%B2%E7%BA%BF%E8%A7%84%E5%88%92%E6%95%B4%E6%AE%B5%E8%8A%82%E5%A5%8F"><span class="nav-text">八、用情绪曲线规划整段节奏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%93%BA%E5%9E%AB"><span class="nav-text">1. 铺垫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8A%A0%E9%80%9F"><span class="nav-text">2. 加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%81%9C%E9%A1%BF"><span class="nav-text">3. 停顿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%88%86%E5%8F%91"><span class="nav-text">4. 爆发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%9B%9E%E8%90%BD"><span class="nav-text">5. 回落</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%AE%9E%E6%88%98%E6%8B%86%E8%A7%A3%EF%BC%9A30-%E7%A7%92%E8%A3%85%E4%BF%AE%E7%9F%AD%E8%A7%86%E9%A2%91"><span class="nav-text">九、实战拆解：30 秒装修短视频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0%E2%80%943-%E7%A7%92%EF%BC%9A%E7%BB%93%E6%9E%9C%E9%92%A9%E5%AD%90"><span class="nav-text">0—3 秒：结果钩子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E2%80%9410-%E7%A7%92%EF%BC%9A%E9%97%AE%E9%A2%98%E5%BB%BA%E7%AB%8B"><span class="nav-text">3—10 秒：问题建立</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10%E2%80%9420-%E7%A7%92%EF%BC%9A%E6%96%B9%E6%A1%88%E5%8A%A0%E9%80%9F"><span class="nav-text">10—20 秒：方案加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20%E2%80%9424-%E7%A7%92%EF%BC%9A%E7%BB%93%E6%9E%9C%E5%89%8D%E5%81%9C%E9%A1%BF"><span class="nav-text">20—24 秒：结果前停顿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24%E2%80%9430-%E7%A7%92%EF%BC%9A%E6%8F%AD%E7%A4%BA%E4%B8%8E%E5%9B%9E%E8%90%BD"><span class="nav-text">24—30 秒：揭示与回落</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E5%89%AA%E8%BE%91%E8%8A%82%E5%A5%8F%E6%A3%80%E6%9F%A5%E8%A1%A8"><span class="nav-text">十、剪辑节奏检查表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4"><span class="nav-text">镜头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9C"><span class="nav-text">动作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E9%9F%B3"><span class="nav-text">声音</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF"><span class="nav-text">信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="nav-text">十一、常见误区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        13 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>

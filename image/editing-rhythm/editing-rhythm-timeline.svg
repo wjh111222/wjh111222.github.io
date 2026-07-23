@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">剪辑节奏与镜头时长示意</title>
+  <desc id="desc">比较快节奏、中节奏和慢节奏段落的镜头长度及观看感受。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="1080" cy="80" r="190" fill="#22d3ee" opacity=".07"/>
+  <circle cx="100" cy="640" r="230" fill="#f97316" opacity=".06"/>
+  <text x="600" y="70" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" font-weight="700">镜头越短不一定越精彩：节奏来自信息变化</text>
+  <text x="600" y="110" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="19">同样 12 秒，不同镜头分配会产生完全不同的观看呼吸</text>
+
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif" filter="url(#shadow)">
+    <rect x="70" y="165" width="1060" height="125" rx="22" fill="#172554" stroke="#3b82f6" stroke-width="2"/>
+    <text x="105" y="210" fill="#bfdbfe" font-size="25" font-weight="700">快节奏</text>
+    <text x="105" y="248" fill="#93c5fd" font-size="17">紧张、效率、冲击</text>
+    <g transform="translate(300 190)">
+      <rect x="0" y="0" width="62" height="68" rx="8" fill="#2563eb"/>
+      <rect x="72" y="0" width="48" height="68" rx="8" fill="#3b82f6"/>
+      <rect x="130" y="0" width="75" height="68" rx="8" fill="#60a5fa"/>
+      <rect x="215" y="0" width="52" height="68" rx="8" fill="#2563eb"/>
+      <rect x="277" y="0" width="88" height="68" rx="8" fill="#3b82f6"/>
+      <rect x="375" y="0" width="55" height="68" rx="8" fill="#60a5fa"/>
+      <rect x="440" y="0" width="70" height="68" rx="8" fill="#2563eb"/>
+      <rect x="520" y="0" width="43" height="68" rx="8" fill="#3b82f6"/>
+      <rect x="573" y="0" width="82" height="68" rx="8" fill="#60a5fa"/>
+      <rect x="665" y="0" width="58" height="68" rx="8" fill="#2563eb"/>
+      <text x="362" y="44" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">10 个短镜头 / 信息连续变化</text>
+    </g>
+
+    <rect x="70" y="315" width="1060" height="125" rx="22" fill="#134e4a" stroke="#14b8a6" stroke-width="2"/>
+    <text x="105" y="360" fill="#ccfbf1" font-size="25" font-weight="700">中节奏</text>
+    <text x="105" y="398" fill="#99f6e4" font-size="17">清楚、自然、稳定</text>
+    <g transform="translate(300 340)">
+      <rect x="0" y="0" width="145" height="68" rx="8" fill="#0f766e"/>
+      <rect x="157" y="0" width="125" height="68" rx="8" fill="#14b8a6"/>
+      <rect x="294" y="0" width="170" height="68" rx="8" fill="#2dd4bf"/>
+      <rect x="476" y="0" width="108" height="68" rx="8" fill="#0f766e"/>
+      <rect x="596" y="0" width="127" height="68" rx="8" fill="#14b8a6"/>
+      <text x="362" y="44" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">5 个中等镜头 / 行动完整但不拖沓</text>
+    </g>
+
+    <rect x="70" y="465" width="1060" height="125" rx="22" fill="#7c2d12" stroke="#f97316" stroke-width="2"/>
+    <text x="105" y="510" fill="#ffedd5" font-size="25" font-weight="700">慢节奏</text>
+    <text x="105" y="548" fill="#fed7aa" font-size="17">沉浸、观察、压力</text>
+    <g transform="translate(300 490)">
+      <rect x="0" y="0" width="300" height="68" rx="8" fill="#c2410c"/>
+      <rect x="312" y="0" width="220" height="68" rx="8" fill="#ea580c"/>
+      <rect x="544" y="0" width="179" height="68" rx="8" fill="#fb923c"/>
+      <text x="362" y="44" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">3 个长镜头 / 让表演、沉默和环境发生</text>
+    </g>
+  </g>
+
+  <line x1="300" y1="625" x2="1023" y2="625" stroke="#64748b" stroke-width="3"/>
+  <g fill="#94a3b8" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="16">
+    <text x="300" y="651" text-anchor="middle">0 秒</text>
+    <text x="662" y="651" text-anchor="middle">6 秒</text>
+    <text x="1023" y="651" text-anchor="middle">12 秒</text>
+  </g>
+</svg>
