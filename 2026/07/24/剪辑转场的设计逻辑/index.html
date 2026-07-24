@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/07/24/剪辑转场的设计逻辑/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🎞️ 剪辑转场的设计逻辑：让场景变化自然又有意义">
+<meta property="og:url" content="http://example.com/2026/07/24/%E5%89%AA%E8%BE%91%E8%BD%AC%E5%9C%BA%E7%9A%84%E8%AE%BE%E8%AE%A1%E9%80%BB%E8%BE%91/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-07-24T07:50:00.000Z">
+<meta property="article:modified_time" content="2026-07-24T07:51:23.021Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="剪辑">
+<meta property="article:tag" content="短视频">
+<meta property="article:tag" content="视听语言">
+<meta property="article:tag" content="转场">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🎞️ 剪辑转场的设计逻辑：让场景变化自然又有意义 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">🎞️ 剪辑转场的设计逻辑：让场景变化自然又有意义</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-07-24 15:50</span>
+        <span class="mobile">2026-07-24 15:50</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-07-24 15:51:23</span>
+            <span class="mobile">2026-07-24 15:51:23</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8B%8D%E6%91%84/">拍摄</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%AA%E8%BE%91/">剪辑</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">视听语言</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%9F%AD%E8%A7%86%E9%A2%91/">短视频</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%BD%AC%E5%9C%BA/">转场</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：转场不是在两个镜头之间添加一个炫目的效果，而是帮助观众理解时间、空间、动作和情绪如何发生变化。好的转场有清楚的连接依据，即使观众没有注意到技巧，也能自然进入下一个场景。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/editing-transitions/transition-methods-map.svg"
+                      alt="六种自然转场方法"
+                ></p>
+<p><em>图 1：动作、视线、形状、遮挡、声音和色彩，都可以成为前后场景的连接依据。</em></p>
+<h2 id="一、为什么很多转场看起来很“刻意”？"><a href="#一、为什么很多转场看起来很“刻意”？" class="headerlink" title="一、为什么很多转场看起来很“刻意”？"></a>一、为什么很多转场看起来很“刻意”？</h2><p>初学剪辑时，人们很容易把转场理解为旋转、缩放、闪白、模糊或故障特效。效果本身可以制造视觉刺激，但如果前后内容没有关系，观众只会注意到软件做了什么，而不是故事发生了什么。</p>
+<p>一次转场至少需要回答三个问题：</p>
+<ol>
+<li><strong>时间是否变化</strong>：是连续几秒、经过一天，还是跨越多年？</li>
+<li><strong>空间是否变化</strong>：人物仍在同一地点，还是进入了另一个环境？</li>
+<li><strong>叙事为什么继续</strong>：下一场是前一场的结果、对比、回忆，还是新的问题？</li>
+</ol>
+<p>如果前后镜头本来就处在连续动作中，直接硬切通常最自然；如果需要跨越较长时间，淡出、空镜或声音连接可能更清楚；如果两个空间存在视觉相似性，形状匹配可以让跨越更有设计感。</p>
+<p>转场的形式应该来自内容关系，而不是先选择特效，再强迫素材适应。</p>
+<hr>
+<h2 id="二、硬切：最普通，也是最重要的转场"><a href="#二、硬切：最普通，也是最重要的转场" class="headerlink" title="二、硬切：最普通，也是最重要的转场"></a>二、硬切：最普通，也是最重要的转场</h2><p>硬切是从一个镜头直接进入另一个镜头，不添加任何过渡效果。绝大多数影视作品和短视频都以硬切为基础。</p>
+<p>硬切之所以自然，是因为观众早已习惯通过镜头变化重新理解空间。人物看向画外，下一镜展示他看到的对象；人物走到门边，下一镜从门外继续动作；说话者提出问题，下一镜切到倾听者反应。这些转场不需要视觉特效，因为视线、动作和因果已经完成连接。</p>
+<p>硬切适合：</p>
+<ul>
+<li>连续动作与对话；</li>
+<li>同一空间内的景别变化；</li>
+<li>信息明确、节奏直接的段落；</li>
+<li>需要突然产生冲击或反差的瞬间。</li>
+</ul>
+<p>“没有效果”并不代表没有设计。硬切真正考验的是切点、构图、动作方向和信息顺序。</p>
+<hr>
+<h2 id="三、动作匹配：让运动穿过剪辑点"><a href="#三、动作匹配：让运动穿过剪辑点" class="headerlink" title="三、动作匹配：让运动穿过剪辑点"></a>三、动作匹配：让运动穿过剪辑点</h2><p>动作匹配是最实用的自然转场之一。前一个镜头开始动作，后一个镜头延续动作，观众会把两个画面自动理解为连续过程。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/editing-transitions/action-match-transition.svg"
+                      alt="动作匹配转场三步法"
+                ></p>
+<p><em>图 2：利用动作峰值和满屏遮挡，可以把两个完全不同的空间连接起来。</em></p>
+<h3 id="1-保持运动方向一致"><a href="#1-保持运动方向一致" class="headerlink" title="1. 保持运动方向一致"></a>1. 保持运动方向一致</h3><p>前一镜人物向右挥手，后一镜最好继续向右运动。如果方向突然相反，观众会感到动作撞在一起，除非这种冲突本来就是表达目的。</p>
+<h3 id="2-速度尽量接近"><a href="#2-速度尽量接近" class="headerlink" title="2. 速度尽量接近"></a>2. 速度尽量接近</h3><p>快速甩动接快速甩动，缓慢转身接缓慢转身。速度差异过大，会让动作像突然停顿或加速。</p>
+<h3 id="3-主体位置相互对应"><a href="#3-主体位置相互对应" class="headerlink" title="3. 主体位置相互对应"></a>3. 主体位置相互对应</h3><p>前一镜手臂位于画面右侧，后一镜运动主体也尽量从相近区域出现。观众的视线不需要大幅寻找，转场会更加顺畅。</p>
+<h3 id="4-在动作最明显的位置切"><a href="#4-在动作最明显的位置切" class="headerlink" title="4. 在动作最明显的位置切"></a>4. 在动作最明显的位置切</h3><p>运动会吸引注意力，也会掩盖背景和服装变化。在动作速度最快、画面模糊或遮挡面积最大时切换，通常最不容易暴露剪辑点。</p>
+<p>例如人物在办公室关门，门板快速占满画面时切到家中的冰箱门，再让冰箱门以相同方向继续移动。地点已经变化，动作却保持连续，转场便同时完成了空间跳跃和生活节奏连接。</p>
+<hr>
+<h2 id="四、遮挡转场：把切点藏在黑暗或前景中"><a href="#四、遮挡转场：把切点藏在黑暗或前景中" class="headerlink" title="四、遮挡转场：把切点藏在黑暗或前景中"></a>四、遮挡转场：把切点藏在黑暗或前景中</h2><p>遮挡转场利用人物、门框、墙面、车辆或其他物体短暂占满画面。在画面被遮住时切换场景，再从相似遮挡中移出。</p>
+<p>常见拍法包括：</p>
+<ul>
+<li>人物从镜头前经过；</li>
+<li>摄像机移动到墙后；</li>
+<li>衣服、手掌或道具靠近镜头；</li>
+<li>镜头进入黑暗区域；</li>
+<li>车辆横穿画面形成移动遮挡。</li>
+</ul>
+<p>遮挡转场成功的关键是前后方向对应。前一镜遮挡物从左向右进入，后一镜最好继续向右移出；前一镜逐渐变暗，后一镜可以从黑暗中逐渐出现。</p>
+<p>拍摄时要让遮挡真正覆盖画面边缘，避免留下明显亮缝。还应多保留几帧完全遮挡状态，给后期留下调整空间。</p>
+<p>遮挡不能频繁滥用。每隔几秒让手掌盖住镜头，会让观众提前预测技巧。它更适合段落切换、地点变化和需要明显节奏推动的场景。</p>
+<hr>
+<h2 id="五、视线匹配：观众会追随人物的目光"><a href="#五、视线匹配：观众会追随人物的目光" class="headerlink" title="五、视线匹配：观众会追随人物的目光"></a>五、视线匹配：观众会追随人物的目光</h2><p>人物看向画外时，观众会本能地想知道他在看什么。下一镜展示被看对象，就形成了最基础的视线匹配。</p>
+<p>视线匹配可以连接同一空间，也可以进入回忆、想象和远方。例如人物看着墙上的旧照片，下一镜切到照片所代表的过去；人物抬头看天空，下一镜切到另一个城市的同一轮月亮。</p>
+<p>需要注意视线方向：人物看向画面右上方，被看对象的构图应让观众感到它位于相应方向。方向关系错误会削弱空间真实感。</p>
+<p>还可以故意延迟展示对象。人物先看、停顿、表情变化，过一会儿才切出答案，转场就会带有悬念。导演控制的不只是“看什么”，还包括“什么时候让观众看到”。</p>
+<hr>
+<h2 id="六、形状匹配：用视觉相似跨越时空"><a href="#六、形状匹配：用视觉相似跨越时空" class="headerlink" title="六、形状匹配：用视觉相似跨越时空"></a>六、形状匹配：用视觉相似跨越时空</h2><p>形状匹配把轮廓、构图或运动轨迹相似的两个画面连接起来。例如：</p>
+<ul>
+<li>杯子的圆形俯拍切到月亮；</li>
+<li>旋转车轮切到旋转风扇；</li>
+<li>楼梯线条切到城市道路；</li>
+<li>人物眼睛特写切到门锁孔；</li>
+<li>白色灯光切到清晨太阳。</li>
+</ul>
+<p>形状匹配不只追求“长得像”，还应该产生意义。旧钟表切到新城市的交通灯，可以表达时间推动生活变化；孩子手中的纸飞机切到真实飞机，可以表现梦想与成长。</p>
+<p>为了提高匹配度，拍摄时应提前统一主体位置、大小、角度和运动方向。后期可以轻微缩放和移动画面，但调整幅度过大会损失清晰度，也可能让构图显得勉强。</p>
+<hr>
+<h2 id="七、色彩与光线匹配：先连接情绪，再改变地点"><a href="#七、色彩与光线匹配：先连接情绪，再改变地点" class="headerlink" title="七、色彩与光线匹配：先连接情绪，再改变地点"></a>七、色彩与光线匹配：先连接情绪，再改变地点</h2><p>两个场景的主色相近，即使地点完全不同，也能形成视觉连续性。例如暖黄色台灯切到日出天空，蓝色手机屏幕切到夜晚街道，红色衣服切到红色招牌。</p>
+<p>色彩匹配适合品牌短片、旅行视频、产品展示和情绪蒙太奇。它能保持整体视觉风格，也能让多个碎片化场景显得属于同一个段落。</p>
+<p>色彩也可以故意形成反差。温暖室内突然切到冷色室外，会强化孤独、离开或现实冲击。此时转场依据不是相似，而是有意义的差异。</p>
+<p>无论匹配还是反差，都应先确定情绪目的。仅仅因为两个素材颜色接近而连接，可能流畅，却不一定推动内容。</p>
+<hr>
+<h2 id="八、声音转场：让画面变化得更流动"><a href="#八、声音转场：让画面变化得更流动" class="headerlink" title="八、声音转场：让画面变化得更流动"></a>八、声音转场：让画面变化得更流动</h2><p>声音可以跨越画面边界，是最不容易显得刻意的转场工具。</p>
+<h3 id="1-声音先行"><a href="#1-声音先行" class="headerlink" title="1. 声音先行"></a>1. 声音先行</h3><p>下一个场景的声音提前出现，画面稍后才切换。例如办公室画面中先听到列车广播，再切到车站。观众的注意力已经被声音带走，画面变化便不会突然。</p>
+<h3 id="2-声音延续"><a href="#2-声音延续" class="headerlink" title="2. 声音延续"></a>2. 声音延续</h3><p>画面已经进入下一场景，前一个场景的台词、音乐或环境声仍然保留。例如人物说“我再也不会回来了”，画面提前切到空房间，台词继续完成。声音把人物决定和最终结果连接起来。</p>
+<h3 id="3-相似声音连接"><a href="#3-相似声音连接" class="headerlink" title="3. 相似声音连接"></a>3. 相似声音连接</h3><p>门铃声切到学校铃声，掌声切到雨声，机器转动声切到列车行驶声。音色或节奏相似，可以像形状匹配一样完成听觉上的桥接。</p>
+<h3 id="4-突然静音"><a href="#4-突然静音" class="headerlink" title="4. 突然静音"></a>4. 突然静音</h3><p>转场并不总要增加声音。喧闹场景突然切入安静空间，会产生强烈反差。静音本身就是一种声音设计，能够突出孤独、震惊或时间停滞感。</p>
+<hr>
+<h2 id="九、淡入淡出、叠化什么时候使用？"><a href="#九、淡入淡出、叠化什么时候使用？" class="headerlink" title="九、淡入淡出、叠化什么时候使用？"></a>九、淡入淡出、叠化什么时候使用？</h2><h3 id="淡入淡出"><a href="#淡入淡出" class="headerlink" title="淡入淡出"></a>淡入淡出</h3><p>画面逐渐进入黑场或从黑场出现，通常表示段落结束、时间经过、意识变化或完整停顿。它不适合每个场景都使用，否则视频会不断“结束”。</p>
+<h3 id="叠化"><a href="#叠化" class="headerlink" title="叠化"></a>叠化</h3><p>前后画面短暂重叠，适合回忆、梦境、时间流逝和情绪联系。叠化时间越长，抒情感通常越强；时间越短，更像柔和的场景连接。</p>
+<p>叠化时要注意两个画面的亮部、人物位置和运动。如果人脸、文字或复杂边缘重叠，容易产生混乱的双重影像。</p>
+<h3 id="闪白与闪黑"><a href="#闪白与闪黑" class="headerlink" title="闪白与闪黑"></a>闪白与闪黑</h3><p>闪白常用于强光、拍照、记忆断裂和强烈刺激；闪黑更接近眨眼、撞击、停顿和段落分隔。它们应有画面或声音动机，不应只是为了“更有节奏”。</p>
+<hr>
+<h2 id="十、如何选择合适的转场？"><a href="#十、如何选择合适的转场？" class="headerlink" title="十、如何选择合适的转场？"></a>十、如何选择合适的转场？</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/editing-transitions/transition-decision-flow.svg"
+                      alt="转场选择决策流程"
+                ></p>
+<p><em>图 3：先分析前后场景的叙事关系，再决定使用动作、视线、声音或视觉匹配。</em></p>
+<p>可以按照下面的顺序判断：</p>
+<ol>
+<li><strong>动作是否连续</strong>：有连续动作，优先使用硬切或动作匹配。</li>
+<li><strong>人物是否在看某物</strong>：有观看关系，使用视线匹配。</li>
+<li><strong>声音能否跨场景</strong>：有台词、环境或情绪延续，使用声音先行或延续。</li>
+<li><strong>画面是否存在视觉呼应</strong>：形状、色彩和构图相似，可以使用视觉匹配。</li>
+<li><strong>是否需要明确表示时间经过</strong>：考虑空镜、淡出、叠化或字幕。</li>
+<li><strong>是否没有特殊连接关系</strong>：直接硬切，不必强行设计特效。</li>
+</ol>
+<p>最专业的选择不一定最复杂，而是最清楚、最准确、最符合段落气质。</p>
+<hr>
+<h2 id="十一、实战拆解：一条“下班回家”短片"><a href="#十一、实战拆解：一条“下班回家”短片" class="headerlink" title="十一、实战拆解：一条“下班回家”短片"></a>十一、实战拆解：一条“下班回家”短片</h2><p><strong>内容</strong>：人物结束一天工作，离开办公室，回家做饭，最后坐在窗边休息。</p>
+<h3 id="镜头-1：办公室收尾"><a href="#镜头-1：办公室收尾" class="headerlink" title="镜头 1：办公室收尾"></a>镜头 1：办公室收尾</h3><p>人物合上电脑。利用电脑盖下落的动作切到家中菜板落下，完成动作匹配，也压缩通勤时间。</p>
+<h3 id="镜头-2：空间转换"><a href="#镜头-2：空间转换" class="headerlink" title="镜头 2：空间转换"></a>镜头 2：空间转换</h3><p>人物从办公楼门口走过镜头，身体占满画面；下一镜从厨房柜门后移出，使用遮挡转场进入家中。</p>
+<h3 id="镜头-3：做饭过程"><a href="#镜头-3：做饭过程" class="headerlink" title="镜头 3：做饭过程"></a>镜头 3：做饭过程</h3><p>锅内圆形俯拍切到餐盘圆形俯拍，用形状匹配压缩烹饪步骤。滋滋声继续延续到餐盘画面，让味觉想象保持连续。</p>
+<h3 id="镜头-4：情绪放松"><a href="#镜头-4：情绪放松" class="headerlink" title="镜头 4：情绪放松"></a>镜头 4：情绪放松</h3><p>人物看向窗外，先听见远处雨声，再切到窗户上的雨滴。声音先行与视线匹配同时完成转场。</p>
+<h3 id="镜头-5：结尾"><a href="#镜头-5：结尾" class="headerlink" title="镜头 5：结尾"></a>镜头 5：结尾</h3><p>室内暖色台灯切到城市远处的暖色灯光，镜头逐渐拉远，保留环境声后淡出。转场把个人空间与城市夜晚连接起来，形成安静余韵。</p>
+<p>这组转场没有依赖复杂插件，而是利用现场动作、构图、声音和光线建立联系。前期拍摄越有计划，后期越容易自然连接。</p>
+<hr>
+<h2 id="十二、拍摄时如何为转场留素材？"><a href="#十二、拍摄时如何为转场留素材？" class="headerlink" title="十二、拍摄时如何为转场留素材？"></a>十二、拍摄时如何为转场留素材？</h2><ol>
+<li><strong>动作前后多拍两秒</strong>：避免素材刚好卡在动作开始或结束处。</li>
+<li><strong>记录运动方向</strong>：同一组转场尽量保持左进右出或相反的统一关系。</li>
+<li><strong>拍到完全遮挡</strong>：遮挡转场要让物体真正覆盖整个画面。</li>
+<li><strong>保留环境声</strong>：每个场景单独录制一段安静环境声，方便后期连接声场。</li>
+<li><strong>拍摄相似构图</strong>：提前记录主体在画面中的位置和大小，为形状匹配提供参考。</li>
+<li><strong>多拍空镜与细节</strong>：天空、门窗、道路、灯光和道具可以承担时间与空间过渡。</li>
+<li><strong>确认曝光与白平衡</strong>：色彩差异过大时，匹配转场会显得突兀。</li>
+</ol>
+<hr>
+<h2 id="十三、常见误区"><a href="#十三、常见误区" class="headerlink" title="十三、常见误区"></a>十三、常见误区</h2><ol>
+<li><strong>每次换场都使用特效</strong>：观众会持续注意形式，内容反而被削弱。</li>
+<li><strong>前后运动方向冲突</strong>：动作像突然反弹，转场失去连续性。</li>
+<li><strong>遮挡没有盖满画面</strong>：亮缝会直接暴露切点。</li>
+<li><strong>只追求相似，不考虑意义</strong>：两个圆形物体虽然能匹配，却可能与故事毫无关系。</li>
+<li><strong>声音在切点突然中断</strong>：环境声消失会让空间变化显得生硬。</li>
+<li><strong>叠化时间过长</strong>：复杂画面长时间重叠，容易产生视觉混乱。</li>
+<li><strong>后期才临时想转场</strong>：缺少对应动作、构图和遮挡素材，再强的插件也难以补救。</li>
+</ol>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>转场是场景之间的语法。硬切像句号和逗号，动作匹配让行动继续，视线匹配回答人物的问题，声音转场保持情绪流动，形状与色彩匹配则能够跨越时间和空间建立新的意义。</p>
+<p>真正自然的转场，不会让观众停下来赞叹效果多复杂，而会让他们顺着动作、声音和注意力进入下一段内容。</p>
+<p>下次剪辑时，不要先打开转场插件。先观察前一个镜头如何结束、下一个镜头如何开始，再寻找它们在动作、视线、声音、形状或情绪上的共同点。共同点清楚，最简单的切换也能成立；共同点缺失，再华丽的效果也只是装饰。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 🎞️ 剪辑转场的设计逻辑：让场景变化自然又有意义</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-07-24 15:50:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-07-24 15:51:23
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/07/24/剪辑转场的设计逻辑/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%89%AA%E8%BE%91/">#剪辑</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">#视听语言</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E7%9F%AD%E8%A7%86%E9%A2%91/">#短视频</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%BD%AC%E5%9C%BA/">#转场</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/07/23/%E5%89%AA%E8%BE%91%E8%8A%82%E5%A5%8F%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">✂️ 剪辑节奏的设计方法：让镜头有快慢、有停顿、有呼吸</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">🎞️ 剪辑转场的设计逻辑：让场景变化自然又有意义</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%88%E5%A4%9A%E8%BD%AC%E5%9C%BA%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%BE%88%E2%80%9C%E5%88%BB%E6%84%8F%E2%80%9D%EF%BC%9F"><span class="nav-text">一、为什么很多转场看起来很“刻意”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%A1%AC%E5%88%87%EF%BC%9A%E6%9C%80%E6%99%AE%E9%80%9A%EF%BC%8C%E4%B9%9F%E6%98%AF%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E8%BD%AC%E5%9C%BA"><span class="nav-text">二、硬切：最普通，也是最重要的转场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8A%A8%E4%BD%9C%E5%8C%B9%E9%85%8D%EF%BC%9A%E8%AE%A9%E8%BF%90%E5%8A%A8%E7%A9%BF%E8%BF%87%E5%89%AA%E8%BE%91%E7%82%B9"><span class="nav-text">三、动作匹配：让运动穿过剪辑点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BF%9D%E6%8C%81%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%80%E8%87%B4"><span class="nav-text">1. 保持运动方向一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%80%9F%E5%BA%A6%E5%B0%BD%E9%87%8F%E6%8E%A5%E8%BF%91"><span class="nav-text">2. 速度尽量接近</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%BB%E4%BD%93%E4%BD%8D%E7%BD%AE%E7%9B%B8%E4%BA%92%E5%AF%B9%E5%BA%94"><span class="nav-text">3. 主体位置相互对应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%9C%A8%E5%8A%A8%E4%BD%9C%E6%9C%80%E6%98%8E%E6%98%BE%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%88%87"><span class="nav-text">4. 在动作最明显的位置切</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%81%AE%E6%8C%A1%E8%BD%AC%E5%9C%BA%EF%BC%9A%E6%8A%8A%E5%88%87%E7%82%B9%E8%97%8F%E5%9C%A8%E9%BB%91%E6%9A%97%E6%88%96%E5%89%8D%E6%99%AF%E4%B8%AD"><span class="nav-text">四、遮挡转场：把切点藏在黑暗或前景中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%A7%86%E7%BA%BF%E5%8C%B9%E9%85%8D%EF%BC%9A%E8%A7%82%E4%BC%97%E4%BC%9A%E8%BF%BD%E9%9A%8F%E4%BA%BA%E7%89%A9%E7%9A%84%E7%9B%AE%E5%85%89"><span class="nav-text">五、视线匹配：观众会追随人物的目光</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BD%A2%E7%8A%B6%E5%8C%B9%E9%85%8D%EF%BC%9A%E7%94%A8%E8%A7%86%E8%A7%89%E7%9B%B8%E4%BC%BC%E8%B7%A8%E8%B6%8A%E6%97%B6%E7%A9%BA"><span class="nav-text">六、形状匹配：用视觉相似跨越时空</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E8%89%B2%E5%BD%A9%E4%B8%8E%E5%85%89%E7%BA%BF%E5%8C%B9%E9%85%8D%EF%BC%9A%E5%85%88%E8%BF%9E%E6%8E%A5%E6%83%85%E7%BB%AA%EF%BC%8C%E5%86%8D%E6%94%B9%E5%8F%98%E5%9C%B0%E7%82%B9"><span class="nav-text">七、色彩与光线匹配：先连接情绪，再改变地点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%A3%B0%E9%9F%B3%E8%BD%AC%E5%9C%BA%EF%BC%9A%E8%AE%A9%E7%94%BB%E9%9D%A2%E5%8F%98%E5%8C%96%E5%BE%97%E6%9B%B4%E6%B5%81%E5%8A%A8"><span class="nav-text">八、声音转场：让画面变化得更流动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%A3%B0%E9%9F%B3%E5%85%88%E8%A1%8C"><span class="nav-text">1. 声音先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A3%B0%E9%9F%B3%E5%BB%B6%E7%BB%AD"><span class="nav-text">2. 声音延续</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%9B%B8%E4%BC%BC%E5%A3%B0%E9%9F%B3%E8%BF%9E%E6%8E%A5"><span class="nav-text">3. 相似声音连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%AA%81%E7%84%B6%E9%9D%99%E9%9F%B3"><span class="nav-text">4. 突然静音</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E6%B7%A1%E5%85%A5%E6%B7%A1%E5%87%BA%E3%80%81%E5%8F%A0%E5%8C%96%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-text">九、淡入淡出、叠化什么时候使用？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%A1%E5%85%A5%E6%B7%A1%E5%87%BA"><span class="nav-text">淡入淡出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A0%E5%8C%96"><span class="nav-text">叠化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AA%E7%99%BD%E4%B8%8E%E9%97%AA%E9%BB%91"><span class="nav-text">闪白与闪黑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E8%BD%AC%E5%9C%BA%EF%BC%9F"><span class="nav-text">十、如何选择合适的转场？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%AE%9E%E6%88%98%E6%8B%86%E8%A7%A3%EF%BC%9A%E4%B8%80%E6%9D%A1%E2%80%9C%E4%B8%8B%E7%8F%AD%E5%9B%9E%E5%AE%B6%E2%80%9D%E7%9F%AD%E7%89%87"><span class="nav-text">十一、实战拆解：一条“下班回家”短片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4-1%EF%BC%9A%E5%8A%9E%E5%85%AC%E5%AE%A4%E6%94%B6%E5%B0%BE"><span class="nav-text">镜头 1：办公室收尾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4-2%EF%BC%9A%E7%A9%BA%E9%97%B4%E8%BD%AC%E6%8D%A2"><span class="nav-text">镜头 2：空间转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4-3%EF%BC%9A%E5%81%9A%E9%A5%AD%E8%BF%87%E7%A8%8B"><span class="nav-text">镜头 3：做饭过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4-4%EF%BC%9A%E6%83%85%E7%BB%AA%E6%94%BE%E6%9D%BE"><span class="nav-text">镜头 4：情绪放松</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4-5%EF%BC%9A%E7%BB%93%E5%B0%BE"><span class="nav-text">镜头 5：结尾</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E6%8B%8D%E6%91%84%E6%97%B6%E5%A6%82%E4%BD%95%E4%B8%BA%E8%BD%AC%E5%9C%BA%E7%95%99%E7%B4%A0%E6%9D%90%EF%BC%9F"><span class="nav-text">十二、拍摄时如何为转场留素材？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="nav-text">十三、常见误区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        14 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
