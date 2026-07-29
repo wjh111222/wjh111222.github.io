@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/07/29/蒙太奇的设计方法/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🎬 蒙太奇的设计方法：让镜头组合产生新的意义">
+<meta property="og:url" content="http://example.com/2026/07/29/%E8%92%99%E5%A4%AA%E5%A5%87%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-07-29T01:40:00.000Z">
+<meta property="article:modified_time" content="2026-07-29T01:40:50.589Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="剪辑">
+<meta property="article:tag" content="叙事">
+<meta property="article:tag" content="蒙太奇">
+<meta property="article:tag" content="视听语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🎬 蒙太奇的设计方法：让镜头组合产生新的意义 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">15</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">15</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">🎬 蒙太奇的设计方法：让镜头组合产生新的意义</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-07-29 09:40</span>
+        <span class="mobile">2026-07-29 09:40</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-07-29 09:40:50</span>
+            <span class="mobile">2026-07-29 09:40:50</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8B%8D%E6%91%84/">拍摄</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%AA%E8%BE%91/">剪辑</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">视听语言</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%92%99%E5%A4%AA%E5%A5%87/">蒙太奇</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%8F%99%E4%BA%8B/">叙事</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：蒙太奇不是把精彩镜头快速堆在一起，而是通过镜头的选择、排列和对比，引导观众建立时间、空间、因果与情绪关系。单个镜头负责提供材料，镜头之间的关系负责产生意义。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/montage-thinking/montage-equation.svg"
+                      alt="蒙太奇意义生成公式"
+                ></p>
+<p><em>图 1：人物的“饥饿”并不直接存在于镜头中，而是由人物与食物两个镜头的并置产生。</em></p>
+<h2 id="一、什么是蒙太奇思维？"><a href="#一、什么是蒙太奇思维？" class="headerlink" title="一、什么是蒙太奇思维？"></a>一、什么是蒙太奇思维？</h2><p>蒙太奇原本有装配、组合的含义。在影视创作中，它既指剪辑手段，也是一种组织时间和空间的思维方式。</p>
+<p>现实中的事件连续发生，但电影不必完整记录每一分钟。人物起床、洗漱、出门、乘车、到达公司，现实可能需要一个小时，剪辑却可以用闹钟、刷牙、关门、车轮和电梯数字几个镜头，在十几秒内完成时间压缩。</p>
+<p>蒙太奇真正重要的地方，不只是“省略过程”，而是让观众主动把分散画面连接起来。镜头中没有直接说人物很匆忙，但快速动作、不断跳动的时间和拥挤交通并置后，观众会得出“他快迟到了”的判断。</p>
+<p>这种判断来自镜头之间，而不是来自某一个镜头。</p>
+<hr>
+<h2 id="二、镜头-A-加镜头-B-为什么会产生新意义？"><a href="#二、镜头-A-加镜头-B-为什么会产生新意义？" class="headerlink" title="二、镜头 A 加镜头 B 为什么会产生新意义？"></a>二、镜头 A 加镜头 B 为什么会产生新意义？</h2><p>假设镜头 A 是一个表情平静的人。</p>
+<ul>
+<li>后面接一碗热汤，观众可能认为他饿了。</li>
+<li>后面接一副棺材，观众可能认为他在悲伤。</li>
+<li>后面接一个玩耍的孩子，观众可能认为他感到温柔。</li>
+<li>后面接一间空房，观众可能认为他孤独或正在回忆。</li>
+</ul>
+<p>人物镜头没有变化，观众对表情的理解却发生了变化。因为人会本能地在相邻画面之间寻找因果关系。</p>
+<p>剪辑师可以利用这种心理控制解释方向，但也要避免错误暗示。如果人物只是普通地看向街道，下一镜却接上事故现场，观众会自然认为人物看见了事故。若两者在故事中没有关系，这个组合就会造成误导。</p>
+<p>蒙太奇思维要求创作者在排列镜头时不断追问：把这两个画面放在一起，观众会得出什么结论？这个结论是否符合故事目标？</p>
+<hr>
+<h2 id="三、叙事蒙太奇：把故事讲清楚"><a href="#三、叙事蒙太奇：把故事讲清楚" class="headerlink" title="三、叙事蒙太奇：把故事讲清楚"></a>三、叙事蒙太奇：把故事讲清楚</h2><p>叙事蒙太奇的首要任务，是帮助观众理解人物做了什么、事件如何发展，以及不同时间和空间之间有什么联系。</p>
+<h3 id="1-连续蒙太奇"><a href="#1-连续蒙太奇" class="headerlink" title="1. 连续蒙太奇"></a>1. 连续蒙太奇</h3><p>按照事件发生顺序组织镜头，保持动作、视线和空间方向连续。例如人物走到门边、拿出钥匙、打开门、进入房间。它适合清楚讲述行动过程，是剧情和短视频最基础的剪辑方式。</p>
+<p>连续不等于保留全部过程。人物从楼下走到十楼，可以用进入电梯、数字变化和走出电梯三个镜头完成。只要因果清楚，观众会自动补全被省略的时间。</p>
+<h3 id="2-平行蒙太奇"><a href="#2-平行蒙太奇" class="headerlink" title="2. 平行蒙太奇"></a>2. 平行蒙太奇</h3><p>两条或多条故事线分别发展，彼此可能存在主题联系，却不一定在同一时间发生。例如一边展示年轻人离开家乡，另一边展示老人整理空房间。两条线没有直接相遇，却共同表达离别。</p>
+<p>平行蒙太奇适合人物群像、不同生活对照、主题宣传片和多地点叙事。</p>
+<h3 id="3-交叉蒙太奇"><a href="#3-交叉蒙太奇" class="headerlink" title="3. 交叉蒙太奇"></a>3. 交叉蒙太奇</h3><p>两条行动线交替出现，并逐渐向同一个结果汇合。最常见的例子是“危险正在发生—救援者正在赶来”。交替速度越快，观众越能感到时间正在减少。</p>
+<h3 id="4-重复蒙太奇"><a href="#4-重复蒙太奇" class="headerlink" title="4. 重复蒙太奇"></a>4. 重复蒙太奇</h3><p>同一个镜头、动作、声音或道具在不同段落再次出现。第一次出现负责建立信息，后续重复会因为人物经历变化而获得新的意义。</p>
+<p>例如故事开头人物独自关闭店门，结尾同样关闭店门，但身边已经多了伙伴。动作完全相同，关系与情绪却已经改变。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/montage-thinking/montage-types.svg"
+                      alt="四种常用蒙太奇结构"
+                ></p>
+<p><em>图 2：平行、交叉、对比和重复蒙太奇承担不同的叙事任务。</em></p>
+<hr>
+<h2 id="四、交叉蒙太奇如何制造紧张？"><a href="#四、交叉蒙太奇如何制造紧张？" class="headerlink" title="四、交叉蒙太奇如何制造紧张？"></a>四、交叉蒙太奇如何制造紧张？</h2><p>交叉蒙太奇通常需要三个条件：</p>
+<ol>
+<li>两条行动线在时间上有关联；</li>
+<li>双方都朝同一个结果移动；</li>
+<li>观众知道任何一方的进度都会影响结局。</li>
+</ol>
+<p>例如人物被困在故障电梯里，维修人员正在赶来。可以这样组织：</p>
+<ol>
+<li>被困者按下报警按钮，但没有回应。</li>
+<li>维修人员接到电话，拿起工具离开值班室。</li>
+<li>电梯灯光闪烁，被困者开始呼吸急促。</li>
+<li>维修人员跑向机房，却发现通道被杂物挡住。</li>
+<li>电梯内部完全熄灯，人物用力拍门。</li>
+<li>维修人员启动设备，电梯门终于打开。</li>
+</ol>
+<p>前半段镜头可以稍长，让观众理解空间；越接近结果，镜头越短，动作和声音越密集。被困者的呼吸、维修人员的脚步、机械报警和时间提示可以相互叠加，形成共同倒计时。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/montage-thinking/crosscut-tension.svg"
+                      alt="交叉蒙太奇如何制造紧张"
+                ></p>
+<p><em>图 3：两条行动线交替加速并最终汇合，观众会持续判断救援能否及时发生。</em></p>
+<p>交叉蒙太奇的悬念来自信息优势：人物不知道救援还有多远，观众却同时看见危险和希望。这种“比人物知道得更多”的状态，会让观众主动计算时间。</p>
+<hr>
+<h2 id="五、对比蒙太奇：让差异直接产生观点"><a href="#五、对比蒙太奇：让差异直接产生观点" class="headerlink" title="五、对比蒙太奇：让差异直接产生观点"></a>五、对比蒙太奇：让差异直接产生观点</h2><p>对比蒙太奇把内容、情绪、色彩、规模或声音相反的画面放在一起，让差异变得更加明显。</p>
+<p>常见对比包括：</p>
+<ul>
+<li>盛大的宴会与空碗；</li>
+<li>豪华高楼与狭小房间；</li>
+<li>欢快音乐与孤独人物；</li>
+<li>婚礼准备与葬礼准备；</li>
+<li>孩子的奔跑与老人的缓慢行走；</li>
+<li>同一地点改造前后的状态。</li>
+</ul>
+<p>对比可以提供信息，也可以表达创作者立场。例如广告中先展示杂乱空间，再展示整理后的空间，是功能对比；纪录片中把奢华消费与资源浪费并置，则可能形成批评。</p>
+<p>使用对比时，要确认两组画面是否具有可比性。只有差异，没有共同背景，观众可能无法理解比较标准。</p>
+<hr>
+<h2 id="六、节奏蒙太奇：镜头长度也能表达意义"><a href="#六、节奏蒙太奇：镜头长度也能表达意义" class="headerlink" title="六、节奏蒙太奇：镜头长度也能表达意义"></a>六、节奏蒙太奇：镜头长度也能表达意义</h2><p>蒙太奇不仅由画面内容决定，也由镜头时长和内部动作决定。</p>
+<p>一组施工镜头逐渐缩短，会让工程显得快速推进；同样的镜头逐渐拉长，则可能表现疲惫、重复与时间漫长。</p>
+<p>节奏蒙太奇可以从以下方面设计：</p>
+<ul>
+<li>镜头长度逐渐缩短或拉长；</li>
+<li>动作速度逐渐加快或减慢；</li>
+<li>景别从全景逐渐推进到特写；</li>
+<li>声音层次不断增加或突然消失；</li>
+<li>画面运动从稳定变为强烈手持；</li>
+<li>信息密度从稀疏变得集中。</li>
+</ul>
+<p>需要注意，踩音乐节拍只是节奏的一部分。如果每一拍都切，观众很快会预测规律。真正有效的节奏会根据动作、情绪和信息调整，而不是让画面完全服从鼓点。</p>
+<hr>
+<h2 id="七、主题蒙太奇：用画面表达抽象概念"><a href="#七、主题蒙太奇：用画面表达抽象概念" class="headerlink" title="七、主题蒙太奇：用画面表达抽象概念"></a>七、主题蒙太奇：用画面表达抽象概念</h2><p>有些概念很难用单个镜头直接表现，例如成长、孤独、城市压力、时间流逝或人与自然的关系。这时可以通过一组具有共同主题的画面建立意义。</p>
+<p>例如表现“城市苏醒”：</p>
+<ul>
+<li>清洁车驶过空街；</li>
+<li>早餐店拉开卷帘门；</li>
+<li>地铁灯光亮起；</li>
+<li>第一班公交进站；</li>
+<li>办公楼电梯数字上升；</li>
+<li>人群从不同方向进入画面。</li>
+</ul>
+<p>这些镜头并不讲述同一个人物，却共同完成“城市开始运转”的概念。</p>
+<p>主题蒙太奇要有统一线索，可以是动作、颜色、声音、时间或构图。如果素材只是“看起来漂亮”，却没有共同方向，段落会像无目的的素材展示。</p>
+<hr>
+<h2 id="八、声音如何参与蒙太奇？"><a href="#八、声音如何参与蒙太奇？" class="headerlink" title="八、声音如何参与蒙太奇？"></a>八、声音如何参与蒙太奇？</h2><p>声音可以连接原本分离的画面，也能改变画面含义。</p>
+<h3 id="1-统一声场"><a href="#1-统一声场" class="headerlink" title="1. 统一声场"></a>1. 统一声场</h3><p>一段连续音乐或旁白覆盖多个地点，可以把分散画面组织成同一主题段落。</p>
+<h3 id="2-声音桥接"><a href="#2-声音桥接" class="headerlink" title="2. 声音桥接"></a>2. 声音桥接</h3><p>下一个场景的声音提前出现，或前一个场景的声音延续，可以让时间与空间跳跃更流畅。</p>
+<h3 id="3-相似声音匹配"><a href="#3-相似声音匹配" class="headerlink" title="3. 相似声音匹配"></a>3. 相似声音匹配</h3><p>机器轰鸣切到列车行驶，掌声切到雨声，闹钟切到学校铃声。听觉相似会帮助观众建立联系。</p>
+<h3 id="4-声画对位"><a href="#4-声画对位" class="headerlink" title="4. 声画对位"></a>4. 声画对位</h3><p>声音情绪与画面相反，会产生讽刺、荒诞或复杂心理。例如欢快音乐搭配失败场景，可能把悲伤转化为黑色幽默。</p>
+<h3 id="5-突然安静"><a href="#5-突然安静" class="headerlink" title="5. 突然安静"></a>5. 突然安静</h3><p>连续快速蒙太奇后突然撤掉音乐，只保留人物呼吸，可以立刻改变观看状态。安静不是没有声音，而是主动设计注意力。</p>
+<hr>
+<h2 id="九、短视频中的蒙太奇结构"><a href="#九、短视频中的蒙太奇结构" class="headerlink" title="九、短视频中的蒙太奇结构"></a>九、短视频中的蒙太奇结构</h2><p>短视频时间有限，更需要清楚的镜头功能。一个常用结构是：</p>
+<h3 id="1-结果先行"><a href="#1-结果先行" class="headerlink" title="1. 结果先行"></a>1. 结果先行</h3><p>先展示最强结果或冲突，让观众知道继续观看会获得什么。</p>
+<h3 id="2-问题蒙太奇"><a href="#2-问题蒙太奇" class="headerlink" title="2. 问题蒙太奇"></a>2. 问题蒙太奇</h3><p>用三到五个镜头快速展示现状、困难和限制。每个镜头只承担一个信息，不要重复。</p>
+<h3 id="3-过程蒙太奇"><a href="#3-过程蒙太奇" class="headerlink" title="3. 过程蒙太奇"></a>3. 过程蒙太奇</h3><p>将复杂流程拆成具有代表性的动作：准备、执行、变化和完成。利用动作匹配与声音保持连续。</p>
+<h3 id="4-结果对比"><a href="#4-结果对比" class="headerlink" title="4. 结果对比"></a>4. 结果对比</h3><p>使用同机位、同动作或同构图展示前后差异，让变化更直观。</p>
+<h3 id="5-情绪落点"><a href="#5-情绪落点" class="headerlink" title="5. 情绪落点"></a>5. 情绪落点</h3><p>最后不要只停在产品或空间上，还可以加入人物使用、触摸或反应，让结果获得情感意义。</p>
+<p>例如装修视频不是简单堆叠拆墙、木作和完工素材，而是按照“原有问题—设计决定—施工变化—生活结果”组织。镜头顺序清楚，观众才能理解改造价值。</p>
+<hr>
+<h2 id="十、实战：用蒙太奇表现“一个人的一年”"><a href="#十、实战：用蒙太奇表现“一个人的一年”" class="headerlink" title="十、实战：用蒙太奇表现“一个人的一年”"></a>十、实战：用蒙太奇表现“一个人的一年”</h2><p><strong>主题</strong>：年轻人离开家乡，在城市生活一年后再次回家。</p>
+<h3 id="开始：建立离开"><a href="#开始：建立离开" class="headerlink" title="开始：建立离开"></a>开始：建立离开</h3><p>行李箱合上、车站广播、母亲整理餐桌、列车驶出。人物与家庭两条线平行展开，建立离别。</p>
+<h3 id="中段：压缩一年"><a href="#中段：压缩一年" class="headerlink" title="中段：压缩一年"></a>中段：压缩一年</h3><p>办公桌四季光线变化、日历翻动、不同天气下的通勤、重复打开出租屋房门。重复动作与环境变化共同表现时间流逝。</p>
+<h3 id="冲突：城市与家乡对比"><a href="#冲突：城市与家乡对比" class="headerlink" title="冲突：城市与家乡对比"></a>冲突：城市与家乡对比</h3><p>城市深夜外卖与家中热饭并置；拥挤地铁与空旷田野并置；手机通话中的笑容与挂断后的沉默并置。对比让人物的疲惫与思念变得可见。</p>
+<h3 id="结尾：回家汇合"><a href="#结尾：回家汇合" class="headerlink" title="结尾：回家汇合"></a>结尾：回家汇合</h3><p>人物拖着行李走出车站，母亲在家门口等待。两条行动线交叉加快，脚步声和开门声形成共同节奏。最后重复开头的餐桌镜头，但这次人物已经坐回原来的位置。</p>
+<p>同一张餐桌从“缺少一个人”变成“重新完整”，重复镜头因此完成情绪闭环。</p>
+<hr>
+<h2 id="十一、剪辑前的蒙太奇检查表"><a href="#十一、剪辑前的蒙太奇检查表" class="headerlink" title="十一、剪辑前的蒙太奇检查表"></a>十一、剪辑前的蒙太奇检查表</h2><h3 id="镜头功能"><a href="#镜头功能" class="headerlink" title="镜头功能"></a>镜头功能</h3><ul>
+<li>这个镜头提供了什么新信息？</li>
+<li>删除后，故事或情绪是否受到影响？</li>
+<li>相邻镜头是在延续、对比还是解释？</li>
+</ul>
+<h3 id="时间与空间"><a href="#时间与空间" class="headerlink" title="时间与空间"></a>时间与空间</h3><ul>
+<li>观众能否理解时间经过了多久？</li>
+<li>空间变化是否有动作、声音或视觉依据？</li>
+<li>两条行动线是否处于相同时间范围？</li>
+</ul>
+<h3 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h3><ul>
+<li>镜头 A 与镜头 B 并置后会产生什么理解？</li>
+<li>这个理解是否符合创作意图？</li>
+<li>对比是否存在共同的比较标准？</li>
+</ul>
+<h3 id="节奏"><a href="#节奏" class="headerlink" title="节奏"></a>节奏</h3><ul>
+<li>镜头长度是否随着压力或行动发生变化？</li>
+<li>高潮前是否有足够铺垫？</li>
+<li>快速段落后是否给观众留下反应时间？</li>
+</ul>
+<h3 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h3><ul>
+<li>声音是否帮助连接不同画面？</li>
+<li>音乐是否覆盖了重要的现场声和停顿？</li>
+<li>是否可以用声音先行、延续或对位产生新意义？</li>
+</ul>
+<hr>
+<h2 id="十二、常见误区"><a href="#十二、常见误区" class="headerlink" title="十二、常见误区"></a>十二、常见误区</h2><ol>
+<li><strong>把蒙太奇等同于快剪</strong>：慢镜头、长停顿和重复画面同样可以构成蒙太奇。</li>
+<li><strong>镜头很多却没有关系</strong>：素材数量不能代替结构，漂亮画面也需要共同主题。</li>
+<li><strong>过度解释</strong>：画面已经表达清楚，又用旁白重复，会削弱观众参与感。</li>
+<li><strong>平行线索没有区别</strong>：人物、空间和声音缺少明确特征，观众难以判断当前是哪条线。</li>
+<li><strong>交叉剪辑没有共同结果</strong>：两条线不断切换却不产生影响，紧张感无法建立。</li>
+<li><strong>对比只追求反差</strong>：没有主题关联的反差只是突兀，不会形成观点。</li>
+<li><strong>重复镜头毫无变化</strong>：重复必须因情境改变而获得新意义，否则只是素材复用。</li>
+</ol>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>蒙太奇是对观众联想过程的设计。镜头负责展示人物、动作和环境，镜头之间的排列负责建立因果、对比、时间、空间与情绪。</p>
+<p>成熟的剪辑不会把所有意义直接说出来，而会给观众足够清楚的线索，让他们主动完成最后一步理解。这种参与感，正是影像比单纯说明更有力量的原因。</p>
+<p>剪辑时可以始终记住一个简单公式：镜头 A 加镜头 B，不等于两个画面的机械相加，而应该产生新的理解 C。只要每一次并置都能推动信息、情绪或主题，零散素材就会变成真正的叙事。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 🎬 蒙太奇的设计方法：让镜头组合产生新的意义</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-07-29 09:40:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-07-29 09:40:50
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/07/29/蒙太奇的设计方法/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%89%AA%E8%BE%91/">#剪辑</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">#视听语言</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%92%99%E5%A4%AA%E5%A5%87/">#蒙太奇</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%8F%99%E4%BA%8B/">#叙事</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/07/24/%E5%89%AA%E8%BE%91%E8%BD%AC%E5%9C%BA%E7%9A%84%E8%AE%BE%E8%AE%A1%E9%80%BB%E8%BE%91/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">🎞️ 剪辑转场的设计逻辑：让场景变化自然又有意义</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">🎬 蒙太奇的设计方法：让镜头组合产生新的意义</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E8%92%99%E5%A4%AA%E5%A5%87%E6%80%9D%E7%BB%B4%EF%BC%9F"><span class="nav-text">一、什么是蒙太奇思维？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%95%9C%E5%A4%B4-A-%E5%8A%A0%E9%95%9C%E5%A4%B4-B-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%96%B0%E6%84%8F%E4%B9%89%EF%BC%9F"><span class="nav-text">二、镜头 A 加镜头 B 为什么会产生新意义？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8F%99%E4%BA%8B%E8%92%99%E5%A4%AA%E5%A5%87%EF%BC%9A%E6%8A%8A%E6%95%85%E4%BA%8B%E8%AE%B2%E6%B8%85%E6%A5%9A"><span class="nav-text">三、叙事蒙太奇：把故事讲清楚</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%BF%9E%E7%BB%AD%E8%92%99%E5%A4%AA%E5%A5%87"><span class="nav-text">1. 连续蒙太奇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%B9%B3%E8%A1%8C%E8%92%99%E5%A4%AA%E5%A5%87"><span class="nav-text">2. 平行蒙太奇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BA%A4%E5%8F%89%E8%92%99%E5%A4%AA%E5%A5%87"><span class="nav-text">3. 交叉蒙太奇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%87%8D%E5%A4%8D%E8%92%99%E5%A4%AA%E5%A5%87"><span class="nav-text">4. 重复蒙太奇</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BA%A4%E5%8F%89%E8%92%99%E5%A4%AA%E5%A5%87%E5%A6%82%E4%BD%95%E5%88%B6%E9%80%A0%E7%B4%A7%E5%BC%A0%EF%BC%9F"><span class="nav-text">四、交叉蒙太奇如何制造紧张？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AF%B9%E6%AF%94%E8%92%99%E5%A4%AA%E5%A5%87%EF%BC%9A%E8%AE%A9%E5%B7%AE%E5%BC%82%E7%9B%B4%E6%8E%A5%E4%BA%A7%E7%94%9F%E8%A7%82%E7%82%B9"><span class="nav-text">五、对比蒙太奇：让差异直接产生观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%8A%82%E5%A5%8F%E8%92%99%E5%A4%AA%E5%A5%87%EF%BC%9A%E9%95%9C%E5%A4%B4%E9%95%BF%E5%BA%A6%E4%B9%9F%E8%83%BD%E8%A1%A8%E8%BE%BE%E6%84%8F%E4%B9%89"><span class="nav-text">六、节奏蒙太奇：镜头长度也能表达意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E4%B8%BB%E9%A2%98%E8%92%99%E5%A4%AA%E5%A5%87%EF%BC%9A%E7%94%A8%E7%94%BB%E9%9D%A2%E8%A1%A8%E8%BE%BE%E6%8A%BD%E8%B1%A1%E6%A6%82%E5%BF%B5"><span class="nav-text">七、主题蒙太奇：用画面表达抽象概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%A3%B0%E9%9F%B3%E5%A6%82%E4%BD%95%E5%8F%82%E4%B8%8E%E8%92%99%E5%A4%AA%E5%A5%87%EF%BC%9F"><span class="nav-text">八、声音如何参与蒙太奇？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BB%9F%E4%B8%80%E5%A3%B0%E5%9C%BA"><span class="nav-text">1. 统一声场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A3%B0%E9%9F%B3%E6%A1%A5%E6%8E%A5"><span class="nav-text">2. 声音桥接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%9B%B8%E4%BC%BC%E5%A3%B0%E9%9F%B3%E5%8C%B9%E9%85%8D"><span class="nav-text">3. 相似声音匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%A3%B0%E7%94%BB%E5%AF%B9%E4%BD%8D"><span class="nav-text">4. 声画对位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%AA%81%E7%84%B6%E5%AE%89%E9%9D%99"><span class="nav-text">5. 突然安静</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E7%9F%AD%E8%A7%86%E9%A2%91%E4%B8%AD%E7%9A%84%E8%92%99%E5%A4%AA%E5%A5%87%E7%BB%93%E6%9E%84"><span class="nav-text">九、短视频中的蒙太奇结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BB%93%E6%9E%9C%E5%85%88%E8%A1%8C"><span class="nav-text">1. 结果先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%97%AE%E9%A2%98%E8%92%99%E5%A4%AA%E5%A5%87"><span class="nav-text">2. 问题蒙太奇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BF%87%E7%A8%8B%E8%92%99%E5%A4%AA%E5%A5%87"><span class="nav-text">3. 过程蒙太奇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%BB%93%E6%9E%9C%E5%AF%B9%E6%AF%94"><span class="nav-text">4. 结果对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%83%85%E7%BB%AA%E8%90%BD%E7%82%B9"><span class="nav-text">5. 情绪落点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E5%AE%9E%E6%88%98%EF%BC%9A%E7%94%A8%E8%92%99%E5%A4%AA%E5%A5%87%E8%A1%A8%E7%8E%B0%E2%80%9C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E4%B8%80%E5%B9%B4%E2%80%9D"><span class="nav-text">十、实战：用蒙太奇表现“一个人的一年”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%EF%BC%9A%E5%BB%BA%E7%AB%8B%E7%A6%BB%E5%BC%80"><span class="nav-text">开始：建立离开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%AE%B5%EF%BC%9A%E5%8E%8B%E7%BC%A9%E4%B8%80%E5%B9%B4"><span class="nav-text">中段：压缩一年</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B2%E7%AA%81%EF%BC%9A%E5%9F%8E%E5%B8%82%E4%B8%8E%E5%AE%B6%E4%B9%A1%E5%AF%B9%E6%AF%94"><span class="nav-text">冲突：城市与家乡对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E5%B0%BE%EF%BC%9A%E5%9B%9E%E5%AE%B6%E6%B1%87%E5%90%88"><span class="nav-text">结尾：回家汇合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%89%AA%E8%BE%91%E5%89%8D%E7%9A%84%E8%92%99%E5%A4%AA%E5%A5%87%E6%A3%80%E6%9F%A5%E8%A1%A8"><span class="nav-text">十一、剪辑前的蒙太奇检查表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4%E5%8A%9F%E8%83%BD"><span class="nav-text">镜头功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E4%B8%8E%E7%A9%BA%E9%97%B4"><span class="nav-text">时间与空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%8F%E4%B9%89"><span class="nav-text">意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E5%A5%8F"><span class="nav-text">节奏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E9%9F%B3"><span class="nav-text">声音</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="nav-text">十二、常见误区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        15 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>

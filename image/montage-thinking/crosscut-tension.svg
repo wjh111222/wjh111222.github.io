@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">交叉蒙太奇如何制造紧张</title><desc id="desc">受困者与救援者两条线索交替加速并在最后汇合。</desc>
+  <defs><linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111827"/><stop offset="1" stop-color="#3f1d2e"/></linearGradient><marker id="ar" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#fda4af"/></marker></defs>
+  <rect width="1200" height="675" fill="url(#bg3)"/>
+  <text x="600" y="65" text-anchor="middle" fill="#fff" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" font-weight="700">交叉蒙太奇：让两条行动线在同一倒计时中逼近</text>
+  <text x="600" y="103" text-anchor="middle" fill="#fecdd3" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="19">示例：人物被困电梯，维修人员正在赶来</text>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="70" y="190" fill="#93c5fd" font-size="23" font-weight="700">A 线：被困者</text>
+    <text x="70" y="330" fill="#fdba74" font-size="23" font-weight="700">B 线：救援者</text>
+    <line x1="230" y1="180" x2="1090" y2="180" stroke="#475569" stroke-width="2"/><line x1="230" y1="320" x2="1090" y2="320" stroke="#475569" stroke-width="2"/>
+    <g fill="#2563eb"><rect x="250" y="145" width="150" height="70" rx="12"/><rect x="540" y="145" width="110" height="70" rx="12"/><rect x="775" y="145" width="78" height="70" rx="12"/><rect x="955" y="145" width="56" height="70" rx="12"/></g>
+    <g fill="#ea580c"><rect x="420" y="285" width="130" height="70" rx="12"/><rect x="670" y="285" width="98" height="70" rx="12"/><rect x="865" y="285" width="70" height="70" rx="12"/><rect x="1023" y="285" width="48" height="70" rx="12"/></g>
+    <g fill="#fff" font-size="16" text-anchor="middle"><text x="325" y="186">按报警键</text><text x="595" y="186">呼吸急促</text><text x="814" y="186">灯熄灭</text><text x="983" y="186">拍门</text><text x="485" y="326">接到电话</text><text x="719" y="326">冲向机房</text><text x="900" y="326">启动设备</text><text x="1047" y="326">开门</text></g>
+    <path d="M250 410C430 400 520 370 640 335C780 292 880 235 1070 165" fill="none" stroke="#f43f5e" stroke-width="10" stroke-linecap="round"/>
+    <text x="160" y="425" fill="#fda4af" font-size="19" font-weight="700">紧张强度</text>
+    <line x1="230" y1="500" x2="1090" y2="500" stroke="#64748b" stroke-width="3" marker-end="url(#ar)"/>
+    <g fill="#cbd5e1" font-size="16"><text x="250" y="530">镜头较长</text><text x="580" y="530">交替加快</text><text x="830" y="530">动作密度上升</text><text x="1010" y="530">汇合</text></g>
+    <rect x="230" y="565" width="860" height="66" rx="33" fill="#fff" opacity=".1"/>
+    <text x="660" y="592" text-anchor="middle" fill="#fff" font-size="20" font-weight="700">越接近共同结果，镜头越短、声音越急、空间距离越近</text>
+    <text x="660" y="618" text-anchor="middle" fill="#fecdd3" font-size="16">观众同时知道危险和希望，因此产生“能否及时赶到”的悬念</text>
+  </g>
+</svg>
