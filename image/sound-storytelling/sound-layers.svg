@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101827"/>
+      <stop offset="1" stop-color="#172554"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#020617" flood-opacity=".38"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="680" rx="28" fill="url(#bg)"/>
+  <text x="600" y="70" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="700">影视声音的四层结构</text>
+  <text x="600" y="110" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, sans-serif" font-size="20">声音不是一条轨道，而是一组具有叙事分工的层次</text>
+
+  <g filter="url(#shadow)">
+    <rect x="120" y="155" width="960" height="92" rx="18" fill="#2563eb"/>
+    <rect x="120" y="267" width="960" height="92" rx="18" fill="#7c3aed"/>
+    <rect x="120" y="379" width="960" height="92" rx="18" fill="#db2777"/>
+    <rect x="120" y="491" width="960" height="92" rx="18" fill="#ea580c"/>
+  </g>
+
+  <g font-family="Microsoft YaHei, sans-serif" fill="#fff">
+    <text x="165" y="195" font-size="26" font-weight="700">对白层</text>
+    <text x="165" y="226" font-size="18" opacity=".9">人物说了什么，以及停顿、气息和语气透露了什么</text>
+    <text x="930" y="210" text-anchor="middle" font-size="21" font-weight="700">传递信息与关系</text>
+
+    <text x="165" y="307" font-size="26" font-weight="700">环境层</text>
+    <text x="165" y="338" font-size="18" opacity=".9">风声、人群、空调、车流、房间混响与空间底噪</text>
+    <text x="930" y="322" text-anchor="middle" font-size="21" font-weight="700">建立时间与空间</text>
+
+    <text x="165" y="419" font-size="26" font-weight="700">动作与细节层</text>
+    <text x="165" y="450" font-size="18" opacity=".9">脚步、衣料、按键、杯子、门锁以及被强调的关键声响</text>
+    <text x="930" y="434" text-anchor="middle" font-size="21" font-weight="700">赋予动作重量</text>
+
+    <text x="165" y="531" font-size="26" font-weight="700">音乐与情绪层</text>
+    <text x="165" y="562" font-size="18" opacity=".9">旋律、节拍、持续音与有意识留下的静默</text>
+    <text x="930" y="546" text-anchor="middle" font-size="21" font-weight="700">控制情绪方向</text>
+  </g>
+
+  <path d="M600 605v34" stroke="#f8fafc" stroke-width="3"/>
+  <path d="M588 629l12 13 12-13" fill="none" stroke="#f8fafc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600" y="664" text-anchor="middle" fill="#cbd5e1" font-family="Microsoft YaHei, sans-serif" font-size="18">四层共同服务于同一个叙事目的</text>
+</svg>

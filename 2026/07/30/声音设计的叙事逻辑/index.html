@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/07/30/声音设计的叙事逻辑/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🎧 声音设计的叙事逻辑：让观众听见画面之外的故事">
+<meta property="og:url" content="http://example.com/2026/07/30/%E5%A3%B0%E9%9F%B3%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%8F%99%E4%BA%8B%E9%80%BB%E8%BE%91/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-07-30T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-30T07:26:16.931Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="剪辑">
+<meta property="article:tag" content="叙事">
+<meta property="article:tag" content="声音设计">
+<meta property="article:tag" content="视听语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🎧 声音设计的叙事逻辑：让观众听见画面之外的故事 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">16</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">16</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">🎧 声音设计的叙事逻辑：让观众听见画面之外的故事</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-07-30 10:00</span>
+        <span class="mobile">2026-07-30 10:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-07-30 15:26:16</span>
+            <span class="mobile">2026-07-30 15:26:16</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8B%8D%E6%91%84/">拍摄</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%AA%E8%BE%91/">剪辑</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">视听语言</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%8F%99%E4%BA%8B/">叙事</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%A3%B0%E9%9F%B3%E8%AE%BE%E8%AE%A1/">声音设计</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：画面告诉观众“正在看什么”，声音却能告诉观众“应该注意什么、感受什么，以及画面之外正在发生什么”。好的声音设计并不是把素材库里的音效铺满时间线，而是通过选择、层次、远近、节奏和留白，建立一个可以被听见的叙事空间。</p>
+</blockquote>
+<p>很多创作者剪完画面后，才开始思考声音：对白能够听清，再铺一首音乐，补几个转场音效，一条视频似乎就完成了。但这种做法只把声音当成画面的附属品，没有发挥声音在叙事中的真正能力。</p>
+<p>事实上，观众可以闭上眼睛判断空间大小、人物距离和危险方向，也可以在还没看到某个物体之前，先通过声音想象它。画面受制于取景框，声音却能越过画框，连接过去与未来、现实与记忆、人物与环境。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/sound-storytelling/sound-layers.svg"
+                      alt="影视声音的四层结构"
+                ></p>
+<p><em>图 1：对白、环境、动作细节和音乐承担不同任务，四个层次共同构成完整的声音叙事。</em></p>
+<h2 id="一、先理解声音的四个叙事层次"><a href="#一、先理解声音的四个叙事层次" class="headerlink" title="一、先理解声音的四个叙事层次"></a>一、先理解声音的四个叙事层次</h2><p>一段成熟的影视声音，通常不是“一条原声加一条音乐”，而是由多个层次共同组成。</p>
+<h3 id="1-对白层：传递信息，也暴露关系"><a href="#1-对白层：传递信息，也暴露关系" class="headerlink" title="1. 对白层：传递信息，也暴露关系"></a>1. 对白层：传递信息，也暴露关系</h3><p>对白最直接的作用是交代信息，但真正有价值的部分常常不在字面。人物说话的音量、速度、停顿、呼吸和距离，都在透露关系。</p>
+<p>同一句“你回来了”，可以是惊喜、警惕、责备或心虚。画面中的表情也许很克制，但一句话前的吸气、一秒钟的迟疑，可能已经暴露人物的真实情绪。因此处理对白时，不要只做降噪和响度统一，还要保留具有表演价值的气息与停顿。</p>
+<h3 id="2-环境层：让空间变得可信"><a href="#2-环境层：让空间变得可信" class="headerlink" title="2. 环境层：让空间变得可信"></a>2. 环境层：让空间变得可信</h3><p>环境声负责建立地点、时间和空间质感。清晨的鸟声、夜晚远处的车流、狭小房间里的空调低鸣、医院走廊的混响，都在告诉观众“这里是什么地方”。</p>
+<p>如果一个街头镜头没有任何环境声，即使画面清晰，也会像人物贴在一张背景图片上。反过来，先听见远处钟声和稀疏脚步，即使画面还没有出现教堂或广场，观众也会开始建立空间想象。</p>
+<p>环境声不一定响亮，却不能随意中断。它是连接不同机位、隐藏画面切口的重要“声音胶水”。</p>
+<h3 id="3-动作与细节层：赋予画面重量"><a href="#3-动作与细节层：赋予画面重量" class="headerlink" title="3. 动作与细节层：赋予画面重量"></a>3. 动作与细节层：赋予画面重量</h3><p>现实中有些声音并不明显，但影视作品会有意识地将它们放大。皮鞋踩在地面上的声音、钥匙插入锁孔的摩擦、手指敲击桌面的节奏、刀落在案板上的力度，都能让动作变得具体。</p>
+<p>细节音效的关键不是真实还原每一个声音，而是选择最能代表动作意义的声音。人物紧张时，可以突出手指摩擦衣角；人物做出决定时，可以突出笔落在合同上的一声轻响。被选择的声音，就是观众被引导关注的信息。</p>
+<h3 id="4-音乐与静默层：控制情绪方向"><a href="#4-音乐与静默层：控制情绪方向" class="headerlink" title="4. 音乐与静默层：控制情绪方向"></a>4. 音乐与静默层：控制情绪方向</h3><p>音乐可以建立节奏、统一段落，也可以预告情绪。但音乐用得越满，越容易替画面“强行解释”。</p>
+<p>有时真正有力量的设计是撤掉音乐。当一个持续有配乐的段落突然安静下来，观众会本能地提高注意力。静默并不是没有声音，而是有意识地减少信息，让呼吸、脚步或房间底噪成为情绪主体。</p>
+<p>所以不要只问“这里配什么音乐”，还要问：“这里真的需要音乐吗？如果音乐停下，观众会感受到什么？”</p>
+<hr>
+<h2 id="二、声音可以先于画面，也可以晚于画面"><a href="#二、声音可以先于画面，也可以晚于画面" class="headerlink" title="二、声音可以先于画面，也可以晚于画面"></a>二、声音可以先于画面，也可以晚于画面</h2><p>初学剪辑时，我们常把画面和声音剪在同一个位置：镜头切换，声音也立刻更换。这样做清晰，却容易形成机械的“一刀两断”。</p>
+<p>更自然的方式，是让声音跨越画面切点。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/sound-storytelling/jl-cut.svg"
+                      alt="J Cut 与 L Cut"
+                ></p>
+<p><em>图 2：声音与画面错开切换，可以提前建立期待，也可以延长上一场的情绪。</em></p>
+<h3 id="J-Cut：声音先带观众去下一场"><a href="#J-Cut：声音先带观众去下一场" class="headerlink" title="J Cut：声音先带观众去下一场"></a>J Cut：声音先带观众去下一场</h3><p>J Cut 指下一场的声音先出现，随后画面才切过去。例如人物还坐在办公室里，我们已经听到火车站广播；几秒后画面切到站台。声音提前打开下一空间，让转场拥有方向，也让观众产生期待。</p>
+<p>它尤其适合：</p>
+<ul>
+<li>从安静场景进入热闹场景；</li>
+<li>用一句对白引出下一段内容；</li>
+<li>在纪录片中连接采访和现场；</li>
+<li>让观众先产生疑问，再通过画面回答。</li>
+</ul>
+<h3 id="L-Cut：画面离开，情绪仍然停留"><a href="#L-Cut：画面离开，情绪仍然停留" class="headerlink" title="L Cut：画面离开，情绪仍然停留"></a>L Cut：画面离开，情绪仍然停留</h3><p>L Cut 指上一场的声音继续延伸，而画面已经切到下一场。例如争吵画面结束后，人物独自走在回家路上，但最后一句刺痛他的话仍在声音中延续。此时对白不再只是现场信息，而像留在人物脑海里的回声。</p>
+<p>它适合表现回忆、余味、心理影响和因果联系，也常用于采访剪辑：采访者的声音继续，画面切到相关行动或资料，使信息更流畅。</p>
+<p>J Cut 和 L Cut 的本质，是把“看见”和“听见”安排在不同时间。观众的注意力因此被声音牵引，而不是被每次画面切换打断。</p>
+<hr>
+<h2 id="三、声画同步只是基础，声画关系才产生意义"><a href="#三、声画同步只是基础，声画关系才产生意义" class="headerlink" title="三、声画同步只是基础，声画关系才产生意义"></a>三、声画同步只是基础，声画关系才产生意义</h2><p>声音与画面的关系大致可以分成三种。</p>
+<h3 id="1-同步：声音确认画面"><a href="#1-同步：声音确认画面" class="headerlink" title="1. 同步：声音确认画面"></a>1. 同步：声音确认画面</h3><p>门被关上，同时听见关门声；杯子落地，同时听见破碎声。这种声画同步让动作可信，也是空间连续性的基础。</p>
+<p>但同步并不意味着所有动作都要配音。真正重要的是强调关键动作，并让声音的力度符合叙事。轻轻合门和愤怒摔门，即使画面动作相似，声音的低频、尾音与响度也应该不同。</p>
+<h3 id="2-补充：声音扩展画外空间"><a href="#2-补充：声音扩展画外空间" class="headerlink" title="2. 补充：声音扩展画外空间"></a>2. 补充：声音扩展画外空间</h3><p>镜头只拍人物的脸，画外传来救护车靠近的声音；镜头只拍一扇门，门后传来压低的争吵。观众没有看见事件，却会主动想象。</p>
+<p>这种设计可以节省画面，也能制造悬念。看不见的事物往往比直接展示更有想象空间。尤其在低成本创作中，声音可以建立画面无法完整呈现的世界规模。</p>
+<h3 id="3-对位：声音与画面形成反差"><a href="#3-对位：声音与画面形成反差" class="headerlink" title="3. 对位：声音与画面形成反差"></a>3. 对位：声音与画面形成反差</h3><p>喜庆音乐下出现失败的场景，平静的童谣配合危险画面，热闹人群中人物却听不清任何声音。声画反差会迫使观众重新理解画面。</p>
+<p>不过，反差不是为了猎奇。它必须服务于明确的表达：是讽刺、悲凉、疏离，还是人物主观感受？如果没有目的，对位只会显得故作高级。</p>
+<hr>
+<h2 id="四、从客观声音切换到主观声音"><a href="#四、从客观声音切换到主观声音" class="headerlink" title="四、从客观声音切换到主观声音"></a>四、从客观声音切换到主观声音</h2><p>声音不仅能描述环境，还能决定观众站在谁的角度体验事件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/sound-storytelling/sound-perspective.svg"
+                      alt="客观声音与主观声音"
+                ></p>
+<p><em>图 3：客观声音让观众观察现场，主观声音则把观众拉进人物的身体与意识。</em></p>
+<p>客观声音尽量保持现实中的比例：近处声音清晰，远处声音模糊，环境、人声与动作共同存在。观众像站在现场旁观。</p>
+<p>主观声音则按照人物的心理重新分配声音。例如人物受到惊吓时，周围人声逐渐模糊，只剩心跳、呼吸和耳鸣；人物在人群中突然看见熟悉的人时，嘈杂环境可以迅速变小，只突出对方的一句话。</p>
+<p>主观声音的常见方法包括：</p>
+<ul>
+<li>降低或过滤环境高频；</li>
+<li>放大呼吸、心跳和身体内部声；</li>
+<li>使用耳鸣、低频持续音或异常混响；</li>
+<li>让某个现实声音不断重复；</li>
+<li>突然抽走声音，制造短暂真空。</li>
+</ul>
+<p>这些方法不是固定的“紧张音效套餐”。它们要与人物注意力一致：人物此刻最在意什么，观众就应该最清楚地听见什么。</p>
+<hr>
+<h2 id="五、声音也有景别和透视"><a href="#五、声音也有景别和透视" class="headerlink" title="五、声音也有景别和透视"></a>五、声音也有景别和透视</h2><p>画面有远景、中景和近景，声音同样具有距离。</p>
+<p>远处声音通常更小、细节更少、混响更多；近处声音更直接、更清晰，低频和细节也更丰富。如果人物明明站在走廊尽头，说话声却像贴着麦克风，空间感就会崩塌。</p>
+<p>制作声音透视时，可以同时考虑：</p>
+<ol>
+<li><strong>响度</strong>：距离越远，通常越小；</li>
+<li><strong>频率</strong>：隔着门或墙时，高频往往衰减；</li>
+<li><strong>混响</strong>：空间越大、距离越远，反射声越明显；</li>
+<li><strong>声像</strong>：声音来自画面左侧、右侧还是背后；</li>
+<li><strong>清晰度</strong>：主角关注的声音可以更清楚，非重点可以更模糊。</li>
+</ol>
+<p>声音透视不仅为了真实，还能引导注意力。导演完全可以让一个远处但关键的声音比现实更清晰，因为叙事真实有时比物理真实更重要。</p>
+<hr>
+<h2 id="六、短视频中如何设计声音节奏"><a href="#六、短视频中如何设计声音节奏" class="headerlink" title="六、短视频中如何设计声音节奏"></a>六、短视频中如何设计声音节奏</h2><p>短视频常依赖音乐卡点，但卡点不等于声音节奏。真正有效的声音节奏来自密度变化：有些段落信息丰富，有些段落突然稀疏；有些声音连续推进，有些声音在关键时刻断开。</p>
+<p>可以尝试一个四段式结构：</p>
+<h3 id="第一段：用声音先制造问题"><a href="#第一段：用声音先制造问题" class="headerlink" title="第一段：用声音先制造问题"></a>第一段：用声音先制造问题</h3><p>画面还没完全交代环境，先出现一个有辨识度的声音，例如急促敲门、倒计时、异常呼吸或远处呼喊。声音先提出问题，吸引观众寻找声源。</p>
+<h3 id="第二段：用环境和动作建立过程"><a href="#第二段：用环境和动作建立过程" class="headerlink" title="第二段：用环境和动作建立过程"></a>第二段：用环境和动作建立过程</h3><p>进入主体后，不要让音乐覆盖一切。保留脚步、工具、键盘或材料变化的声音，让过程具有触感。必要时让动作声与剪辑节奏互相呼应。</p>
+<h3 id="第三段：在转折前减少声音"><a href="#第三段：在转折前减少声音" class="headerlink" title="第三段：在转折前减少声音"></a>第三段：在转折前减少声音</h3><p>当重要信息即将揭示时，可以降低音乐、缩减环境声，给观众留下注意力空间。声音密度的下降，本身就是“有事要发生”的信号。</p>
+<h3 id="第四段：用一个声音完成收束"><a href="#第四段：用一个声音完成收束" class="headerlink" title="第四段：用一个声音完成收束"></a>第四段：用一个声音完成收束</h3><p>结尾不一定依靠音乐高潮。门锁扣上、发送成功提示音、人物的一次呼气，甚至回到开头的同一个声音，都能形成声音上的闭环。</p>
+<hr>
+<h2 id="七、实战案例：设计一段“深夜回家”"><a href="#七、实战案例：设计一段“深夜回家”" class="headerlink" title="七、实战案例：设计一段“深夜回家”"></a>七、实战案例：设计一段“深夜回家”</h2><p>假设画面内容很简单：人物深夜回家，进入房间后发现桌上放着一封信。</p>
+<p>如果只使用舒缓音乐，这段内容只是普通的回家过程。我们可以用声音重新组织它：</p>
+<ol>
+<li>楼道画面出现前，先听见感应灯启动的轻响；</li>
+<li>脚步声在空楼道里带有明显混响，建立深夜的空旷；</li>
+<li>人物走近家门时，音乐停止，只保留钥匙碰撞声；</li>
+<li>钥匙插入锁孔，却停顿两秒，让观众感到人物在犹豫；</li>
+<li>开门后，楼道环境声被门隔断，房间显得异常安静；</li>
+<li>镜头尚未拍到桌子，先传来纸张被风轻轻吹动的声音；</li>
+<li>人物看见信后，远处冰箱压缩机突然停止，空间进一步安静；</li>
+<li>手触碰信封时，突出纸张摩擦，随后切入一段记忆中的对白。</li>
+</ol>
+<p>这套设计没有使用夸张音效，却通过远近、停顿和声音缺失，把普通动作变成具有悬念的叙事。</p>
+<hr>
+<h2 id="八、声音设计最常见的五个问题"><a href="#八、声音设计最常见的五个问题" class="headerlink" title="八、声音设计最常见的五个问题"></a>八、声音设计最常见的五个问题</h2><h3 id="1-音乐从头铺到尾"><a href="#1-音乐从头铺到尾" class="headerlink" title="1. 音乐从头铺到尾"></a>1. 音乐从头铺到尾</h3><p>持续音乐会让情绪失去层次。先划分段落，再决定哪里进入、哪里退出、哪里只保留环境声。</p>
+<h3 id="2-所有效果音都一样响"><a href="#2-所有效果音都一样响" class="headerlink" title="2. 所有效果音都一样响"></a>2. 所有效果音都一样响</h3><p>声音没有主次，观众就不知道关注什么。每个时刻最好只有一个主要声音，其余声音负责支撑空间。</p>
+<h3 id="3-只追求干净，破坏现场感"><a href="#3-只追求干净，破坏现场感" class="headerlink" title="3. 只追求干净，破坏现场感"></a>3. 只追求干净，破坏现场感</h3><p>降噪过度会让对白像悬浮在真空中。保留适量房间底噪，并在不同镜头之间维持一致，往往比绝对安静更自然。</p>
+<h3 id="4-转场音效成为固定模板"><a href="#4-转场音效成为固定模板" class="headerlink" title="4. 转场音效成为固定模板"></a>4. 转场音效成为固定模板</h3><p>每次切镜头都加“嗖”的一声，会让声音只剩装饰。先判断转场的叙事关系，再决定使用提前声、延续声、环境桥接或真正的效果音。</p>
+<h3 id="5-忽略手机与耳机的播放差异"><a href="#5-忽略手机与耳机的播放差异" class="headerlink" title="5. 忽略手机与耳机的播放差异"></a>5. 忽略手机与耳机的播放差异</h3><p>低频丰富的声音在音箱上有力量，但在手机外放中可能几乎消失。完成后至少使用耳机、手机外放和普通电脑音箱各检查一次，确认对白清晰、关键音效仍然可辨。</p>
+<hr>
+<h2 id="九、一份可直接使用的声音检查清单"><a href="#九、一份可直接使用的声音检查清单" class="headerlink" title="九、一份可直接使用的声音检查清单"></a>九、一份可直接使用的声音检查清单</h2><p>剪辑完成后，可以逐项检查：</p>
+<ul>
+<li>不看画面时，是否仍能判断场景和情绪变化？</li>
+<li>对白、环境、动作和音乐是否各自有明确任务？</li>
+<li>环境声是否在机位切换时突然中断？</li>
+<li>关键动作是否有足够的重量和细节？</li>
+<li>音乐是否给情绪留出了起伏与呼吸？</li>
+<li>是否尝试过让声音提前或延后跨越切点？</li>
+<li>声音距离是否与画面景别基本一致？</li>
+<li>主观声音是否与人物当下的注意力一致？</li>
+<li>最重要的声音是否被其他层次遮盖？</li>
+<li>手机外放时，对白和关键细节是否仍然清楚？</li>
+</ul>
+<hr>
+<h2 id="结语：声音不是补充，而是另一条叙事线"><a href="#结语：声音不是补充，而是另一条叙事线" class="headerlink" title="结语：声音不是补充，而是另一条叙事线"></a>结语：声音不是补充，而是另一条叙事线</h2><p>真正成熟的视听创作，不是先把画面讲完整，再用声音装饰，而是在前期就同时思考“观众会看见什么”和“观众会听见什么”。</p>
+<p>画面可以展示门已经关上，声音却能告诉观众关门的人是否愤怒；画面可以展示一条空走廊，声音却能让观众知道拐角后有人接近；画面可以停留在人物平静的脸上，声音却能带我们进入他的记忆和恐惧。</p>
+<p>当你开始主动设计声音的出现、消失、距离和视角，剪辑就不再只是画面的排列。观众不仅是在观看一个故事，也是在声音建立的空间里亲身经历它。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 🎧 声音设计的叙事逻辑：让观众听见画面之外的故事</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-07-30 10:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-07-30 15:26:16
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/07/30/声音设计的叙事逻辑/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%89%AA%E8%BE%91/">#剪辑</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">#视听语言</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%8F%99%E4%BA%8B/">#叙事</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%A3%B0%E9%9F%B3%E8%AE%BE%E8%AE%A1/">#声音设计</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/07/29/%E8%92%99%E5%A4%AA%E5%A5%87%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">🎬 蒙太奇的设计方法：让镜头组合产生新的意义</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">🎧 声音设计的叙事逻辑：让观众听见画面之外的故事</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E7%90%86%E8%A7%A3%E5%A3%B0%E9%9F%B3%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%8F%99%E4%BA%8B%E5%B1%82%E6%AC%A1"><span class="nav-text">一、先理解声音的四个叙事层次</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AF%B9%E7%99%BD%E5%B1%82%EF%BC%9A%E4%BC%A0%E9%80%92%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%B9%9F%E6%9A%B4%E9%9C%B2%E5%85%B3%E7%B3%BB"><span class="nav-text">1. 对白层：传递信息，也暴露关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%8E%AF%E5%A2%83%E5%B1%82%EF%BC%9A%E8%AE%A9%E7%A9%BA%E9%97%B4%E5%8F%98%E5%BE%97%E5%8F%AF%E4%BF%A1"><span class="nav-text">2. 环境层：让空间变得可信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8A%A8%E4%BD%9C%E4%B8%8E%E7%BB%86%E8%8A%82%E5%B1%82%EF%BC%9A%E8%B5%8B%E4%BA%88%E7%94%BB%E9%9D%A2%E9%87%8D%E9%87%8F"><span class="nav-text">3. 动作与细节层：赋予画面重量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%9F%B3%E4%B9%90%E4%B8%8E%E9%9D%99%E9%BB%98%E5%B1%82%EF%BC%9A%E6%8E%A7%E5%88%B6%E6%83%85%E7%BB%AA%E6%96%B9%E5%90%91"><span class="nav-text">4. 音乐与静默层：控制情绪方向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%A3%B0%E9%9F%B3%E5%8F%AF%E4%BB%A5%E5%85%88%E4%BA%8E%E7%94%BB%E9%9D%A2%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%99%9A%E4%BA%8E%E7%94%BB%E9%9D%A2"><span class="nav-text">二、声音可以先于画面，也可以晚于画面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#J-Cut%EF%BC%9A%E5%A3%B0%E9%9F%B3%E5%85%88%E5%B8%A6%E8%A7%82%E4%BC%97%E5%8E%BB%E4%B8%8B%E4%B8%80%E5%9C%BA"><span class="nav-text">J Cut：声音先带观众去下一场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L-Cut%EF%BC%9A%E7%94%BB%E9%9D%A2%E7%A6%BB%E5%BC%80%EF%BC%8C%E6%83%85%E7%BB%AA%E4%BB%8D%E7%84%B6%E5%81%9C%E7%95%99"><span class="nav-text">L Cut：画面离开，情绪仍然停留</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%A3%B0%E7%94%BB%E5%90%8C%E6%AD%A5%E5%8F%AA%E6%98%AF%E5%9F%BA%E7%A1%80%EF%BC%8C%E5%A3%B0%E7%94%BB%E5%85%B3%E7%B3%BB%E6%89%8D%E4%BA%A7%E7%94%9F%E6%84%8F%E4%B9%89"><span class="nav-text">三、声画同步只是基础，声画关系才产生意义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%90%8C%E6%AD%A5%EF%BC%9A%E5%A3%B0%E9%9F%B3%E7%A1%AE%E8%AE%A4%E7%94%BB%E9%9D%A2"><span class="nav-text">1. 同步：声音确认画面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%A1%A5%E5%85%85%EF%BC%9A%E5%A3%B0%E9%9F%B3%E6%89%A9%E5%B1%95%E7%94%BB%E5%A4%96%E7%A9%BA%E9%97%B4"><span class="nav-text">2. 补充：声音扩展画外空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%AF%B9%E4%BD%8D%EF%BC%9A%E5%A3%B0%E9%9F%B3%E4%B8%8E%E7%94%BB%E9%9D%A2%E5%BD%A2%E6%88%90%E5%8F%8D%E5%B7%AE"><span class="nav-text">3. 对位：声音与画面形成反差</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BB%8E%E5%AE%A2%E8%A7%82%E5%A3%B0%E9%9F%B3%E5%88%87%E6%8D%A2%E5%88%B0%E4%B8%BB%E8%A7%82%E5%A3%B0%E9%9F%B3"><span class="nav-text">四、从客观声音切换到主观声音</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%A3%B0%E9%9F%B3%E4%B9%9F%E6%9C%89%E6%99%AF%E5%88%AB%E5%92%8C%E9%80%8F%E8%A7%86"><span class="nav-text">五、声音也有景别和透视</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E7%9F%AD%E8%A7%86%E9%A2%91%E4%B8%AD%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E5%A3%B0%E9%9F%B3%E8%8A%82%E5%A5%8F"><span class="nav-text">六、短视频中如何设计声音节奏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AE%B5%EF%BC%9A%E7%94%A8%E5%A3%B0%E9%9F%B3%E5%85%88%E5%88%B6%E9%80%A0%E9%97%AE%E9%A2%98"><span class="nav-text">第一段：用声音先制造问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AE%B5%EF%BC%9A%E7%94%A8%E7%8E%AF%E5%A2%83%E5%92%8C%E5%8A%A8%E4%BD%9C%E5%BB%BA%E7%AB%8B%E8%BF%87%E7%A8%8B"><span class="nav-text">第二段：用环境和动作建立过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AE%B5%EF%BC%9A%E5%9C%A8%E8%BD%AC%E6%8A%98%E5%89%8D%E5%87%8F%E5%B0%91%E5%A3%B0%E9%9F%B3"><span class="nav-text">第三段：在转折前减少声音</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AE%B5%EF%BC%9A%E7%94%A8%E4%B8%80%E4%B8%AA%E5%A3%B0%E9%9F%B3%E5%AE%8C%E6%88%90%E6%94%B6%E6%9D%9F"><span class="nav-text">第四段：用一个声音完成收束</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%EF%BC%9A%E8%AE%BE%E8%AE%A1%E4%B8%80%E6%AE%B5%E2%80%9C%E6%B7%B1%E5%A4%9C%E5%9B%9E%E5%AE%B6%E2%80%9D"><span class="nav-text">七、实战案例：设计一段“深夜回家”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%A3%B0%E9%9F%B3%E8%AE%BE%E8%AE%A1%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%94%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="nav-text">八、声音设计最常见的五个问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9F%B3%E4%B9%90%E4%BB%8E%E5%A4%B4%E9%93%BA%E5%88%B0%E5%B0%BE"><span class="nav-text">1. 音乐从头铺到尾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%89%80%E6%9C%89%E6%95%88%E6%9E%9C%E9%9F%B3%E9%83%BD%E4%B8%80%E6%A0%B7%E5%93%8D"><span class="nav-text">2. 所有效果音都一样响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8F%AA%E8%BF%BD%E6%B1%82%E5%B9%B2%E5%87%80%EF%BC%8C%E7%A0%B4%E5%9D%8F%E7%8E%B0%E5%9C%BA%E6%84%9F"><span class="nav-text">3. 只追求干净，破坏现场感</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%BD%AC%E5%9C%BA%E9%9F%B3%E6%95%88%E6%88%90%E4%B8%BA%E5%9B%BA%E5%AE%9A%E6%A8%A1%E6%9D%BF"><span class="nav-text">4. 转场音效成为固定模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%BF%BD%E7%95%A5%E6%89%8B%E6%9C%BA%E4%B8%8E%E8%80%B3%E6%9C%BA%E7%9A%84%E6%92%AD%E6%94%BE%E5%B7%AE%E5%BC%82"><span class="nav-text">5. 忽略手机与耳机的播放差异</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E4%B8%80%E4%BB%BD%E5%8F%AF%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E5%A3%B0%E9%9F%B3%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><span class="nav-text">九、一份可直接使用的声音检查清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD%EF%BC%9A%E5%A3%B0%E9%9F%B3%E4%B8%8D%E6%98%AF%E8%A1%A5%E5%85%85%EF%BC%8C%E8%80%8C%E6%98%AF%E5%8F%A6%E4%B8%80%E6%9D%A1%E5%8F%99%E4%BA%8B%E7%BA%BF"><span class="nav-text">结语：声音不是补充，而是另一条叙事线</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        16 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
