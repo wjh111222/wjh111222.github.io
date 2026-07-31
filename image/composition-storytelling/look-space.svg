@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#172554"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="680" rx="28" fill="url(#bg2)"/>
+  <text x="600" y="68" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="700">视线空间如何制造心理感受</text>
+  <text x="600" y="106" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, sans-serif" font-size="19">同一个人物，只改变前方留白，画面含义就会变化</text>
+
+  <g font-family="Microsoft YaHei, sans-serif">
+    <rect x="80" y="155" width="480" height="360" rx="18" fill="#0f172a" stroke="#334155" stroke-width="3"/>
+    <text x="320" y="192" text-anchor="middle" fill="#34d399" font-size="24" font-weight="700">充分留白：期待、观察、前进</text>
+    <circle cx="205" cy="328" r="44" fill="#dbeafe"/>
+    <path d="M137 445c9-83 36-125 68-125s59 42 68 125" fill="#60a5fa"/>
+    <path d="M198 320l18 7-18 7" fill="#1e3a8a"/>
+    <line x1="255" y1="330" x2="475" y2="330" stroke="#fbbf24" stroke-width="5" marker-end="url(#arrow)"/>
+    <text x="370" y="370" text-anchor="middle" fill="#fde68a" font-size="18">视线方向与留白一致</text>
+
+    <rect x="640" y="155" width="480" height="360" rx="18" fill="#0f172a" stroke="#334155" stroke-width="3"/>
+    <text x="880" y="192" text-anchor="middle" fill="#fb7185" font-size="24" font-weight="700">压缩留白：受阻、紧迫、逃离</text>
+    <circle cx="1015" cy="328" r="44" fill="#ffe4e6"/>
+    <path d="M947 445c9-83 36-125 68-125s59 42 68 125" fill="#f43f5e"/>
+    <path d="M1008 320l18 7-18 7" fill="#881337"/>
+    <line x1="995" y1="330" x2="1085" y2="330" stroke="#fbbf24" stroke-width="5" marker-end="url(#arrow)"/>
+    <text x="880" y="370" text-anchor="middle" fill="#fecdd3" font-size="18">视线被画框边缘截断</text>
+  </g>
+
+  <rect x="174" y="565" width="852" height="66" rx="18" fill="#fff" fill-opacity=".07" stroke="#475569"/>
+  <text x="600" y="606" text-anchor="middle" fill="#e2e8f0" font-family="Microsoft YaHei, sans-serif" font-size="20">留白不是“空着没东西”，而是留给方向、关系和未知事件的位置</text>
+</svg>

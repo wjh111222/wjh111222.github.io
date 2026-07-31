@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#475569"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="680" rx="28" fill="#0f172a"/>
+  <text x="600" y="68" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="700">前景、中景、背景：建立画面纵深</text>
+  <text x="600" y="106" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, sans-serif" font-size="19">分层不仅让画面更丰富，也能同时交代人物、环境与关系</text>
+
+  <rect x="90" y="145" width="1020" height="430" rx="20" fill="url(#sky)" stroke="#475569" stroke-width="3"/>
+  <path d="M90 390L1110 330V575H90Z" fill="url(#floor)"/>
+
+  <g opacity=".48" fill="#94a3b8">
+    <rect x="715" y="195" width="130" height="220"/>
+    <rect x="870" y="245" width="92" height="180"/>
+    <rect x="990" y="210" width="70" height="225"/>
+    <g fill="#f8fafc">
+      <rect x="738" y="220" width="22" height="28"/><rect x="786" y="220" width="22" height="28"/>
+      <rect x="738" y="270" width="22" height="28"/><rect x="786" y="270" width="22" height="28"/>
+      <rect x="891" y="270" width="18" height="25"/><rect x="928" y="270" width="18" height="25"/>
+    </g>
+  </g>
+
+  <circle cx="580" cy="325" r="42" fill="#fef3c7"/>
+  <path d="M505 500c10-122 40-183 75-183s65 61 75 183" fill="#f59e0b"/>
+  <path d="M535 375h90" stroke="#fde68a" stroke-width="8" stroke-linecap="round"/>
+
+  <path d="M90 145h170c-78 108-86 252 0 430H90Z" fill="#020617"/>
+  <path d="M1110 145H975c65 119 72 260 10 430h125Z" fill="#020617"/>
+  <path d="M185 145c45 106 50 283 0 430" fill="none" stroke="#22c55e" stroke-width="6"/>
+
+  <g font-family="Microsoft YaHei, sans-serif">
+    <rect x="104" y="592" width="270" height="48" rx="14" fill="#22c55e"/>
+    <text x="239" y="623" text-anchor="middle" fill="#052e16" font-size="20" font-weight="700">前景：遮挡与引导</text>
+    <rect x="465" y="592" width="270" height="48" rx="14" fill="#f59e0b"/>
+    <text x="600" y="623" text-anchor="middle" fill="#451a03" font-size="20" font-weight="700">中景：人物与行动</text>
+    <rect x="826" y="592" width="270" height="48" rx="14" fill="#94a3b8"/>
+    <text x="961" y="623" text-anchor="middle" fill="#0f172a" font-size="20" font-weight="700">背景：环境与信息</text>
+  </g>
+</svg>

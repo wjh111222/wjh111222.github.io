@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="680" rx="28" fill="url(#bg)"/>
+  <text x="600" y="68" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="700">画面元素的视觉重量</text>
+  <text x="600" y="106" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, sans-serif" font-size="19">构图平衡不是左右数量相等，而是视觉力量彼此制衡</text>
+
+  <line x1="600" y1="145" x2="600" y2="590" stroke="#475569" stroke-width="2"/>
+  <g font-family="Microsoft YaHei, sans-serif">
+    <text x="300" y="172" text-anchor="middle" fill="#38bdf8" font-size="25" font-weight="700">失衡：注意力被单侧拉走</text>
+    <rect x="90" y="205" width="420" height="300" rx="16" fill="#111827" stroke="#334155" stroke-width="3"/>
+    <circle cx="190" cy="340" r="82" fill="#f97316"/>
+    <circle cx="190" cy="315" r="28" fill="#fff7ed"/>
+    <path d="M135 420c8-58 31-88 55-88s47 30 55 88" fill="#fff7ed"/>
+    <path d="M150 525h100" stroke="#f97316" stroke-width="12" stroke-linecap="round"/>
+    <text x="300" y="555" text-anchor="middle" fill="#cbd5e1" font-size="18">人物、大面积亮色都集中在左侧</text>
+
+    <text x="900" y="172" text-anchor="middle" fill="#a78bfa" font-size="25" font-weight="700">平衡：不同元素相互支撑</text>
+    <rect x="690" y="205" width="420" height="300" rx="16" fill="#111827" stroke="#334155" stroke-width="3"/>
+    <circle cx="785" cy="350" r="70" fill="#7c3aed"/>
+    <circle cx="785" cy="328" r="25" fill="#f5f3ff"/>
+    <path d="M737 420c7-50 27-76 48-76s41 26 48 76" fill="#f5f3ff"/>
+    <rect x="952" y="258" width="72" height="150" rx="8" fill="#f59e0b"/>
+    <circle cx="988" cy="245" r="32" fill="#fef3c7"/>
+    <text x="900" y="555" text-anchor="middle" fill="#cbd5e1" font-size="18">左侧人物由右侧亮区与垂直线条平衡</text>
+  </g>
+
+  <rect x="214" y="600" width="772" height="50" rx="16" fill="#fff" fill-opacity=".07" stroke="#475569"/>
+  <text x="600" y="633" text-anchor="middle" fill="#e2e8f0" font-family="Microsoft YaHei, sans-serif" font-size="18">亮度、色彩、大小、清晰度和人物面孔都会增加视觉重量</text>
+</svg>
