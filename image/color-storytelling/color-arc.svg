@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+    <linearGradient id="arc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#64748b"/><stop offset=".5" stop-color="#2563eb"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+  </defs>
+  <rect width="1200" height="680" rx="28" fill="url(#bg3)"/>
+  <text x="600" y="70" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="700">人物的色彩弧线</text>
+  <text x="600" y="108" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, sans-serif" font-size="19">色彩可以像表演和构图一样，随剧情逐步变化</text>
+  <rect x="110" y="178" width="980" height="110" rx="24" fill="url(#arc)"/>
+  <circle cx="220" cy="233" r="18" fill="#fff"/><circle cx="600" cy="233" r="18" fill="#fff"/><circle cx="980" cy="233" r="18" fill="#fff"/>
+  <g font-family="Microsoft YaHei, sans-serif">
+    <text x="220" y="335" text-anchor="middle" fill="#cbd5e1" font-size="25" font-weight="700">压抑</text>
+    <text x="220" y="373" text-anchor="middle" fill="#94a3b8" font-size="18">低饱和、低明度</text>
+    <text x="220" y="405" text-anchor="middle" fill="#94a3b8" font-size="18">人物融入灰暗环境</text>
+    <text x="600" y="335" text-anchor="middle" fill="#93c5fd" font-size="25" font-weight="700">冲突</text>
+    <text x="600" y="373" text-anchor="middle" fill="#94a3b8" font-size="18">冷暖开始分离</text>
+    <text x="600" y="405" text-anchor="middle" fill="#94a3b8" font-size="18">对比增强、关系撕裂</text>
+    <text x="980" y="335" text-anchor="middle" fill="#fde68a" font-size="25" font-weight="700">释放</text>
+    <text x="980" y="373" text-anchor="middle" fill="#94a3b8" font-size="18">明度与暖色增加</text>
+    <text x="980" y="405" text-anchor="middle" fill="#94a3b8" font-size="18">人物从环境中显现</text>
+    <path d="M220 480C380 560 455 540 600 480S820 400 980 480" fill="none" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+    <text x="600" y="540" text-anchor="middle" fill="#e2e8f0" font-size="19">情绪变化不必靠突然换色，而应在多个场景中逐步累积</text>
+    <rect x="205" y="588" width="790" height="54" rx="16" fill="#fff" fill-opacity=".07" stroke="#475569"/>
+    <text x="600" y="623" text-anchor="middle" fill="#e2e8f0" font-size="19">先确定人物弧光，再设计全片的颜色变化路线</text>
+  </g>
+</svg>

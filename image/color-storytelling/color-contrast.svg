@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <defs><linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111827"/><stop offset="1" stop-color="#172554"/></linearGradient></defs>
+  <rect width="1200" height="680" rx="28" fill="url(#bg2)"/>
+  <text x="600" y="68" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="700">三种常见的色彩关系</text>
+  <text x="600" y="106" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, sans-serif" font-size="19">配色不是选“好看的颜色”，而是安排视觉关系</text>
+  <g font-family="Microsoft YaHei, sans-serif">
+    <rect x="70" y="155" width="320" height="400" rx="22" fill="#0f172a" stroke="#334155" stroke-width="3"/>
+    <text x="230" y="198" text-anchor="middle" fill="#f8fafc" font-size="24" font-weight="700">同类色</text>
+    <circle cx="170" cy="310" r="70" fill="#1d4ed8"/><circle cx="290" cy="310" r="70" fill="#38bdf8" fill-opacity=".9"/>
+    <text x="230" y="430" text-anchor="middle" fill="#93c5fd" font-size="19">统一、稳定、沉浸</text>
+    <text x="230" y="470" text-anchor="middle" fill="#94a3b8" font-size="16">适合建立完整世界气质</text>
+    <rect x="440" y="155" width="320" height="400" rx="22" fill="#0f172a" stroke="#334155" stroke-width="3"/>
+    <text x="600" y="198" text-anchor="middle" fill="#f8fafc" font-size="24" font-weight="700">冷暖对比</text>
+    <circle cx="540" cy="310" r="70" fill="#0ea5e9"/><circle cx="660" cy="310" r="70" fill="#f97316" fill-opacity=".95"/>
+    <text x="600" y="430" text-anchor="middle" fill="#fed7aa" font-size="19">距离、冲突、空间层次</text>
+    <text x="600" y="470" text-anchor="middle" fill="#94a3b8" font-size="16">常用于分离人物与环境</text>
+    <rect x="810" y="155" width="320" height="400" rx="22" fill="#0f172a" stroke="#334155" stroke-width="3"/>
+    <text x="970" y="198" text-anchor="middle" fill="#f8fafc" font-size="24" font-weight="700">点状强调</text>
+    <circle cx="970" cy="310" r="112" fill="#475569"/><circle cx="970" cy="310" r="30" fill="#ef4444"/>
+    <text x="970" y="430" text-anchor="middle" fill="#fecaca" font-size="19">线索、危险、视觉焦点</text>
+    <text x="970" y="470" text-anchor="middle" fill="#94a3b8" font-size="16">少量高饱和色最醒目</text>
+    <rect x="190" y="590" width="820" height="54" rx="16" fill="#fff" fill-opacity=".07" stroke="#475569"/>
+    <text x="600" y="625" text-anchor="middle" fill="#e2e8f0" font-size="19">关系越统一越平静，差异越明显越容易形成叙事重点</text>
+  </g>
+</svg>
