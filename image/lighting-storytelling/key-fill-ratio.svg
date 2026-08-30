@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">主光与辅光的明暗关系</title>
+  <desc id="desc">从低反差到高反差，画面的感受由明快自然逐渐变得集中而戏剧化。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#1f2937"/>
+    </linearGradient>
+    <linearGradient id="scale" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset=".5" stop-color="#94a3b8"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <text x="600" y="72" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" font-weight="700">主光与辅光：用反差控制情绪</text>
+  <text x="600" y="112" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="19">主光确定方向，辅光决定阴影保留多少</text>
+
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <rect x="100" y="170" width="1000" height="74" rx="37" fill="url(#scale)" stroke="#64748b"/>
+    <circle cx="215" cy="207" r="16" fill="#2563eb"/>
+    <circle cx="600" cy="207" r="16" fill="#8b5cf6"/>
+    <circle cx="985" cy="207" r="16" fill="#f59e0b"/>
+
+    <rect x="80" y="305" width="320" height="250" rx="24" fill="#f8fafc"/>
+    <circle cx="240" cy="380" r="48" fill="#f1c7a5"/>
+    <path d="M240 332a48 48 0 0 1 0 96z" fill="#dfb08c" opacity=".22"/>
+    <text x="240" y="478" text-anchor="middle" fill="#1e3a8a" font-size="27" font-weight="700">低反差</text>
+    <text x="240" y="516" text-anchor="middle" fill="#475569" font-size="18">明快 · 清楚 · 轻松</text>
+
+    <rect x="440" y="305" width="320" height="250" rx="24" fill="#e2e8f0"/>
+    <circle cx="600" cy="380" r="48" fill="#f1c7a5"/>
+    <path d="M600 332a48 48 0 0 1 0 96z" fill="#8b5e4a" opacity=".55"/>
+    <text x="600" y="478" text-anchor="middle" fill="#4c1d95" font-size="27" font-weight="700">中等反差</text>
+    <text x="600" y="516" text-anchor="middle" fill="#475569" font-size="18">自然 · 有层次 · 集中</text>
+
+    <rect x="800" y="305" width="320" height="250" rx="24" fill="#334155"/>
+    <circle cx="960" cy="380" r="48" fill="#f1c7a5"/>
+    <path d="M960 332a48 48 0 0 1 0 96z" fill="#0f172a" opacity=".94"/>
+    <text x="960" y="478" text-anchor="middle" fill="#fde68a" font-size="27" font-weight="700">高反差</text>
+    <text x="960" y="516" text-anchor="middle" fill="#cbd5e1" font-size="18">紧张 · 神秘 · 戏剧化</text>
+
+    <text x="100" y="278" fill="#cbd5e1" font-size="17">辅光较强</text>
+    <text x="1100" y="278" text-anchor="end" fill="#cbd5e1" font-size="17">辅光较弱</text>
+    <text x="600" y="618" text-anchor="middle" fill="#cbd5e1" font-size="20">反差是一条连续刻度，应根据内容选择，而不是追求固定比例</text>
+  </g>
+</svg>

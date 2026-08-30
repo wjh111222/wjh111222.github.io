@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">一场对话中的光线情绪弧线</title>
+  <desc id="desc">人物从各自处在光圈边缘，逐步进入亮处，最终共享同一束暖光。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <radialGradient id="pool" cx="50%" cy="20%" r="80%">
+      <stop offset="0" stop-color="#fef3c7" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0 0L12 6L0 12Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <text x="600" y="70" text-anchor="middle" fill="#f8fafc" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" font-weight="700">让人物移动，完成光线的情绪变化</text>
+  <text x="600" y="108" text-anchor="middle" fill="#94a3b8" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="19">同一盏吊灯，也可以讲出一段关系弧线</text>
+
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <g transform="translate(45 160)">
+      <rect width="330" height="340" rx="26" fill="#172033" stroke="#334155"/>
+      <ellipse cx="165" cy="150" rx="125" ry="120" fill="url(#pool)" opacity=".46"/>
+      <rect x="75" y="205" width="180" height="18" rx="9" fill="#7c5536"/>
+      <circle cx="82" cy="176" r="27" fill="#64748b"/>
+      <circle cx="248" cy="176" r="27" fill="#64748b"/>
+      <text x="165" y="276" text-anchor="middle" fill="#f8fafc" font-size="25" font-weight="700">分离</text>
+      <text x="165" y="312" text-anchor="middle" fill="#94a3b8" font-size="17">两人停在光圈边缘</text>
+    </g>
+
+    <g transform="translate(435 160)">
+      <rect width="330" height="340" rx="26" fill="#172033" stroke="#334155"/>
+      <ellipse cx="165" cy="150" rx="125" ry="120" fill="url(#pool)" opacity=".62"/>
+      <rect x="75" y="205" width="180" height="18" rx="9" fill="#7c5536"/>
+      <circle cx="120" cy="171" r="27" fill="#e5b887"/>
+      <circle cx="238" cy="176" r="27" fill="#64748b"/>
+      <text x="165" y="276" text-anchor="middle" fill="#f8fafc" font-size="25" font-weight="700">揭示</text>
+      <text x="165" y="312" text-anchor="middle" fill="#94a3b8" font-size="17">一人先进入亮处</text>
+    </g>
+
+    <g transform="translate(825 160)">
+      <rect width="330" height="340" rx="26" fill="#172033" stroke="#334155"/>
+      <ellipse cx="165" cy="150" rx="125" ry="120" fill="url(#pool)" opacity=".82"/>
+      <rect x="75" y="205" width="180" height="18" rx="9" fill="#7c5536"/>
+      <circle cx="135" cy="171" r="27" fill="#e5b887"/>
+      <circle cx="205" cy="171" r="27" fill="#e5b887"/>
+      <text x="165" y="276" text-anchor="middle" fill="#f8fafc" font-size="25" font-weight="700">靠近</text>
+      <text x="165" y="312" text-anchor="middle" fill="#94a3b8" font-size="17">两人共享同一束光</text>
+    </g>
+
+    <path d="M385 330h34" stroke="#94a3b8" stroke-width="5" marker-end="url(#arrow)"/>
+    <path d="M775 330h34" stroke="#94a3b8" stroke-width="5" marker-end="url(#arrow)"/>
+    <text x="210" y="555" text-anchor="middle" fill="#cbd5e1" font-size="18">保持距离</text>
+    <text x="600" y="555" text-anchor="middle" fill="#cbd5e1" font-size="18">信息进入光里</text>
+    <text x="990" y="555" text-anchor="middle" fill="#cbd5e1" font-size="18">关系发生变化</text>
+  </g>
+  <rect x="190" y="590" width="820" height="54" rx="27" fill="#fff" fill-opacity=".06" stroke="#475569"/>
+  <text x="600" y="625" text-anchor="middle" fill="#e2e8f0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="20">光不必主动变化，人物与光的关系本身就是叙事</text>
+</svg>

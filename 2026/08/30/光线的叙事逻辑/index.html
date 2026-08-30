@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/08/30/光线的叙事逻辑/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="💡 光线的叙事逻辑：方向、软硬、明暗与色温">
+<meta property="og:url" content="http://example.com/2026/08/30/%E5%85%89%E7%BA%BF%E7%9A%84%E5%8F%99%E4%BA%8B%E9%80%BB%E8%BE%91/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-08-30T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-30T12:42:33.402Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="叙事">
+<meta property="article:tag" content="拍摄">
+<meta property="article:tag" content="灯光">
+<meta property="article:tag" content="视听语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            💡 光线的叙事逻辑：方向、软硬、明暗与色温 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">20</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">19</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">💡 光线的叙事逻辑：方向、软硬、明暗与色温</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/profile-avatar.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-08-30 10:00</span>
+        <span class="mobile">2026-08-30 10:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-08-30 20:42:33</span>
+            <span class="mobile">2026-08-30 20:42:33</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8B%8D%E6%91%84/">拍摄</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%8B%8D%E6%91%84/">拍摄</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">视听语言</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%8F%99%E4%BA%8B/">叙事</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%81%AF%E5%85%89/">灯光</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：灯光不是把人物“照亮”就结束了，而是通过方向、软硬、明暗和色温，决定观众先看哪里、如何理解空间，以及对人物产生怎样的感受。好的光线未必复杂，但每一束光都应该有来源、有重点，也有叙事目的。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/lighting-storytelling/lighting-dimensions.svg"
+                      alt="光线叙事的四个维度"
+                ></p>
+<p><em>图 1：方向塑造关系，软硬改变质感，明暗分配注意力，色温建立情绪。</em></p>
+<h2 id="一、灯光真正改变的是什么？"><a href="#一、灯光真正改变的是什么？" class="headerlink" title="一、灯光真正改变的是什么？"></a>一、灯光真正改变的是什么？</h2><p>同一个人、同一个房间、同一句台词，只要改变光线，观众就可能得到完全不同的判断。</p>
+<p>正面柔光会减弱面部阴影，让人物显得亲近、坦率；侧光把脸分成明暗两部分，容易带来矛盾、迟疑或神秘感；顶光压低眼窝，可能制造疲惫和压迫；来自身后的轮廓光，则会把人物从环境中分离出来，让他显得醒目、孤独，或者带有某种不可接近的气质。</p>
+<p>因此，布光之前最重要的问题不是“现场有几盏灯”，而是：</p>
+<ul>
+<li>观众第一眼应该看见什么？</li>
+<li>人物此刻愿意被看清，还是试图隐藏自己？</li>
+<li>空间给人的感觉是安全、日常、陌生，还是危险？</li>
+<li>这场戏开始和结束时，情绪有没有发生变化？</li>
+</ul>
+<p>灯具只是执行工具。真正的灯光设计，是先确定叙事判断，再把这种判断变成可见的明暗关系。</p>
+<hr>
+<h2 id="二、方向：光从哪里来，人物就以什么方式被理解"><a href="#二、方向：光从哪里来，人物就以什么方式被理解" class="headerlink" title="二、方向：光从哪里来，人物就以什么方式被理解"></a>二、方向：光从哪里来，人物就以什么方式被理解</h2><h3 id="1-正面光：信息清楚，但容易失去层次"><a href="#1-正面光：信息清楚，但容易失去层次" class="headerlink" title="1. 正面光：信息清楚，但容易失去层次"></a>1. 正面光：信息清楚，但容易失去层次</h3><p>光线接近镜头方向时，人物面部阴影较少，五官容易被看清。这种光适合口播、采访、产品介绍和轻松的生活场景，因为它降低了观看压力。</p>
+<p>但正面光如果太强、太平，脸部会缺少立体感，背景也容易与人物黏在一起。实际拍摄时，可以把灯从镜头正前方稍微移到一侧并抬高，让鼻影和面部轮廓出现一点变化，画面通常会自然很多。</p>
+<h3 id="2-侧光：把人物的内在冲突变成明暗"><a href="#2-侧光：把人物的内在冲突变成明暗" class="headerlink" title="2. 侧光：把人物的内在冲突变成明暗"></a>2. 侧光：把人物的内在冲突变成明暗</h3><p>当光从人物侧面照来，一侧明亮、一侧进入阴影，画面会立即获得方向感。侧光适合表现犹豫、秘密、对抗和心理复杂性。</p>
+<p>侧光并不自动等于“高级感”。如果暗部完全没有细节，观众只会觉得曝光不足；如果亮部过度刺眼，注意力也会被皮肤高光抢走。侧光的关键，是让明暗分界服务于表情，而不是遮住表演。</p>
+<h3 id="3-逆光：先塑造轮廓，再决定是否揭示人物"><a href="#3-逆光：先塑造轮廓，再决定是否揭示人物" class="headerlink" title="3. 逆光：先塑造轮廓，再决定是否揭示人物"></a>3. 逆光：先塑造轮廓，再决定是否揭示人物</h3><p>逆光能勾勒头发、肩膀和身体边缘，使人物从背景中分离。它常被用于清晨、黄昏、回忆、登场和情绪高潮。</p>
+<p>逆光场景中，面部是否补光是一个重要叙事选择。补得充足，人物清晰而有光泽；只保留轮廓，人物会更神秘；让人物从剪影逐渐走入亮处，则可以直接表现“身份被揭示”或“态度变得明确”。</p>
+<h3 id="4-顶光与底光：谨慎使用的强烈判断"><a href="#4-顶光与底光：谨慎使用的强烈判断" class="headerlink" title="4. 顶光与底光：谨慎使用的强烈判断"></a>4. 顶光与底光：谨慎使用的强烈判断</h3><p>顶光会加深眼窝、鼻下和下巴阴影，适合表现正午、审讯、疲惫与孤立；底光违背日常光源经验，容易制造不安、怪诞或恐怖感。</p>
+<p>这两种方向的表达非常鲜明，因此不宜仅仅为了视觉特别而使用。只要光源逻辑与场景不一致，观众就会先注意到“灯打得很奇怪”，而不是人物正在经历什么。</p>
+<hr>
+<h2 id="三、软硬：阴影边缘决定画面的情绪触感"><a href="#三、软硬：阴影边缘决定画面的情绪触感" class="headerlink" title="三、软硬：阴影边缘决定画面的情绪触感"></a>三、软硬：阴影边缘决定画面的情绪触感</h2><p>硬光会产生边缘清楚、对比强烈的阴影，突出皮肤纹理、空间结构和时间感。它适合阳光直射、悬疑、冲突、炎热或力量感强的画面。</p>
+<p>柔光的阴影过渡更缓慢，能减弱皮肤细节和面部棱角，让画面显得包容、安静、自然。人物访谈、美妆、亲密关系和温和的生活场景，通常更适合柔光。</p>
+<p>光线软硬主要取决于光源相对主体的大小。对人物来说，面积越大的光源越柔，面积越小的光源越硬；同一块柔光布离人物越近，相对面积越大，光也越柔。</p>
+<p>这意味着“柔光”并不只是把灯调暗。给小灯降低亮度，只会得到较暗的硬光；要让阴影真正变软，需要扩大光源面积，例如增加柔光布、反光板，或者把灯打向白墙和天花板再反射回来。</p>
+<p>一个实用判断是观察鼻影和下巴阴影：边缘清晰、变化突然，说明光偏硬；边缘模糊、明暗缓慢过渡，说明光偏柔。</p>
+<hr>
+<h2 id="四、明暗：不是让所有地方都看得见，而是建立观看顺序"><a href="#四、明暗：不是让所有地方都看得见，而是建立观看顺序" class="headerlink" title="四、明暗：不是让所有地方都看得见，而是建立观看顺序"></a>四、明暗：不是让所有地方都看得见，而是建立观看顺序</h2><p>画面中的亮度差异，会直接安排观众的注意力。人眼通常先看较亮、对比更强的区域，因此主体比背景略亮，人物就更容易成为视觉中心；反过来，如果窗户过曝、背景灯过亮，观众会不断被无关区域吸引。</p>
+<p>主光负责确定人物的主要方向和曝光，辅光负责控制暗部保留多少细节。两者的差异越小，画面越明快、平衡；差异越大，画面越有戏剧性。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/lighting-storytelling/key-fill-ratio.svg"
+                      alt="主光与辅光的明暗关系"
+                ></p>
+<p><em>图 2：主辅光比不是固定数字，而是从平缓、自然到强烈、戏剧化的一条连续选择。</em></p>
+<p>可以把常见的明暗关系理解为三个层级：</p>
+<table>
+<thead>
+<tr>
+<th align="left">明暗关系</th>
+<th align="left">视觉感受</th>
+<th align="left">常见场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>低反差</strong></td>
+<td align="left">轻松、清楚、平等</td>
+<td align="left">口播、喜剧、生活方式、商业展示</td>
+</tr>
+<tr>
+<td align="left"><strong>中等反差</strong></td>
+<td align="left">自然、有层次、适度集中</td>
+<td align="left">剧情对话、纪录片、人物采访</td>
+</tr>
+<tr>
+<td align="left"><strong>高反差</strong></td>
+<td align="left">紧张、神秘、强烈、具有方向性</td>
+<td align="left">悬疑、冲突、人物心理转折</td>
+</tr>
+</tbody></table>
+<p>需要注意的是，高反差不等于把暗部全部压黑。真正有效的暗部仍然有选择：哪些细节需要保留，哪些信息应该延后，哪些区域可以彻底消失。黑不是曝光失败，而是一种主动隐藏。</p>
+<h3 id="用负补光主动“减掉”杂光"><a href="#用负补光主动“减掉”杂光" class="headerlink" title="用负补光主动“减掉”杂光"></a>用负补光主动“减掉”杂光</h3><p>小空间常见的问题不是灯不够，而是墙面太近，光线到处反射，导致人物两侧都很亮、面部没有方向。此时继续加灯往往适得其反。</p>
+<p>可以在人物暗侧放置黑布、黑旗或深色泡沫板，吸收环境反光，让阴影重新出现。这种方法叫负补光。它不增加光，却能更准确地雕刻人物轮廓，尤其适合白墙房间、阴天窗边和低成本采访。</p>
+<hr>
+<h2 id="五、色温：让空间拥有时间、情绪与关系"><a href="#五、色温：让空间拥有时间、情绪与关系" class="headerlink" title="五、色温：让空间拥有时间、情绪与关系"></a>五、色温：让空间拥有时间、情绪与关系</h2><p>色温首先应该有现实来源。窗外日光偏冷，室内钨丝灯偏暖；清晨与傍晚的阳光偏暖，阴天和阴影区域偏冷。观众虽然未必知道具体数值，却对这些生活经验非常敏感。</p>
+<p>在真实逻辑之上，色温还可以表达人物关系：</p>
+<ul>
+<li>暖光常与安全、亲密、回忆、烟火气联系在一起。</li>
+<li>冷光常与距离、理性、孤独、未知和夜晚联系在一起。</li>
+<li>冷暖同时存在，可以把人物分隔在不同情绪或不同空间中。</li>
+<li>色温逐渐变化，可以表现时间流逝或人物状态改变。</li>
+</ul>
+<p>色温不能脱离白平衡单独讨论。同一盏灯在不同白平衡设置下会呈现不同颜色。拍摄前应先确定主要光源与基准白平衡，再决定哪些区域保留偏冷或偏暖，而不是等到后期随机套滤镜。</p>
+<p>如果人物脸上同时混入多种光源，肤色很容易显脏。需要先确认哪一盏灯负责肤色，再让其他色彩作为背景、轮廓或局部动机存在。</p>
+<hr>
+<h2 id="六、光源动机：每一束光都应该像从真实空间里长出来"><a href="#六、光源动机：每一束光都应该像从真实空间里长出来" class="headerlink" title="六、光源动机：每一束光都应该像从真实空间里长出来"></a>六、光源动机：每一束光都应该像从真实空间里长出来</h2><p>所谓“有动机的光”，是指观众能够理解它大致来自哪里。窗户、台灯、吊灯、电视、走廊和街道霓虹，都可以成为画面内的光源依据；真正使用的灯具可以不出现在画面中，但方向、颜色与强度要延续这种逻辑。</p>
+<p>例如，桌面有一盏暖色台灯，人物脸上的暖光就应该从台灯方向出现；窗外是阴天，窗侧的主光可以更大、更柔、更冷。即使实际拍摄使用了两三盏专业灯，观众仍会相信这是房间本来就有的光。</p>
+<p>可以遵循“先找依据，再做增强”的顺序：</p>
+<ol>
+<li>找到场景中最合理的主要光源。</li>
+<li>确定光的方向、颜色和覆盖范围。</li>
+<li>用灯具增强人物，但保持同一方向逻辑。</li>
+<li>只在需要分离主体或控制反差时增加辅助光。</li>
+<li>检查灯光是否破坏了场景原有的时间与空间感。</li>
+</ol>
+<p>当灯光有来源，复杂布光也会显得自然；当灯光没有来源，再漂亮的轮廓光也可能让观众出戏。</p>
+<hr>
+<h2 id="七、实战：把一次深夜对话设计成光线变化"><a href="#七、实战：把一次深夜对话设计成光线变化" class="headerlink" title="七、实战：把一次深夜对话设计成光线变化"></a>七、实战：把一次深夜对话设计成光线变化</h2><p><strong>情景设定</strong>：父亲和成年女儿深夜坐在餐桌两端。女儿原本准备宣布离开这座城市，却在对话中第一次听见父亲解释多年前的选择。</p>
+<h3 id="1-场景开始：保持距离"><a href="#1-场景开始：保持距离" class="headerlink" title="1. 场景开始：保持距离"></a>1. 场景开始：保持距离</h3><p>让餐桌上方的吊灯成为主要光源，光线偏硬，桌面明亮，人物眼窝略暗。两人分别坐在光圈边缘，中间留出一块空桌面。背景大部分进入阴影，只保留厨房里一盏偏冷的环境灯。</p>
+<p>此时的明暗关系表达的是：两个人处在同一空间，却没有真正靠近。</p>
+<h3 id="2-对话推进：让信息进入亮处"><a href="#2-对话推进：让信息进入亮处" class="headerlink" title="2. 对话推进：让信息进入亮处"></a>2. 对话推进：让信息进入亮处</h3><p>父亲开始解释时，不必突然换灯。可以让他身体略微前倾，从光圈边缘进入更亮的位置；女儿仍停在暗侧。光没有主动变化，但表演调度改变了人物与光的关系。</p>
+<p>这种处理比“说到重点就开一盏灯”更自然，因为情绪变化来自人物的行动。</p>
+<h3 id="3-关系转折：降低反差而不是增加亮度"><a href="#3-关系转折：降低反差而不是增加亮度" class="headerlink" title="3. 关系转折：降低反差而不是增加亮度"></a>3. 关系转折：降低反差而不是增加亮度</h3><p>女儿开始倾听后，可以用极弱的反射光或调光缓慢抬起她的暗侧，让眼神逐渐可见。亮度变化不需要明显到让观众察觉灯光操作，只要观众比之前更容易读到她的反应即可。</p>
+<h3 id="4-场景结束：用同一光源得到新的关系"><a href="#4-场景结束：用同一光源得到新的关系" class="headerlink" title="4. 场景结束：用同一光源得到新的关系"></a>4. 场景结束：用同一光源得到新的关系</h3><p>结尾让女儿把椅子向前移动，两个人进入同一个暖色光区。厨房的冷光仍然存在，但不再切断他们。画面不需要变得非常明亮；只要原本分离的人物开始共享一束光，关系变化就已经被看见。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/lighting-storytelling/lighting-arc.svg"
+                      alt="一场对话中的光线情绪弧线"
+                ></p>
+<p><em>图 3：好的灯光变化常常来自人物进入或离开光区，而不是每个段落都重新布灯。</em></p>
+<hr>
+<h2 id="八、低成本拍摄的布光顺序"><a href="#八、低成本拍摄的布光顺序" class="headerlink" title="八、低成本拍摄的布光顺序"></a>八、低成本拍摄的布光顺序</h2><p>设备有限时，更需要明确优先级。一扇窗、一块白板和一块黑布，往往比同时打开许多小灯更容易得到干净结果。</p>
+<h3 id="第一步：关闭不受控制的光源"><a href="#第一步：关闭不受控制的光源" class="headerlink" title="第一步：关闭不受控制的光源"></a>第一步：关闭不受控制的光源</h3><p>先观察现场顶灯、窗户、台灯和显示器分别产生什么效果。关闭那些方向混乱、颜色不一致或造成难看阴影的光源，避免一开始就陷入“用更多灯修补更多问题”。</p>
+<h3 id="第二步：确定主光"><a href="#第二步：确定主光" class="headerlink" title="第二步：确定主光"></a>第二步：确定主光</h3><p>选择窗户或一盏灯作为主要方向，先只看人物脸部。调整人物角度、灯位和距离，直到眼神、鼻影与面部轮廓符合场景情绪。</p>
+<h3 id="第三步：控制暗部"><a href="#第三步：控制暗部" class="headerlink" title="第三步：控制暗部"></a>第三步：控制暗部</h3><p>暗部过黑，就用白色反光板轻微补光；暗部太亮，就用黑布做负补光。先通过反射和遮挡控制对比，再考虑增加第二盏灯。</p>
+<h3 id="第四步：整理背景"><a href="#第四步：整理背景" class="headerlink" title="第四步：整理背景"></a>第四步：整理背景</h3><p>检查背景是否比主体更抢眼，是否有过曝窗户、杂乱高光和无意义的亮区。背景灯的任务是建立空间层次，不是与人物争夺注意力。</p>
+<h3 id="第五步：最后处理轮廓和眼神光"><a href="#第五步：最后处理轮廓和眼神光" class="headerlink" title="第五步：最后处理轮廓和眼神光"></a>第五步：最后处理轮廓和眼神光</h3><p>人物与背景确实无法分离时，再增加轮廓光；眼睛缺乏生命力时，再微调主光或反光板。不要把这些“效果灯”当作每个场景必须完成的固定套餐。</p>
+<hr>
+<h2 id="九、拍摄现场的灯光检查表"><a href="#九、拍摄现场的灯光检查表" class="headerlink" title="九、拍摄现场的灯光检查表"></a>九、拍摄现场的灯光检查表</h2><h3 id="叙事"><a href="#叙事" class="headerlink" title="叙事"></a>叙事</h3><ul>
+<li>这场戏希望观众先看哪里？</li>
+<li>人物应该显得亲近、矛盾、孤立，还是危险？</li>
+<li>场景前后的光线关系是否对应情绪变化？</li>
+</ul>
+<h3 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h3><ul>
+<li>主光在画面中有没有合理来源？</li>
+<li>光线方向与窗户、灯具和时间是否一致？</li>
+<li>人物移动后，仍然处在可信的光区里吗？</li>
+</ul>
+<h3 id="人物"><a href="#人物" class="headerlink" title="人物"></a>人物</h3><ul>
+<li>眼神是否清楚，面部高光是否过曝？</li>
+<li>阴影是在帮助表演，还是遮住了关键信息？</li>
+<li>肤色是否被多种色温污染？</li>
+</ul>
+<h3 id="空间"><a href="#空间" class="headerlink" title="空间"></a>空间</h3><ul>
+<li>主体与背景是否有足够分离？</li>
+<li>背景最亮处是否抢走注意力？</li>
+<li>画面边缘有没有穿帮灯影、反光或杂乱亮点？</li>
+</ul>
+<h3 id="连贯"><a href="#连贯" class="headerlink" title="连贯"></a>连贯</h3><ul>
+<li>正反打的光线方向是否一致？</li>
+<li>演员走位和动作会不会突然改变曝光？</li>
+<li>全景、近景与补拍镜头的明暗关系能否顺利剪接？</li>
+</ul>
+<hr>
+<h2 id="十、常见误区"><a href="#十、常见误区" class="headerlink" title="十、常见误区"></a>十、常见误区</h2><ol>
+<li><strong>把布光理解为增加亮度</strong>：曝光正确只代表信息被记录下来，不代表画面有重点、有层次。</li>
+<li><strong>不看环境，直接套三点布光</strong>：主光、辅光和轮廓光是一种方法，不是所有场景的标准答案。</li>
+<li><strong>每盏灯都开得很亮</strong>：所有区域亮度接近时，观众反而不知道该看哪里。</li>
+<li><strong>追求颜色，却忽略肤色</strong>：彩色灯可以丰富空间，但人物肤色必须有明确、稳定的基准。</li>
+<li><strong>只看单个镜头，不看连续性</strong>：一个漂亮近景如果无法与全景和反打镜头衔接，最终仍会破坏叙事。</li>
+<li><strong>暗部等于死黑</strong>：阴影应该隐藏次要信息，而不是无意中吞掉眼神、动作和场景关系。</li>
+<li><strong>灯光变化没有人物动机</strong>：情绪改变时立刻换颜色或提亮，容易显得刻意。优先考虑让人物移动、转身或接近现实光源。</li>
+</ol>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>光线设计可以归纳为四个问题：光从哪里来，阴影有多硬，明暗如何分配，冷暖怎样建立关系。方向决定人物如何被看见，软硬决定画面的触感，明暗决定观看顺序，色温决定空间的时间与情绪。</p>
+<p>真正成熟的布光，不是让观众注意到用了多少灯，而是让他们自然地感到人物更亲近了、空间更危险了，或者某个秘密终于进入了光里。</p>
+<p>下次拍摄前，可以先关掉所有额外灯具，只保留现场最合理的一束光。观察它如何落在人物和环境上，再逐步增加、反射、遮挡或减去光线。先建立叙事方向，再解决技术问题，灯光才会从“照明”变成真正的视听语言。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 💡 光线的叙事逻辑：方向、软硬、明暗与色温</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-08-30 10:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-08-30 20:42:33
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/08/30/光线的叙事逻辑/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E6%8B%8D%E6%91%84/">#拍摄</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%A7%86%E5%90%AC%E8%AF%AD%E8%A8%80/">#视听语言</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%8F%99%E4%BA%8B/">#叙事</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E7%81%AF%E5%85%89/">#灯光</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/08/17/%E8%89%B2%E5%BD%A9%E7%9A%84%E5%8F%99%E4%BA%8B%E9%80%BB%E8%BE%91/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">🎨 色彩的叙事逻辑：如何用颜色控制情绪与人物关系</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">💡 光线的叙事逻辑：方向、软硬、明暗与色温</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%81%AF%E5%85%89%E7%9C%9F%E6%AD%A3%E6%94%B9%E5%8F%98%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">一、灯光真正改变的是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%96%B9%E5%90%91%EF%BC%9A%E5%85%89%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5%EF%BC%8C%E4%BA%BA%E7%89%A9%E5%B0%B1%E4%BB%A5%E4%BB%80%E4%B9%88%E6%96%B9%E5%BC%8F%E8%A2%AB%E7%90%86%E8%A7%A3"><span class="nav-text">二、方向：光从哪里来，人物就以什么方式被理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%AD%A3%E9%9D%A2%E5%85%89%EF%BC%9A%E4%BF%A1%E6%81%AF%E6%B8%85%E6%A5%9A%EF%BC%8C%E4%BD%86%E5%AE%B9%E6%98%93%E5%A4%B1%E5%8E%BB%E5%B1%82%E6%AC%A1"><span class="nav-text">1. 正面光：信息清楚，但容易失去层次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BE%A7%E5%85%89%EF%BC%9A%E6%8A%8A%E4%BA%BA%E7%89%A9%E7%9A%84%E5%86%85%E5%9C%A8%E5%86%B2%E7%AA%81%E5%8F%98%E6%88%90%E6%98%8E%E6%9A%97"><span class="nav-text">2. 侧光：把人物的内在冲突变成明暗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%80%86%E5%85%89%EF%BC%9A%E5%85%88%E5%A1%91%E9%80%A0%E8%BD%AE%E5%BB%93%EF%BC%8C%E5%86%8D%E5%86%B3%E5%AE%9A%E6%98%AF%E5%90%A6%E6%8F%AD%E7%A4%BA%E4%BA%BA%E7%89%A9"><span class="nav-text">3. 逆光：先塑造轮廓，再决定是否揭示人物</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%A1%B6%E5%85%89%E4%B8%8E%E5%BA%95%E5%85%89%EF%BC%9A%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8%E7%9A%84%E5%BC%BA%E7%83%88%E5%88%A4%E6%96%AD"><span class="nav-text">4. 顶光与底光：谨慎使用的强烈判断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%BD%AF%E7%A1%AC%EF%BC%9A%E9%98%B4%E5%BD%B1%E8%BE%B9%E7%BC%98%E5%86%B3%E5%AE%9A%E7%94%BB%E9%9D%A2%E7%9A%84%E6%83%85%E7%BB%AA%E8%A7%A6%E6%84%9F"><span class="nav-text">三、软硬：阴影边缘决定画面的情绪触感</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%98%8E%E6%9A%97%EF%BC%9A%E4%B8%8D%E6%98%AF%E8%AE%A9%E6%89%80%E6%9C%89%E5%9C%B0%E6%96%B9%E9%83%BD%E7%9C%8B%E5%BE%97%E8%A7%81%EF%BC%8C%E8%80%8C%E6%98%AF%E5%BB%BA%E7%AB%8B%E8%A7%82%E7%9C%8B%E9%A1%BA%E5%BA%8F"><span class="nav-text">四、明暗：不是让所有地方都看得见，而是建立观看顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E8%B4%9F%E8%A1%A5%E5%85%89%E4%B8%BB%E5%8A%A8%E2%80%9C%E5%87%8F%E6%8E%89%E2%80%9D%E6%9D%82%E5%85%89"><span class="nav-text">用负补光主动“减掉”杂光</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%89%B2%E6%B8%A9%EF%BC%9A%E8%AE%A9%E7%A9%BA%E9%97%B4%E6%8B%A5%E6%9C%89%E6%97%B6%E9%97%B4%E3%80%81%E6%83%85%E7%BB%AA%E4%B8%8E%E5%85%B3%E7%B3%BB"><span class="nav-text">五、色温：让空间拥有时间、情绪与关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%85%89%E6%BA%90%E5%8A%A8%E6%9C%BA%EF%BC%9A%E6%AF%8F%E4%B8%80%E6%9D%9F%E5%85%89%E9%83%BD%E5%BA%94%E8%AF%A5%E5%83%8F%E4%BB%8E%E7%9C%9F%E5%AE%9E%E7%A9%BA%E9%97%B4%E9%87%8C%E9%95%BF%E5%87%BA%E6%9D%A5"><span class="nav-text">六、光源动机：每一束光都应该像从真实空间里长出来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%AE%9E%E6%88%98%EF%BC%9A%E6%8A%8A%E4%B8%80%E6%AC%A1%E6%B7%B1%E5%A4%9C%E5%AF%B9%E8%AF%9D%E8%AE%BE%E8%AE%A1%E6%88%90%E5%85%89%E7%BA%BF%E5%8F%98%E5%8C%96"><span class="nav-text">七、实战：把一次深夜对话设计成光线变化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9C%BA%E6%99%AF%E5%BC%80%E5%A7%8B%EF%BC%9A%E4%BF%9D%E6%8C%81%E8%B7%9D%E7%A6%BB"><span class="nav-text">1. 场景开始：保持距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AF%B9%E8%AF%9D%E6%8E%A8%E8%BF%9B%EF%BC%9A%E8%AE%A9%E4%BF%A1%E6%81%AF%E8%BF%9B%E5%85%A5%E4%BA%AE%E5%A4%84"><span class="nav-text">2. 对话推进：让信息进入亮处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%B3%E7%B3%BB%E8%BD%AC%E6%8A%98%EF%BC%9A%E9%99%8D%E4%BD%8E%E5%8F%8D%E5%B7%AE%E8%80%8C%E4%B8%8D%E6%98%AF%E5%A2%9E%E5%8A%A0%E4%BA%AE%E5%BA%A6"><span class="nav-text">3. 关系转折：降低反差而不是增加亮度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%9C%BA%E6%99%AF%E7%BB%93%E6%9D%9F%EF%BC%9A%E7%94%A8%E5%90%8C%E4%B8%80%E5%85%89%E6%BA%90%E5%BE%97%E5%88%B0%E6%96%B0%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">4. 场景结束：用同一光源得到新的关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E4%BD%8E%E6%88%90%E6%9C%AC%E6%8B%8D%E6%91%84%E7%9A%84%E5%B8%83%E5%85%89%E9%A1%BA%E5%BA%8F"><span class="nav-text">八、低成本拍摄的布光顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%85%B3%E9%97%AD%E4%B8%8D%E5%8F%97%E6%8E%A7%E5%88%B6%E7%9A%84%E5%85%89%E6%BA%90"><span class="nav-text">第一步：关闭不受控制的光源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E7%A1%AE%E5%AE%9A%E4%B8%BB%E5%85%89"><span class="nav-text">第二步：确定主光</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%8E%A7%E5%88%B6%E6%9A%97%E9%83%A8"><span class="nav-text">第三步：控制暗部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E6%95%B4%E7%90%86%E8%83%8C%E6%99%AF"><span class="nav-text">第四步：整理背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E6%9C%80%E5%90%8E%E5%A4%84%E7%90%86%E8%BD%AE%E5%BB%93%E5%92%8C%E7%9C%BC%E7%A5%9E%E5%85%89"><span class="nav-text">第五步：最后处理轮廓和眼神光</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E6%8B%8D%E6%91%84%E7%8E%B0%E5%9C%BA%E7%9A%84%E7%81%AF%E5%85%89%E6%A3%80%E6%9F%A5%E8%A1%A8"><span class="nav-text">九、拍摄现场的灯光检查表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%99%E4%BA%8B"><span class="nav-text">叙事</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A5%E6%BA%90"><span class="nav-text">来源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E7%89%A9"><span class="nav-text">人物</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4"><span class="nav-text">空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E8%B4%AF"><span class="nav-text">连贯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="nav-text">十、常见误区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        19 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
