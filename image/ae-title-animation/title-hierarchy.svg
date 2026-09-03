@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">AE 标题的排版层级</title>
+  <desc id="desc">以让文字成为画面为主标题，AE 标题动画练习为副标题，演示主次清楚的最终排版。此图是原创设计示意，不是软件截图。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f172a"/><stop offset="1" stop-color="#262343"/></linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <circle cx="1080" cy="20" r="260" fill="#8b5cf6" opacity=".09"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="66" y="64" fill="#b7a5fb" font-size="18" letter-spacing="3">TYPE IN MOTION / 01</text>
+    <text x="1134" y="64" text-anchor="end" fill="#94a3b8" font-size="17">原创排版示意</text>
+    <rect x="70" y="122" width="1060" height="368" rx="20" fill="#0b1220" stroke="#334155"/>
+    <path d="M555 205h90" stroke="#a78bfa" stroke-width="5" stroke-linecap="round"/>
+    <text x="600" y="303" text-anchor="middle" fill="#f8fafc" font-size="66" font-weight="700">让文字成为画面</text>
+    <text x="600" y="369" text-anchor="middle" fill="#b9c5d6" font-size="28" letter-spacing="2">AE 标题动画练习</text>
+    <g font-size="20">
+      <circle cx="105" cy="556" r="21" fill="#8b5cf6"/><text x="105" y="563" text-anchor="middle" fill="#fff">1</text>
+      <text x="142" y="563" fill="#f8fafc" font-weight="700">主标题 · 先读主题</text>
+      <text x="142" y="602" fill="#94a3b8" font-size="17">最大字级，承担主要表达</text>
+      <circle cx="465" cy="556" r="21" fill="#475569"/><text x="465" y="563" text-anchor="middle" fill="#fff">2</text>
+      <text x="502" y="563" fill="#f8fafc" font-weight="700">副标题 · 后读说明</text>
+      <text x="502" y="602" fill="#94a3b8" font-size="17">较小字级，稍晚进入画面</text>
+      <circle cx="825" cy="556" r="21" fill="#475569"/><text x="825" y="563" text-anchor="middle" fill="#fff">3</text>
+      <text x="862" y="563" fill="#f8fafc" font-weight="700">装饰 · 维持秩序</text>
+      <text x="862" y="602" fill="#94a3b8" font-size="17">少量使用，不抢夺注意力</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/09/03/ae文字标题动画的设计方法/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="✨ AE 文字标题动画的设计方法：从逐字入场到完整片头">
+<meta property="og:url" content="http://example.com/2026/09/03/AE%E6%96%87%E5%AD%97%E6%A0%87%E9%A2%98%E5%8A%A8%E7%94%BB%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-09-03T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-03T04:03:55.534Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="AE">
+<meta property="article:tag" content="After Effects">
+<meta property="article:tag" content="剪辑">
+<meta property="article:tag" content="动态设计">
+<meta property="article:tag" content="文字动画">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            ✨ AE 文字标题动画的设计方法：从逐字入场到完整片头 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">24</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">20</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">✨ AE 文字标题动画的设计方法：从逐字入场到完整片头</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/profile-avatar.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-09-03 10:00</span>
+        <span class="mobile">2026-09-03 10:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-09-03 12:03:55</span>
+            <span class="mobile">2026-09-03 12:03:55</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%90%8E%E6%9C%9F/">后期</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%AA%E8%BE%91/">剪辑</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/AE/">AE</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/After-Effects/">After Effects</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%96%87%E5%AD%97%E5%8A%A8%E7%94%BB/">文字动画</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%8A%A8%E6%80%81%E8%AE%BE%E8%AE%A1/">动态设计</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：文字标题动画不是让每个字都动起来，而是让观众依次完成“注意到标题—读懂内容—记住重点”。排版决定信息层级，动画决定出现顺序，停顿决定阅读体验。先把最后一帧设计好，再考虑文字怎样抵达那里。</p>
+</blockquote>
+<p>本文以 Adobe After Effects（简称 AE）为工具，做一个不依赖第三方插件的 5 秒标题方案：主标题逐字上浮、副标题稍晚出现、完整停留，最后统一退场。文中的帧数、字号和位移是本例的设计起点，并不是所有视频都应照搬的标准。界面译名可能随版本变化，关键属性同时标注英文，方便查找。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/ae-title-animation/title-hierarchy.svg"
+                      alt="AE 标题的静态排版与信息层级"
+                ></p>
+<p><em>图 1：原创排版示意，并非 AE 界面截图。标题、副标题与装饰元素不应争夺同等注意力。</em></p>
+<h2 id="一、先写清楚标题要传递什么"><a href="#一、先写清楚标题要传递什么" class="headerlink" title="一、先写清楚标题要传递什么"></a>一、先写清楚标题要传递什么</h2><p>做动画前，先区分三个内容层级：</p>
+<ul>
+<li><strong>主标题</strong>：这一段最值得记住的一句话。</li>
+<li><strong>副标题</strong>：补充主标题没有说完的信息。</li>
+<li><strong>辅助元素</strong>：栏目名、期数、分隔线或背景，用来建立秩序。</li>
+</ul>
+<p>本例的主标题是“让文字成为画面”，副标题是“AE 标题动画练习”。第一句承担表达，第二句说明主题。两句如果同样大、同样亮、同时跳动，观众就需要自己判断先读哪句。</p>
+<p>可以先关掉所有动画，只看静态画面：主标题是不是第一视觉落点？副标题有没有足够的行间距离？背景有没有穿过字形的强烈高光？如果静态版式还不清楚，加入运动通常只会让问题更明显。</p>
+<p>对于中文标题，我更倾向于先用一种字族、两种字重建立层级，再考虑混搭字体。装饰线、描边和阴影都应该有具体用途，而不是为了填满空白。</p>
+<hr>
+<h2 id="二、先选对动画工具，再设置关键帧"><a href="#二、先选对动画工具，再设置关键帧" class="headerlink" title="二、先选对动画工具，再设置关键帧"></a>二、先选对动画工具，再设置关键帧</h2><p>AE 里最容易混淆的是下面三个入口：</p>
+<table>
+<thead>
+<tr>
+<th align="left">入口</th>
+<th align="left">主要控制对象</th>
+<th align="left">在本例中的用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>图层 Transform（变换）</strong></td>
+<td align="left">整个文字图层</td>
+<td align="left">副标题整体入场、统一退场</td>
+</tr>
+<tr>
+<td align="left"><strong>Text Animator（文字动画器）</strong></td>
+<td align="left">被选中的字符及其属性</td>
+<td align="left">主标题逐字上浮、逐字显现</td>
+</tr>
+<tr>
+<td align="left"><strong>Range Selector（范围选择器）</strong></td>
+<td align="left">动画器影响哪些字、影响多少</td>
+<td align="left">控制逐字变化的推进过程</td>
+</tr>
+</tbody></table>
+<p>可以这样记：<strong>动画器规定“字被影响后是什么样”，选择器规定“现在影响谁”。</strong> 例如，动画器把选中的字下移并变透明，选择器逐渐不再选中它们，字就会依次回到原位、恢复可见。这一机制来自 AE 的文字动画器与选择器系统。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/animating-text/text-animation/animating-text.html" >Adobe 官方：文字动画<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>所以，制作本例时不需要给每个汉字建立一个单独图层，也不需要分别给每个字打位置关键帧。把整句文案保留在一个文字图层中，后续改标题会方便得多。</p>
+<hr>
+<h2 id="三、实战：搭建一个-5-秒标题"><a href="#三、实战：搭建一个-5-秒标题" class="headerlink" title="三、实战：搭建一个 5 秒标题"></a>三、实战：搭建一个 5 秒标题</h2><h3 id="1-建立合成与最终版式"><a href="#1-建立合成与最终版式" class="headerlink" title="1. 建立合成与最终版式"></a>1. 建立合成与最终版式</h3><p>新建合成，使用下面的练习设置：</p>
+<table>
+<thead>
+<tr>
+<th align="left">项目</th>
+<th align="left">本例设置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">合成名称</td>
+<td align="left"><code>TITLE_05S</code></td>
+</tr>
+<tr>
+<td align="left">尺寸</td>
+<td align="left">1920 × 1080，方形像素</td>
+</tr>
+<tr>
+<td align="left">帧率</td>
+<td align="left">25 fps</td>
+</tr>
+<tr>
+<td align="left">时长</td>
+<td align="left">5 秒</td>
+</tr>
+<tr>
+<td align="left">背景</td>
+<td align="left">深蓝灰色纯色层</td>
+</tr>
+<tr>
+<td align="left">主标题</td>
+<td align="left">“让文字成为画面”，约 110 px，粗体</td>
+</tr>
+<tr>
+<td align="left">副标题</td>
+<td align="left">“AE 标题动画练习”，约 36 px，常规字重</td>
+</tr>
+</tbody></table>
+<p>将主副标题分别放在两个文字图层中，按最终画面居中对齐。字号要根据实际字体调整，检查笔画粗细和整行宽度，而不是只盯着数字。背景纯色层单独保留，之后需要透明标题时才方便关闭。</p>
+<p>以下帧数全部从合成第 0 帧开始计算。25 fps 下，第 20 帧是 <code>00:00:00:20</code>，第 28 帧是 <code>00:00:01:03</code>，第 100 帧是 <code>00:00:04:00</code>。不要把“第 28 帧”误填成“第 28 秒”。</p>
+<h3 id="2-让主标题逐字上浮"><a href="#2-让主标题逐字上浮" class="headerlink" title="2. 让主标题逐字上浮"></a>2. 让主标题逐字上浮</h3><p>选中主标题，展开文字属性旁的 <strong>Animate（动画）</strong> 菜单，添加 <strong>Position（位置）</strong>；再在同一个动画器的 <strong>Add → Property（添加 → 属性）</strong> 中加入 <strong>Opacity（不透明度）</strong>。</p>
+<p>本例给这个动画器设置：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Animator Position</td>
+<td align="left"><code>0, 60</code></td>
+</tr>
+<tr>
+<td align="left">Animator Opacity</td>
+<td align="left"><code>0%</code></td>
+</tr>
+<tr>
+<td align="left">Range Selector Start</td>
+<td align="left">第 0 帧 <code>0%</code>；第 20 帧 <code>100%</code></td>
+</tr>
+<tr>
+<td align="left">Range Selector End &#x2F; Offset</td>
+<td align="left">固定 <code>100%</code> &#x2F; <code>0%</code></td>
+</tr>
+<tr>
+<td align="left">Advanced：Units &#x2F; Based On</td>
+<td align="left">Percentage &#x2F; Characters Excluding Spaces</td>
+</tr>
+<tr>
+<td align="left">Advanced：Mode &#x2F; Amount</td>
+<td align="left">Add &#x2F; <code>100%</code></td>
+</tr>
+<tr>
+<td align="left">Advanced：Shape &#x2F; Smoothness</td>
+<td align="left">Square &#x2F; <code>100%</code></td>
+</tr>
+<tr>
+<td align="left">Randomize Order</td>
+<td align="left">Off</td>
+</tr>
+</tbody></table>
+<p>这里只给 <strong>Start（起始）</strong> 打关键帧，其他参数保持固定；Start 的两个关键帧先使用默认的线性时间插值。第 0 帧，整句受到动画器影响而隐藏在下方；第 20 帧，选择范围收至末尾，文字恢复最终排版。帧间预览应看到字从左到右逐渐显现。</p>
+<p><strong>注意：上面的 <code>0, 60</code> 是文字动画器里的相对位移，不是图层 Transform 里的坐标；<code>0%</code> 也不是把整个文字图层的不透明度关掉。</strong> 如果按下 <code>T</code> 后把图层不透明度设为 0，再怎么调整选择器，整句话依然看不见。</p>
+<p>做完先停在第 0、10、20 帧逐一检查，不要立刻叠加其他效果。范围选择器也可以基于单词或行工作，但本例使用逐字选择；官方另有逐字动画演示可辅助理解。<a class="link"   target="_blank" rel="noopener" href="https://www.adobe.com/learn/after-effects/web/animate-letter-by-letter?learnIn=1" >Adobe 官方：逐字动画示例<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="3-让副标题稍晚入场"><a href="#3-让副标题稍晚入场" class="headerlink" title="3. 让副标题稍晚入场"></a>3. 让副标题稍晚入场</h3><p>副标题不必重复主标题的逐字动作，整体上移淡入即可：</p>
+<ol>
+<li>在第 28 帧，记录副标题最终的图层位置，记作 <code>P0</code>，不透明度设为 <code>100%</code>。</li>
+<li>在第 8 帧，把图层位置设为 <code>P0 + [0, 24]</code>，不透明度设为 <code>0%</code>。</li>
+<li>分别给图层 Position 和 Opacity 建立这两组关键帧。</li>
+<li>对副标题的位置关键帧使用 Easy Ease（缓动），再看它是否轻轻停住；不透明度可以先保持线性。</li>
+</ol>
+<p>主标题先动 8 帧，副标题再跟上，形成“先给主题、再补说明”的观看顺序。错峰不是为了增加复杂度，而是让两条信息依次进入注意力。</p>
+<h3 id="4-留出真正的阅读时间"><a href="#4-留出真正的阅读时间" class="headerlink" title="4. 留出真正的阅读时间"></a>4. 留出真正的阅读时间</h3><p>从第 28 帧到第 100 帧，两行文字都保持静止，本例提供约 2.88 秒的完整阅读时间。这个时间只适合当前短标题，不能直接推广到长句、术语或双语字幕。</p>
+<p>阅读时间应从最后一条重要信息清楚出现之后计算。片头总共五秒，不代表观众获得了五秒阅读时间；入场过程中，文字可能仍然透明、错位或者被遮挡。</p>
+<h3 id="5-用图层属性统一退场"><a href="#5-用图层属性统一退场" class="headerlink" title="5. 用图层属性统一退场"></a>5. 用图层属性统一退场</h3><p>主标题和副标题都在第 100 帧记录各自当前的图层位置与 <code>100%</code> 不透明度；第 112 帧把它们各自向上移 24 px，并将图层不透明度设为 <code>0%</code>。两行同时退出，不再添加第二套逐字效果。</p>
+<p>主标题的 Range Selector Start 在退场期间仍保持 <code>100%</code>。入场由文字动画器完成，退场由图层 Transform 完成，两套设置职责分开，修改起来更容易排查。</p>
+<p>第 112 帧对应 <code>00:00:04:12</code>；到合成结束保留约半秒背景，用作转场余量。实际剪辑时可以按下个镜头的需要缩短这段空白。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/ae-title-animation/title-timeline.svg"
+                      alt="25 帧每秒下的五秒标题时间线"
+                ></p>
+<p><em>图 2：本例的原创时间设计。入场完成后才进入完整阅读段，退场不占用主信息的阅读时间。</em></p>
+<hr>
+<h2 id="四、缓动：先区分整句节奏和单字过渡"><a href="#四、缓动：先区分整句节奏和单字过渡" class="headerlink" title="四、缓动：先区分整句节奏和单字过渡"></a>四、缓动：先区分整句节奏和单字过渡</h2><p>副标题从下方移动到最终位置，如果一路匀速后突然停止，会显得机械。Easy Ease 可以作为调整速度的起点，图表编辑器的 Speed Graph（速度图表）则用来进一步控制加速、减速和停止方式。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/animate-in-after-effects/speed-between-keyframes/speed.html" >Adobe 官方：控制关键帧间的速度<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>但不能把所有关键帧都选中按一次 F9，就认为动画完成了。主标题 Start 的时间变化，决定的是整排字被释放的推进节奏；它整体缓动后，前几个字和后几个字的出场间隔也会改变。</p>
+<p>我的调整顺序是：</p>
+<ol>
+<li>先保持主标题 Start 线性，判断整句是否在合适的时间内读得出来。</li>
+<li>再观察单字有没有僵硬的跳变，微调选择器的过渡设置。</li>
+<li>最后决定整句是否需要开头更果断、结尾更从容。</li>
+</ol>
+<p>不要同时大幅修改位移、时长、字间延迟和缓动。每次只改变一类参数，才能判断到底是哪一步改善了观看体验。</p>
+<p>如果想强调某个关键词，先试静态字重或颜色的区别。缩放、弹跳和旋转应当是额外选择，而不是所有标题的默认配置。标题已经停住后仍反复弹跳，会不断打断阅读。</p>
+<hr>
+<h2 id="五、另一种风格：让整行文字从固定窗口里出现"><a href="#五、另一种风格：让整行文字从固定窗口里出现" class="headerlink" title="五、另一种风格：让整行文字从固定窗口里出现"></a>五、另一种风格：让整行文字从固定窗口里出现</h2><p>如果想做更整齐的章节标题，可以另建一个版本，用“整行位移 + Alpha 轨道遮罩”替代主标题的逐字动画。不要直接把它叠在前一个方案上，否则很难分清是哪层设置在控制画面。</p>
+<ol>
+<li>新建没有文字动画器的标题图层，摆好最终位置。</li>
+<li>取消图层选择，再画一个有填充、无描边的矩形形状层，命名为 <code>MATTE_TITLE</code>。</li>
+<li>矩形覆盖文字最终可见的区域，给标点和笔画边缘留出余量。</li>
+<li>在文字图层的 Track Matte（轨道遮罩）中指定 <code>MATTE_TITLE</code>，使用 Alpha Matte（Alpha 遮罩），不要选择反转模式。</li>
+<li>保持矩形不动，只让文字图层从窗口下方移动到最终位置；初始位移需足够大，保证所有字形一开始都在可见范围之外。</li>
+</ol>
+<p>Alpha 遮罩看的是遮罩层的透明度，而不是颜色亮不亮。矩形区域的不透明部分让文字显示，透明部分把文字隐藏。当前界面可通过轨道遮罩来源控件指定图层；一些旧版界面要求遮罩紧邻文字上方，按所用版本选择即可。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/work-with-transparency-and-compositing/work-with-track-mattes-and-traveling-mattes/track-mattes-and-traveling-mattes.html" >Adobe 官方：轨道遮罩<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>如果矩形跟着文字一起移动，就失去了“固定窗口”的揭示效果。若图层自身的蒙版也随整层一起移动，同样要检查是不是把裁切边界和运动对象绑在了一起。</p>
+<hr>
+<h2 id="六、运动模糊：让运动顺一点，不要让文字糊一片"><a href="#六、运动模糊：让运动顺一点，不要让文字糊一片" class="headerlink" title="六、运动模糊：让运动顺一点，不要让文字糊一片"></a>六、运动模糊：让运动顺一点，不要让文字糊一片</h2><p>快速位移的文字可以试着打开运动模糊。检查文字图层的 Motion Blur 开关，同时确认合成顶部的运动模糊总开关已启用；最终输出还应检查渲染设置中的运动模糊选项。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/ca/after-effects/using/assorted-animation-tools.html" >Adobe 官方：运动模糊与动画工具<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>本例不是高速冲击型标题，模糊只需要辅助位移。尤其是细字重、小字号和复杂背景，拖影过长会吃掉笔画。可以用普通速度循环观看，并在中间帧暂停检查：文字仍然在移动时是否完全无法辨认？落定后是否恢复清晰？</p>
+<p>运动模糊不是柔焦，也不是给文字一直加高斯模糊。不要为了“柔和”让完整阅读段也失去锐度。</p>
+<hr>
+<h2 id="七、从教程效果变成真正能用的标题"><a href="#七、从教程效果变成真正能用的标题" class="headerlink" title="七、从教程效果变成真正能用的标题"></a>七、从教程效果变成真正能用的标题</h2><h3 id="保持一种主要运动语言"><a href="#保持一种主要运动语言" class="headerlink" title="保持一种主要运动语言"></a>保持一种主要运动语言</h3><p>如果主标题向上出现、副标题从右侧飞入、装饰线旋转、背景持续放大，观众会同时处理四种方向。本例让两行文字都向上进入，差别只在时间和运动幅度，画面会更统一。</p>
+<h3 id="根据内容决定停顿，而不是每个鼓点都动"><a href="#根据内容决定停顿，而不是每个鼓点都动" class="headerlink" title="根据内容决定停顿，而不是每个鼓点都动"></a>根据内容决定停顿，而不是每个鼓点都动</h3><p>音乐可以提示主标题落定或退场的时机，但不需要每个字都对应一个重音。关闭音乐再看一遍，如果没有鼓点就不知道哪里是重点，说明标题自身的信息层级还不够清楚。</p>
+<h3 id="竖屏需要重新排版"><a href="#竖屏需要重新排版" class="headerlink" title="竖屏需要重新排版"></a>竖屏需要重新排版</h3><p>把 1920 × 1080 的标题直接塞进 1080 × 1920 合成，往往不是字太小，就是一行太长。应重新决定主标题是否换行、副标题放在哪里、人物脸部与平台界面会不会被遮挡。</p>
+<p>先锁定横屏和竖屏各自的最终版式，再沿用相同的动作思路；字号、位移和行间距不必机械照搬。</p>
+<h3 id="改文案后必须重看一遍"><a href="#改文案后必须重看一遍" class="headerlink" title="改文案后必须重看一遍"></a>改文案后必须重看一遍</h3><p>把八个字换成十六个字，动画总时长不变，并不代表观看感受不变。新文案可能拥挤、标点落单，逐字入场也可能显得仓促。替换内容后至少检查首帧、中间帧、落定帧和退场前一帧。</p>
+<hr>
+<h2 id="八、交付：带背景成片与透明标题分开考虑"><a href="#八、交付：带背景成片与透明标题分开考虑" class="headerlink" title="八、交付：带背景成片与透明标题分开考虑"></a>八、交付：带背景成片与透明标题分开考虑</h2><p>标题直接作为完整片头使用时，保留背景并导出普通视频即可；如果要把它叠加在另一段实拍上，就需要输出带透明通道的素材。</p>
+<p>透明交付前，关闭背景图层，通过透明网格确认画面确实没有背景。然后在渲染队列的输出模块里选择支持 Alpha 的格式与编码，把 Channels（通道）设置为 <strong>RGB+Alpha</strong>；例如可以使用支持透明通道的 PNG 序列。并不是所有视频编码都支持 Alpha，不能仅凭预览窗口里“看着像黑底”判断输出是否透明。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/render-and-export/basics-of-rendering-and-exporting/basics-rendering-exporting.html" >Adobe 官方：渲染与导出<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>输出后，把文件或序列重新导入剪辑工程，叠在亮色、暗色两种背景上检查。确认字边没有异常黑边，时长、帧率和透明区域都符合预期，再作为可复用素材保存。</p>
+<p>项目里可以使用清楚的命名：<code>TITLE_MAIN</code>、<code>TITLE_SUB</code>、<code>MATTE_TITLE</code>、<code>BG</code>。保留可编辑文字，并记录字体名称；涉及商业用途时另行确认字体授权范围。</p>
+<hr>
+<h2 id="九、排错与发布前检查"><a href="#九、排错与发布前检查" class="headerlink" title="九、排错与发布前检查"></a>九、排错与发布前检查</h2><table>
+<thead>
+<tr>
+<th align="left">现象</th>
+<th align="left">优先检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">整句话一直看不见</td>
+<td align="left">图层 Opacity 是否误设为 0；选择器结束时是否仍在影响全部文字</td>
+</tr>
+<tr>
+<td align="left">整句话一起移动，没有逐字效果</td>
+<td align="left">是否改了图层 Position，而不是 Animator Position</td>
+</tr>
+<tr>
+<td align="left">标题出现得像打字机，一格一格跳</td>
+<td align="left">选择器 Shape、Smoothness 与关键帧插值是否被改动</td>
+</tr>
+<tr>
+<td align="left">文字被切掉一半</td>
+<td align="left">遮罩尺寸是否足够，字形和标点是否超出裁切边界</td>
+</tr>
+<tr>
+<td align="left">不同版本界面找不到同名选项</td>
+<td align="left">先按英文属性名定位，并检查时间线的 Switches &#x2F; Modes 显示</td>
+</tr>
+<tr>
+<td align="left">文字清楚出现后马上退出</td>
+<td align="left">是否把入场时间误算成完整阅读时间</td>
+</tr>
+<tr>
+<td align="left">导出后带实心背景</td>
+<td align="left">是否关闭背景层，编码与输出通道是否真的保留 Alpha</td>
+</tr>
+</tbody></table>
+<p>最后再问自己五个问题：</p>
+<ul>
+<li>不开声音，观众也知道先读哪一行吗？</li>
+<li>主标题落定后，字形和标点都完整清楚吗？</li>
+<li>动画的方向、幅度和速度是否符合视频内容？</li>
+<li>小屏幕上仍能轻松读完吗？</li>
+<li>输出文件是否已经重新导入，检查过实际效果？</li>
+</ul>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>一组实用的 AE 标题动画，不需要从复杂表达式开始。先把排版做好，用文字动画器解决逐字变化，用图层属性安排整行移动，再通过错峰、停顿和统一退场，把分散动作组织成一段完整表达。</p>
+<p>本例最值得保留的不是某个数值，而是一种顺序：<strong>先设计清楚的终点，再安排入场；先确保读得完，再加入强调；先完成一种动作语言，再考虑更多效果。</strong> 当观众记住的是标题说了什么，而不仅是字飞得多热闹，动画才真正完成了任务。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> ✨ AE 文字标题动画的设计方法：从逐字入场到完整片头</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-09-03 10:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-09-03 12:03:55
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/09/03/AE文字标题动画的设计方法/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%89%AA%E8%BE%91/">#剪辑</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/AE/">#AE</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/After-Effects/">#After Effects</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E6%96%87%E5%AD%97%E5%8A%A8%E7%94%BB/">#文字动画</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%8A%A8%E6%80%81%E8%AE%BE%E8%AE%A1/">#动态设计</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/08/30/%E5%85%89%E7%BA%BF%E7%9A%84%E5%8F%99%E4%BA%8B%E9%80%BB%E8%BE%91/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">💡 光线的叙事逻辑：方向、软硬、明暗与色温</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">✨ AE 文字标题动画的设计方法：从逐字入场到完整片头</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%86%99%E6%B8%85%E6%A5%9A%E6%A0%87%E9%A2%98%E8%A6%81%E4%BC%A0%E9%80%92%E4%BB%80%E4%B9%88"><span class="nav-text">一、先写清楚标题要传递什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E9%80%89%E5%AF%B9%E5%8A%A8%E7%94%BB%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%86%8D%E8%AE%BE%E7%BD%AE%E5%85%B3%E9%94%AE%E5%B8%A7"><span class="nav-text">二、先选对动画工具，再设置关键帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E6%88%98%EF%BC%9A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA-5-%E7%A7%92%E6%A0%87%E9%A2%98"><span class="nav-text">三、实战：搭建一个 5 秒标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BB%BA%E7%AB%8B%E5%90%88%E6%88%90%E4%B8%8E%E6%9C%80%E7%BB%88%E7%89%88%E5%BC%8F"><span class="nav-text">1. 建立合成与最终版式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AE%A9%E4%B8%BB%E6%A0%87%E9%A2%98%E9%80%90%E5%AD%97%E4%B8%8A%E6%B5%AE"><span class="nav-text">2. 让主标题逐字上浮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%AE%A9%E5%89%AF%E6%A0%87%E9%A2%98%E7%A8%8D%E6%99%9A%E5%85%A5%E5%9C%BA"><span class="nav-text">3. 让副标题稍晚入场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%95%99%E5%87%BA%E7%9C%9F%E6%AD%A3%E7%9A%84%E9%98%85%E8%AF%BB%E6%97%B6%E9%97%B4"><span class="nav-text">4. 留出真正的阅读时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%94%A8%E5%9B%BE%E5%B1%82%E5%B1%9E%E6%80%A7%E7%BB%9F%E4%B8%80%E9%80%80%E5%9C%BA"><span class="nav-text">5. 用图层属性统一退场</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%BC%93%E5%8A%A8%EF%BC%9A%E5%85%88%E5%8C%BA%E5%88%86%E6%95%B4%E5%8F%A5%E8%8A%82%E5%A5%8F%E5%92%8C%E5%8D%95%E5%AD%97%E8%BF%87%E6%B8%A1"><span class="nav-text">四、缓动：先区分整句节奏和单字过渡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%8F%A6%E4%B8%80%E7%A7%8D%E9%A3%8E%E6%A0%BC%EF%BC%9A%E8%AE%A9%E6%95%B4%E8%A1%8C%E6%96%87%E5%AD%97%E4%BB%8E%E5%9B%BA%E5%AE%9A%E7%AA%97%E5%8F%A3%E9%87%8C%E5%87%BA%E7%8E%B0"><span class="nav-text">五、另一种风格：让整行文字从固定窗口里出现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%BF%90%E5%8A%A8%E6%A8%A1%E7%B3%8A%EF%BC%9A%E8%AE%A9%E8%BF%90%E5%8A%A8%E9%A1%BA%E4%B8%80%E7%82%B9%EF%BC%8C%E4%B8%8D%E8%A6%81%E8%AE%A9%E6%96%87%E5%AD%97%E7%B3%8A%E4%B8%80%E7%89%87"><span class="nav-text">六、运动模糊：让运动顺一点，不要让文字糊一片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E4%BB%8E%E6%95%99%E7%A8%8B%E6%95%88%E6%9E%9C%E5%8F%98%E6%88%90%E7%9C%9F%E6%AD%A3%E8%83%BD%E7%94%A8%E7%9A%84%E6%A0%87%E9%A2%98"><span class="nav-text">七、从教程效果变成真正能用的标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E6%8C%81%E4%B8%80%E7%A7%8D%E4%B8%BB%E8%A6%81%E8%BF%90%E5%8A%A8%E8%AF%AD%E8%A8%80"><span class="nav-text">保持一种主要运动语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E5%86%85%E5%AE%B9%E5%86%B3%E5%AE%9A%E5%81%9C%E9%A1%BF%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%AF%8F%E4%B8%AA%E9%BC%93%E7%82%B9%E9%83%BD%E5%8A%A8"><span class="nav-text">根据内容决定停顿，而不是每个鼓点都动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%96%E5%B1%8F%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E6%8E%92%E7%89%88"><span class="nav-text">竖屏需要重新排版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E6%96%87%E6%A1%88%E5%90%8E%E5%BF%85%E9%A1%BB%E9%87%8D%E7%9C%8B%E4%B8%80%E9%81%8D"><span class="nav-text">改文案后必须重看一遍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E4%BA%A4%E4%BB%98%EF%BC%9A%E5%B8%A6%E8%83%8C%E6%99%AF%E6%88%90%E7%89%87%E4%B8%8E%E9%80%8F%E6%98%8E%E6%A0%87%E9%A2%98%E5%88%86%E5%BC%80%E8%80%83%E8%99%91"><span class="nav-text">八、交付：带背景成片与透明标题分开考虑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%94%99%E4%B8%8E%E5%8F%91%E5%B8%83%E5%89%8D%E6%A3%80%E6%9F%A5"><span class="nav-text">九、排错与发布前检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        20 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>

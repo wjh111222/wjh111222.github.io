@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">五秒标题动画时间线</title>
+  <desc id="desc">25 fps：主标题在第0至20帧入场，副标题在第8至28帧入场，第28至100帧完整阅读，第100至112帧统一退场，剩余时间留作转场。</desc>
+  <rect width="1200" height="675" rx="28" fill="#0f172a"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="66" y="70" fill="#f8fafc" font-size="34" font-weight="700">5 秒标题：把时间留给阅读</text>
+    <text x="66" y="111" fill="#94a3b8" font-size="19">25 fps / 总时长 125 帧 / 以下帧号均相对于合成起点</text>
+    <g stroke="#334155" stroke-dasharray="4 8">
+      <path d="M200 192v248M380 192v248M560 192v248M740 192v248M920 192v248M1100 192v248"/>
+    </g>
+    <g fill="#cbd5e1" font-size="17" text-anchor="middle">
+      <text x="200" y="173">0s / 0f</text><text x="380" y="173">1s / 25f</text>
+      <text x="560" y="173">2s / 50f</text><text x="740" y="173">3s / 75f</text>
+      <text x="920" y="173">4s / 100f</text><text x="1100" y="173">5s / 125f</text>
+    </g>
+    <text x="68" y="251" fill="#f8fafc" font-size="23" font-weight="700">主标题</text>
+    <text x="68" y="341" fill="#f8fafc" font-size="23" font-weight="700">副标题</text>
+    <rect x="200" y="217" width="900" height="54" rx="10" fill="#1e293b"/>
+    <rect x="200" y="217" width="144" height="54" rx="10" fill="#8b5cf6"/>
+    <rect x="344" y="217" width="576" height="54" fill="#164e63"/>
+    <rect x="920" y="217" width="86.4" height="54" rx="5" fill="#be6a24"/>
+    <rect x="200" y="307" width="900" height="54" rx="10" fill="#1e293b"/>
+    <rect x="257.6" y="307" width="144" height="54" rx="10" fill="#8b5cf6"/>
+    <rect x="401.6" y="307" width="518.4" height="54" fill="#164e63"/>
+    <rect x="920" y="307" width="86.4" height="54" rx="5" fill="#be6a24"/>
+    <g text-anchor="middle" fill="#fff" font-size="18">
+      <text x="272" y="251">0–20f 入场</text><text x="632" y="251">保持静止</text><text x="963" y="251">退场</text>
+      <text x="329.6" y="341">8–28f 入场</text><text x="660.8" y="341">保持静止</text><text x="963" y="341">退场</text>
+    </g>
+    <path d="M401.6 390v16h518.4v-16" stroke="#67e8f9" stroke-width="2" fill="none"/>
+    <text x="660.8" y="442" text-anchor="middle" fill="#67e8f9" font-size="21">完整阅读：28–100f ≈ 2.88 秒</text>
+    <g font-size="18" fill="#cbd5e1">
+      <rect x="95" y="495" width="16" height="16" rx="3" fill="#8b5cf6"/><text x="122" y="510">错峰入场</text>
+      <rect x="351" y="495" width="16" height="16" rx="3" fill="#164e63"/><text x="378" y="510">稳定阅读</text>
+      <rect x="607" y="495" width="16" height="16" rx="3" fill="#be6a24"/><text x="634" y="510">100–112f 退场</text>
+      <rect x="902" y="495" width="16" height="16" rx="3" fill="#334155"/><text x="929" y="510">转场余量</text>
+    </g>
+    <rect x="66" y="559" width="1068" height="64" rx="16" fill="#1e293b"/>
+    <text x="600" y="599" text-anchor="middle" fill="#e2e8f0" font-size="21">最后一条重要信息清楚出现之后，才开始计算完整阅读时间</text>
+  </g>
+</svg>
