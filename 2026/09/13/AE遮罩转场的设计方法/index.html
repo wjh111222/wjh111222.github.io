@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/09/13/ae遮罩转场的设计方法/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🎭 AE 遮罩转场的设计方法：从形状揭示到无缝衔接">
+<meta property="og:url" content="http://example.com/2026/09/13/AE%E9%81%AE%E7%BD%A9%E8%BD%AC%E5%9C%BA%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-09-13T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-13T13:07:04.441Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="AE">
+<meta property="article:tag" content="After Effects">
+<meta property="article:tag" content="动态设计">
+<meta property="article:tag" content="轨道遮罩">
+<meta property="article:tag" content="遮罩转场">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🎭 AE 遮罩转场的设计方法：从形状揭示到无缝衔接 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">26</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">21</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">🎭 AE 遮罩转场的设计方法：从形状揭示到无缝衔接</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/profile-avatar.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-09-13 10:00</span>
+        <span class="mobile">2026-09-13 10:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-09-13 21:07:04</span>
+            <span class="mobile">2026-09-13 21:07:04</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%90%8E%E6%9C%9F/">后期</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/AE/">AE</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/After-Effects/">After Effects</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%8A%A8%E6%80%81%E8%AE%BE%E8%AE%A1/">动态设计</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E9%81%AE%E7%BD%A9%E8%BD%AC%E5%9C%BA/">遮罩转场</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%BD%A8%E9%81%93%E9%81%AE%E7%BD%A9/">轨道遮罩</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：遮罩转场不是用一块图形简单盖住画面，而是把“什么区域可见”和“画面怎样运动”分开控制。遮罩负责改变边界，前后镜头负责延续方向、速度与视觉重点。只有两部分协同，转场才会像一个完整动作，而不是突然出现的特效。</p>
+</blockquote>
+<p>上一篇介绍了 AE 文字标题动画，这次继续使用 Adobe After Effects（简称 AE），制作一个不依赖第三方插件的形状遮罩转场：新画面从左向右被揭示，旧画面轻微离开，新画面同时落到最终位置。</p>
+<p>本文参数基于 1920 × 1080、25 fps 的练习合成。它们是便于跟做的起点，不是所有项目的固定标准。界面名称可能随 AE 版本变化，关键属性同时标注英文。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/ae-matte-transition/matte-layer-relationship.svg"
+                      alt="遮罩转场的图层关系"
+                ></p>
+<p><em>图 1：轨道遮罩提供透明度，新画面提供真正的像素内容。两者职责不同。</em></p>
+<h2 id="一、遮罩转场到底在控制什么？"><a href="#一、遮罩转场到底在控制什么？" class="headerlink" title="一、遮罩转场到底在控制什么？"></a>一、遮罩转场到底在控制什么？</h2><p>假设时间线上有两个镜头：画面 A 在下一个镜头出现前仍然铺满屏幕，画面 B 位于它上方。我们希望一条边界从左向右扫过，边界左侧显示 B，右侧仍显示 A。</p>
+<p>这里至少包含两个独立变化：</p>
+<ol>
+<li><strong>可见区域变化</strong>：B 从完全隐藏逐渐变成覆盖全屏。</li>
+<li><strong>画面内容变化</strong>：A 和 B 可以在转场期间做少量位置、缩放或视差运动。</li>
+</ol>
+<p>轨道遮罩只解决第一件事。它像一张不断移动的透明度地图：不透明区域让 B 显示，透明区域让 B 隐藏。B 隐藏的地方，自然露出下方的 A。</p>
+<p>因此，遮罩层本身不必是观众最终看见的颜色。它的作用是提供 Alpha 或亮度信息，而真正显示的颜色、人物和场景来自被遮罩的画面 B。Adobe 官方说明，轨道遮罩可以来自静态图像、视频、图形、文字或形状层。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/using/track-mattes-and-traveling-mattes.html" >Adobe 官方：轨道遮罩<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<hr>
+<h2 id="二、先分清-Mask、Track-Matte-和普通覆盖层"><a href="#二、先分清-Mask、Track-Matte-和普通覆盖层" class="headerlink" title="二、先分清 Mask、Track Matte 和普通覆盖层"></a>二、先分清 Mask、Track Matte 和普通覆盖层</h2><table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="left">可见边界属于谁</th>
+<th align="left">适合什么情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Layer Mask（图层蒙版）</strong></td>
+<td align="left">直接画在素材自身上</td>
+<td align="left">只裁切一个图层，边界与素材一起管理</td>
+</tr>
+<tr>
+<td align="left"><strong>Track Matte（轨道遮罩）</strong></td>
+<td align="left">独立图层提供透明度或亮度</td>
+<td align="left">一个图形控制另一个图层，适合复用和单独动画</td>
+</tr>
+<tr>
+<td align="left"><strong>普通形状覆盖</strong></td>
+<td align="left">形状只是挡在画面上方</td>
+<td align="left">闪白、色块擦除，或色块完全覆盖后再切镜头</td>
+</tr>
+</tbody></table>
+<p>普通覆盖层会把素材挡住，但它不会自动“把 B 裁成同样的形状”。如果一块紫色矩形从左向右经过，观众只会看到紫色矩形经过；只有把它设为 B 的轨道遮罩，B 才会在矩形范围内出现。</p>
+<p>图层蒙版和形状路径都能像其他属性一样通过关键帧动画，但蒙版跟随它所在的图层。轨道遮罩独立存在，更适合让边界和内容使用不同的运动。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/animate-in-after-effects/animate-shape-paths-and-masks/animating-shape-paths-masks.html" >Adobe 官方：动画化形状路径与蒙版<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>选择方法前，可以先问：这条边界以后要不要换素材、单独改速度，或者同时控制多个图层？如果答案是“要”，轨道遮罩通常更清楚。</p>
+<hr>
+<h2 id="三、实战：建立一个-3-秒转场合成"><a href="#三、实战：建立一个-3-秒转场合成" class="headerlink" title="三、实战：建立一个 3 秒转场合成"></a>三、实战：建立一个 3 秒转场合成</h2><h3 id="1-新建合成并准备素材"><a href="#1-新建合成并准备素材" class="headerlink" title="1. 新建合成并准备素材"></a>1. 新建合成并准备素材</h3><p>本例使用以下设置：</p>
+<table>
+<thead>
+<tr>
+<th align="left">项目</th>
+<th align="left">本例设置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">合成名称</td>
+<td align="left"><code>TRANSITION_03S</code></td>
+</tr>
+<tr>
+<td align="left">尺寸</td>
+<td align="left">1920 × 1080，方形像素</td>
+</tr>
+<tr>
+<td align="left">帧率</td>
+<td align="left">25 fps</td>
+</tr>
+<tr>
+<td align="left">时长</td>
+<td align="left">3 秒，共 75 帧</td>
+</tr>
+<tr>
+<td align="left">转场区间</td>
+<td align="left">第 25–37 帧，共 12 帧</td>
+</tr>
+</tbody></table>
+<p>把旧镜头放入合成，命名为 <code>SHOT_A</code>；把新镜头放在它上方，命名为 <code>SHOT_B</code>。两段素材都覆盖完整合成，并确认缩放后没有露出空边。</p>
+<p>若原素材尺寸、帧率或构图差异很大，先分别预合成，让 A、B 在主合成里都表现为 1920 × 1080 的完整画面。遮罩转场应该解决衔接问题，不应该顺带承担素材尺寸修复。</p>
+<p>第 0–24 帧只看 A，第 25–37 帧发生转场，第 38–74 帧只看 B。先确定这个结构，再设计运动。</p>
+<h3 id="2-创建提供透明度的形状层"><a href="#2-创建提供透明度的形状层" class="headerlink" title="2. 创建提供透明度的形状层"></a>2. 创建提供透明度的形状层</h3><p>取消选择所有图层，再使用矩形工具绘制一个形状层，命名为 <code>MATTE_WIPE</code>。如果绘制前仍选中了 <code>SHOT_B</code>，AE 可能在 B 上创建蒙版，而不是新建形状层，这是初学者最常见的入口错误之一。</p>
+<p>为了让矩形在旋转或运动时仍有余量，本例把 Rectangle Path（矩形路径）的 Size 设为 <code>2050, 1200</code>，Fill（填充）设为完全不透明，Stroke（描边）关闭，Anchor Point（锚点）放在图形中心。</p>
+<p>矩形比合成略大，是为了避免边缘因取整、模糊或轻微旋转露出一条缝。形状颜色可以随意，因为接下来使用的是 Alpha Matte；重要的是透明和不透明区域，而不是它看起来是白色、紫色还是蓝色。</p>
+<h3 id="3-把形状层指定为-B-的轨道遮罩"><a href="#3-把形状层指定为-B-的轨道遮罩" class="headerlink" title="3. 把形状层指定为 B 的轨道遮罩"></a>3. 把形状层指定为 B 的轨道遮罩</h3><p>选中 <code>SHOT_B</code>，在时间线的 Track Matte（轨道遮罩）区域指定 <code>MATTE_WIPE</code>，选择 <strong>Alpha Matte（Alpha 遮罩）</strong>，并保持 <strong>Non-Inverted（不反转）</strong>。</p>
+<p>当前版本允许从图层列表或吸管式关联控件选择遮罩来源，遮罩层不一定必须紧挨着 B；较旧版本通常要求遮罩位于被遮罩图层正上方。如果看不到相关选项，在时间线列标题上打开 Modes（模式），或使用 Toggle Switches &#x2F; Modes（切换开关&#x2F;模式）。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/using/track-mattes-and-traveling-mattes.html" >Adobe 官方：选择轨道遮罩图层<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>Alpha Matte 的逻辑是：遮罩 Alpha 为不透明的地方，B 可见；透明的地方，B 不可见。Alpha Inverted Matte（反转 Alpha 遮罩）则相反。</p>
+<p>不要把 Alpha Matte 和 Luma Matte（亮度遮罩）混为一谈：前者读取透明度，后者读取像素明暗。纯色不透明矩形用 Alpha Matte 最直接；黑白渐变、发光纹理等素材需要按亮度控制透明度时，才更适合 Luma Matte。</p>
+<h3 id="4-给遮罩设置准确的起点与终点"><a href="#4-给遮罩设置准确的起点与终点" class="headerlink" title="4. 给遮罩设置准确的起点与终点"></a>4. 给遮罩设置准确的起点与终点</h3><p>矩形宽 2050 px，锚点在中心。要让它从画面左侧完全离场开始，再移动到完整覆盖画面，可以给 <code>MATTE_WIPE</code> 的图层 Position（位置）设置：</p>
+<table>
+<thead>
+<tr>
+<th align="left">帧</th>
+<th align="left">Position</th>
+<th align="left">画面状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">第 25 帧</td>
+<td align="left"><code>-1025, 540</code></td>
+<td align="left">矩形右边缘刚好在画面左边，B 完全隐藏</td>
+</tr>
+<tr>
+<td align="left">第 31 帧</td>
+<td align="left"><code>0, 540</code></td>
+<td align="left">边界经过画面中部附近，A、B 各显示一部分</td>
+</tr>
+<tr>
+<td align="left">第 37 帧</td>
+<td align="left"><code>1025, 540</code></td>
+<td align="left">矩形覆盖完整画幅，B 完全显示</td>
+</tr>
+</tbody></table>
+<p>这里的坐标假设合成中心是 <code>960, 540</code>，矩形锚点在自身中心。起终点按照矩形宽度计算，因此比随手把 X 写成 <code>-500</code> 和 <code>2500</code> 更容易判断边界是否真正离场。</p>
+<p>先只保留第 25、37 帧两个关键帧，预览硬切式的线性移动。第 31 帧是检查帧，不一定需要建立关键帧：边界应该穿过画面中央，且没有黑缝、透明缝或残留色块。</p>
+<p>然后给首尾关键帧添加 Easy Ease，并在 Speed Graph（速度图表）中调整为“起步短、途中快、落点稳”的单峰速度。不要让曲线在中途降到零，否则边界会像被卡住一样停顿。</p>
+<hr>
+<h2 id="四、让前后镜头与边界一起运动"><a href="#四、让前后镜头与边界一起运动" class="headerlink" title="四、让前后镜头与边界一起运动"></a>四、让前后镜头与边界一起运动</h2><p>只有遮罩运动时，转场已经成立，但画面内部可能仍然像两张静止卡片被擦开。可以在 12 帧内加入非常轻微的位移，让内容与边界共享方向感。</p>
+<p>本例使用：</p>
+<table>
+<thead>
+<tr>
+<th align="left">图层</th>
+<th align="left">第 25 帧</th>
+<th align="left">第 37 帧</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>SHOT_A</code> Position</td>
+<td align="left">原始位置 <code>P0</code></td>
+<td align="left"><code>P0 + [-60, 0]</code></td>
+</tr>
+<tr>
+<td align="left"><code>SHOT_B</code> Position</td>
+<td align="left"><code>P0 + [60, 0]</code></td>
+<td align="left">原始位置 <code>P0</code></td>
+</tr>
+</tbody></table>
+<p>A 向左退出，B 从右侧轻微落回。两者实际只移动 60 px，视觉上提供方向，不应该把观众注意力从内容上抢走。B 在第 25 帧虽然完全隐藏，仍要从那一帧记录起始位置，确保它刚进入遮罩范围时已经处于正确运动阶段。</p>
+<p>如果素材本身已经有明显镜头运动，不要机械添加这组位移。人物正在向右跑时，转场边界和画面运动可以顺势向右；一个镜头快速推进到特写时，下一个镜头也可以从相近尺度和方向接上。先读素材，再决定转场。</p>
+<p>开启运动模糊时，要分别检查移动图层与合成总开关。硬边图形遮罩如果开启很强的运动模糊，会把 Alpha 边界变成半透明带；这可能更柔和，也可能造成脏边。先在中间帧停住观察，再决定是否只给画面运动模糊、保持遮罩边界清晰。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/ae-matte-transition/matte-transition-timeline.svg"
+                      alt="三秒遮罩转场时间线"
+                ></p>
+<p><em>图 2：转场只占 12 帧。A、遮罩和 B 在同一区间内变化，转场前后留给镜头本身。</em></p>
+<hr>
+<h2 id="五、边界形状会改变转场的语气"><a href="#五、边界形状会改变转场的语气" class="headerlink" title="五、边界形状会改变转场的语气"></a>五、边界形状会改变转场的语气</h2><h3 id="1-垂直硬边：清楚、直接"><a href="#1-垂直硬边：清楚、直接" class="headerlink" title="1. 垂直硬边：清楚、直接"></a>1. 垂直硬边：清楚、直接</h3><p>矩形不旋转时，边界是一条垂直直线，适合章节切换、信息类视频和界面演示。它的优势是方向明确、边缘容易检查，也最适合作为第一个练习。</p>
+<h3 id="2-斜边：速度感更强"><a href="#2-斜边：速度感更强" class="headerlink" title="2. 斜边：速度感更强"></a>2. 斜边：速度感更强</h3><p>把 <code>MATTE_WIPE</code> 轻微旋转，例如 <code>-6°</code>，边界会形成斜向推进。旋转后图形占用的宽高范围变化，必须重新检查第 25、37 帧是否完全离场和覆盖；不要直接沿用未旋转时的临界坐标。</p>
+<p>斜边已经提供明显的运动感，前后镜头位移可以更小。角度过大时，画面一角会比另一角早很多完成切换，主体可能被对角线从脸部切过。</p>
+<h3 id="3-柔边：适合梦境和时间变化"><a href="#3-柔边：适合梦境和时间变化" class="headerlink" title="3. 柔边：适合梦境和时间变化"></a>3. 柔边：适合梦境和时间变化</h3><p>柔边本质是让遮罩边缘出现部分透明。可以在遮罩上创建受控的模糊或使用带渐变 Alpha 的素材。过宽的柔边会让两个镜头长时间叠在一起，产生类似溶解的双影；人物脸部、文字和高反差轮廓尤其容易显脏。</p>
+<h3 id="4-图形边界：适合品牌语言"><a href="#4-图形边界：适合品牌语言" class="headerlink" title="4. 图形边界：适合品牌语言"></a>4. 图形边界：适合品牌语言</h3><p>圆形、波形或品牌符号都可以作为轨道遮罩。形状层还提供 Offset Paths、Trim Paths 等路径操作；例如 Offset Paths 可以在不改原始路径的情况下扩张或收缩闭合形状。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/drawing-painting-and-paths/shapes-and-shape-attributes/use-offset-paths.html" >Adobe 官方：Offset Paths<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>图形越复杂，越要先回答它与内容有什么关系。圆形扩张适合聚焦或开启，锯齿边界可能传递故障和冲突，品牌标志则适合片头、片尾或栏目包装。没有含义的复杂轮廓只会增加计算和排错成本。</p>
+<hr>
+<h2 id="六、用画面中的物体做“动机遮罩”"><a href="#六、用画面中的物体做“动机遮罩”" class="headerlink" title="六、用画面中的物体做“动机遮罩”"></a>六、用画面中的物体做“动机遮罩”</h2><p>最自然的遮罩转场，往往不是凭空出现的几何图形，而是由画面中的物体触发。</p>
+<p>例如，人物从镜头前经过，身体短暂遮满画面；下一镜头利用相近方向继续显现。制作时可以复制前景人物，使用蒙版、抠像或 Roto Brush 得到轮廓，再把它作为 B 的轨道遮罩。</p>
+<p>这种做法要注意三个条件：</p>
+<ol>
+<li>前景物体真的有足够面积经过画面，不能靠极度放大掩盖素材不足。</li>
+<li>A 和 B 的主体位置、运动方向或色彩至少有一个明显对应关系。</li>
+<li>遮罩边缘与人物轮廓匹配，头发、手指等区域不能不断跳动。</li>
+</ol>
+<p>传统蒙版路径可以用关键帧逐帧调整，AE 也提供 Mask Tracker（蒙版跟踪器）分析位置、缩放、旋转等变化。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/animate-in-after-effects/track-mask/rigid-mask-tracking.html" >Adobe 官方：蒙版跟踪器<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>跟踪结果不是免检答案。运动模糊、遮挡和出画都可能让轮廓漂移。应在转场开始、中间、结束三处先检查，再逐帧修复最明显的穿帮。</p>
+<hr>
+<h2 id="七、预合成让转场更容易复用"><a href="#七、预合成让转场更容易复用" class="headerlink" title="七、预合成让转场更容易复用"></a>七、预合成让转场更容易复用</h2><p>一个实际镜头可能包含调色、字幕、图形和多个素材层。如果直接让所有层分别引用同一个遮罩，时间线很快会变得难以维护。</p>
+<p>更稳定的结构是：</p>
+<div class="code-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TRANSITION_03S</span><br><span class="line">├─ MATTE_WIPE</span><br><span class="line">├─ SHOT_B_PRECOMP  ← Alpha Matte: MATTE_WIPE</span><br><span class="line">└─ SHOT_A_PRECOMP</span><br></pre></td></tr></table></figure></div>
+
+<p>A 与 B 的内部内容分别放进预合成，主合成只管理三件事：旧镜头、新镜头、遮罩。更换镜头时进入对应预合成替换素材，主合成里的转场节奏不必重做。</p>
+<p>预合成也不是越多越好。与转场无关的全局调色、颗粒和最终字幕可以留在主合成更上方；否则它们也可能被意外遮掉。命名时把职责写清楚，比保留“Shape Layer 7”和“Pre-comp 3”更容易排错。</p>
+<p>如果遮罩和被遮罩画面需要完全相同的整体运动，可以把两者再预合成或建立明确的父子关系。Adobe 也建议在遮罩与填充层需要相同动画设置时考虑预合成。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/using/track-mattes-and-traveling-mattes.html" >Adobe 官方：轨道遮罩与移动遮罩<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<hr>
+<h2 id="八、为什么你的遮罩转场会穿帮？"><a href="#八、为什么你的遮罩转场会穿帮？" class="headerlink" title="八、为什么你的遮罩转场会穿帮？"></a>八、为什么你的遮罩转场会穿帮？</h2><h3 id="边缘出现一条黑缝"><a href="#边缘出现一条黑缝" class="headerlink" title="边缘出现一条黑缝"></a>边缘出现一条黑缝</h3><p>先检查遮罩终点是否真正覆盖完整画幅、素材是否铺满合成，以及运动模糊或缩放是否让边缘产生半透明像素。把合成放大到 200% 查看中间帧，不要只在适合窗口大小的预览里判断。</p>
+<h3 id="遮罩在动，但-B-没有出现"><a href="#遮罩在动，但-B-没有出现" class="headerlink" title="遮罩在动，但 B 没有出现"></a>遮罩在动，但 B 没有出现</h3><p>检查 B 的 Track Matte 来源是否确实指向 <code>MATTE_WIPE</code>，类型是否为 Alpha Matte，B 的眼睛开关和图层入点是否有效。若时间线只显示 Switches（开关），切换到 Modes（模式）。</p>
+<h3 id="只看到一块实色矩形"><a href="#只看到一块实色矩形" class="headerlink" title="只看到一块实色矩形"></a>只看到一块实色矩形</h3><p>这通常说明矩形仍作为普通可见图层叠在最上方，没有成为 B 的轨道遮罩；也可能同时重新打开了遮罩层的可见性。先暂时隐藏矩形的画面显示，再确认关联是否仍然生效。</p>
+<h3 id="转场结束后-B-又消失了"><a href="#转场结束后-B-又消失了" class="headerlink" title="转场结束后 B 又消失了"></a>转场结束后 B 又消失了</h3><p>检查遮罩图层的出点。只要 B 仍依赖它提供 Alpha，遮罩就必须持续存在；在第 37 帧结束遮罩图层，会让 B 失去可见依据。更简单的做法是让遮罩覆盖到合成结束。</p>
+<h3 id="边界方向对了，画面运动却很别扭"><a href="#边界方向对了，画面运动却很别扭" class="headerlink" title="边界方向对了，画面运动却很别扭"></a>边界方向对了，画面运动却很别扭</h3><p>关闭 A、B 的位置关键帧，只看纯遮罩；再固定遮罩，只看素材运动。分别确认无误后再组合。三个图层同时调整，很难判断错误来自边界还是内容。</p>
+<h3 id="Luma-Matte-结果灰蒙蒙"><a href="#Luma-Matte-结果灰蒙蒙" class="headerlink" title="Luma Matte 结果灰蒙蒙"></a>Luma Matte 结果灰蒙蒙</h3><p>亮度遮罩会把中间灰解释为部分透明。需要更干净的硬边时，提高遮罩素材的黑白反差；需要柔边时，则只让过渡区域保留中间灰。Alpha 通道是独立的透明度信息，RGB 颜色变黑并不等于 Alpha 自动变透明。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/work-with-transparency-and-compositing/work-with-alpha-channels-and-masks/alpha-channels-masks-mattes.html" >Adobe 官方：Alpha 通道、蒙版与遮罩<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<hr>
+<h2 id="九、把转场设计成剪辑的一部分"><a href="#九、把转场设计成剪辑的一部分" class="headerlink" title="九、把转场设计成剪辑的一部分"></a>九、把转场设计成剪辑的一部分</h2><p>AE 里预览顺滑，不代表转场放回成片就一定有效。发布前至少检查：</p>
+<ul>
+<li>转场是否盖住了 A 的重要动作或 B 的关键信息？</li>
+<li>边界方向是否与人物视线、移动方向或镜头运动冲突？</li>
+<li>12 帧是否适合当前节奏，快节奏和慢叙事是否需要分别调整？</li>
+<li>转场音效是否只强调一次主要动作，而不是铺满整个过程？</li>
+<li>横屏方案换到竖屏后，主体是否会被边界从面部切开？</li>
+<li>A、B 色彩差异很大时，中间帧是否出现刺眼闪变？</li>
+</ul>
+<p>转场长度应该从镜头内容反推。两个静态产品镜头可以给边界更从容的时间；快速动作之间可能只需要 6–8 帧；情绪段落甚至更适合直接切或溶解。复杂不是质量，选择正确才是。</p>
+<p>如果给转场配合“呼”的声音，峰值应接近边界速度最快的时刻，而不是机械放在第一帧。声音提前一点可以预告变化，落点音则适合强调 B 完全出现。先让画面独立成立，再用声音补充重量。</p>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>AE 遮罩转场可以归纳为一条清楚的工作线：先确定 A 与 B 的关系，再创建独立遮罩；先保证第 25、31、37 帧没有穿帮，再调整速度曲线；先让边界完成信息切换，再给前后画面加入少量运动。</p>
+<p>真正值得复用的不是一块从左向右移动的矩形，而是这套分工：<strong>素材负责内容，遮罩负责可见范围，关键帧负责时间，剪辑负责意义。</strong> 当四者指向同一个动作方向和视觉重点，转场就不会只是盖住切点，而会成为前后镜头之间自然的一步。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 🎭 AE 遮罩转场的设计方法：从形状揭示到无缝衔接</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-09-13 10:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-09-13 21:07:04
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/09/13/AE遮罩转场的设计方法/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/AE/">#AE</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/After-Effects/">#After Effects</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%8A%A8%E6%80%81%E8%AE%BE%E8%AE%A1/">#动态设计</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E9%81%AE%E7%BD%A9%E8%BD%AC%E5%9C%BA/">#遮罩转场</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%BD%A8%E9%81%93%E9%81%AE%E7%BD%A9/">#轨道遮罩</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/09/03/AE%E6%96%87%E5%AD%97%E6%A0%87%E9%A2%98%E5%8A%A8%E7%94%BB%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">✨ AE 文字标题动画的设计方法：从逐字入场到完整片头</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">🎭 AE 遮罩转场的设计方法：从形状揭示到无缝衔接</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%81%AE%E7%BD%A9%E8%BD%AC%E5%9C%BA%E5%88%B0%E5%BA%95%E5%9C%A8%E6%8E%A7%E5%88%B6%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">一、遮罩转场到底在控制什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E5%88%86%E6%B8%85-Mask%E3%80%81Track-Matte-%E5%92%8C%E6%99%AE%E9%80%9A%E8%A6%86%E7%9B%96%E5%B1%82"><span class="nav-text">二、先分清 Mask、Track Matte 和普通覆盖层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E6%88%98%EF%BC%9A%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AA-3-%E7%A7%92%E8%BD%AC%E5%9C%BA%E5%90%88%E6%88%90"><span class="nav-text">三、实战：建立一个 3 秒转场合成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%96%B0%E5%BB%BA%E5%90%88%E6%88%90%E5%B9%B6%E5%87%86%E5%A4%87%E7%B4%A0%E6%9D%90"><span class="nav-text">1. 新建合成并准备素材</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA%E6%8F%90%E4%BE%9B%E9%80%8F%E6%98%8E%E5%BA%A6%E7%9A%84%E5%BD%A2%E7%8A%B6%E5%B1%82"><span class="nav-text">2. 创建提供透明度的形状层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%8A%8A%E5%BD%A2%E7%8A%B6%E5%B1%82%E6%8C%87%E5%AE%9A%E4%B8%BA-B-%E7%9A%84%E8%BD%A8%E9%81%93%E9%81%AE%E7%BD%A9"><span class="nav-text">3. 把形状层指定为 B 的轨道遮罩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%BB%99%E9%81%AE%E7%BD%A9%E8%AE%BE%E7%BD%AE%E5%87%86%E7%A1%AE%E7%9A%84%E8%B5%B7%E7%82%B9%E4%B8%8E%E7%BB%88%E7%82%B9"><span class="nav-text">4. 给遮罩设置准确的起点与终点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%AE%A9%E5%89%8D%E5%90%8E%E9%95%9C%E5%A4%B4%E4%B8%8E%E8%BE%B9%E7%95%8C%E4%B8%80%E8%B5%B7%E8%BF%90%E5%8A%A8"><span class="nav-text">四、让前后镜头与边界一起运动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%BE%B9%E7%95%8C%E5%BD%A2%E7%8A%B6%E4%BC%9A%E6%94%B9%E5%8F%98%E8%BD%AC%E5%9C%BA%E7%9A%84%E8%AF%AD%E6%B0%94"><span class="nav-text">五、边界形状会改变转场的语气</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9E%82%E7%9B%B4%E7%A1%AC%E8%BE%B9%EF%BC%9A%E6%B8%85%E6%A5%9A%E3%80%81%E7%9B%B4%E6%8E%A5"><span class="nav-text">1. 垂直硬边：清楚、直接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%96%9C%E8%BE%B9%EF%BC%9A%E9%80%9F%E5%BA%A6%E6%84%9F%E6%9B%B4%E5%BC%BA"><span class="nav-text">2. 斜边：速度感更强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9F%94%E8%BE%B9%EF%BC%9A%E9%80%82%E5%90%88%E6%A2%A6%E5%A2%83%E5%92%8C%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96"><span class="nav-text">3. 柔边：适合梦境和时间变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%9B%BE%E5%BD%A2%E8%BE%B9%E7%95%8C%EF%BC%9A%E9%80%82%E5%90%88%E5%93%81%E7%89%8C%E8%AF%AD%E8%A8%80"><span class="nav-text">4. 图形边界：适合品牌语言</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E7%94%A8%E7%94%BB%E9%9D%A2%E4%B8%AD%E7%9A%84%E7%89%A9%E4%BD%93%E5%81%9A%E2%80%9C%E5%8A%A8%E6%9C%BA%E9%81%AE%E7%BD%A9%E2%80%9D"><span class="nav-text">六、用画面中的物体做“动机遮罩”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%A2%84%E5%90%88%E6%88%90%E8%AE%A9%E8%BD%AC%E5%9C%BA%E6%9B%B4%E5%AE%B9%E6%98%93%E5%A4%8D%E7%94%A8"><span class="nav-text">七、预合成让转场更容易复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%E9%81%AE%E7%BD%A9%E8%BD%AC%E5%9C%BA%E4%BC%9A%E7%A9%BF%E5%B8%AE%EF%BC%9F"><span class="nav-text">八、为什么你的遮罩转场会穿帮？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E5%87%BA%E7%8E%B0%E4%B8%80%E6%9D%A1%E9%BB%91%E7%BC%9D"><span class="nav-text">边缘出现一条黑缝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%AE%E7%BD%A9%E5%9C%A8%E5%8A%A8%EF%BC%8C%E4%BD%86-B-%E6%B2%A1%E6%9C%89%E5%87%BA%E7%8E%B0"><span class="nav-text">遮罩在动，但 B 没有出现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AA%E7%9C%8B%E5%88%B0%E4%B8%80%E5%9D%97%E5%AE%9E%E8%89%B2%E7%9F%A9%E5%BD%A2"><span class="nav-text">只看到一块实色矩形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E5%9C%BA%E7%BB%93%E6%9D%9F%E5%90%8E-B-%E5%8F%88%E6%B6%88%E5%A4%B1%E4%BA%86"><span class="nav-text">转场结束后 B 又消失了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%96%B9%E5%90%91%E5%AF%B9%E4%BA%86%EF%BC%8C%E7%94%BB%E9%9D%A2%E8%BF%90%E5%8A%A8%E5%8D%B4%E5%BE%88%E5%88%AB%E6%89%AD"><span class="nav-text">边界方向对了，画面运动却很别扭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Luma-Matte-%E7%BB%93%E6%9E%9C%E7%81%B0%E8%92%99%E8%92%99"><span class="nav-text">Luma Matte 结果灰蒙蒙</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E6%8A%8A%E8%BD%AC%E5%9C%BA%E8%AE%BE%E8%AE%A1%E6%88%90%E5%89%AA%E8%BE%91%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="nav-text">九、把转场设计成剪辑的一部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        21 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>

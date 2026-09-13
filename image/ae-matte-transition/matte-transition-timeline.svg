@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">三秒遮罩转场时间线</title>
+  <desc id="desc">25帧每秒的75帧合成中，第25至37帧完成12帧转场，旧镜头、遮罩和新镜头在同一区间运动。</desc>
+  <rect width="1200" height="675" rx="28" fill="#0f172a"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="66" y="68" fill="#f8fafc" font-size="34" font-weight="700">3 秒转场：三层在同一个区间协同</text>
+    <text x="66" y="108" fill="#94a3b8" font-size="19">25 fps / 75 帧 / 第 25–37 帧完成切换</text>
+    <g stroke="#334155" stroke-dasharray="4 8"><path d="M220 180v286M500 180v286M634.4 180v286M920 180v286"/></g>
+    <g text-anchor="middle" fill="#cbd5e1" font-size="17">
+      <text x="220" y="160">0f</text><text x="500" y="160">25f</text><text x="634.4" y="160">37f</text><text x="920" y="160">75f</text>
+    </g>
+    <g fill="#f8fafc" font-size="22" font-weight="700"><text x="66" y="234">SHOT_A</text><text x="66" y="324">MATTE</text><text x="66" y="414">SHOT_B</text></g>
+    <rect x="220" y="200" width="700" height="54" rx="10" fill="#1e293b"/>
+    <rect x="220" y="200" width="280" height="54" rx="10" fill="#334155"/>
+    <rect x="500" y="200" width="134.4" height="54" fill="#b45309"/>
+    <rect x="220" y="290" width="700" height="54" rx="10" fill="#1e293b"/>
+    <rect x="500" y="290" width="134.4" height="54" rx="10" fill="#7c3aed"/>
+    <rect x="220" y="380" width="700" height="54" rx="10" fill="#1e293b"/>
+    <rect x="500" y="380" width="134.4" height="54" fill="#0369a1"/>
+    <rect x="634.4" y="380" width="285.6" height="54" rx="10" fill="#075985"/>
+    <g text-anchor="middle" fill="#fff" font-size="17">
+      <text x="360" y="233">A 完整显示</text><text x="567.2" y="233">向左退出</text>
+      <text x="567.2" y="323">-1025 → 1025</text>
+      <text x="567.2" y="413">从右侧落回</text><text x="777.2" y="413">B 完整显示</text>
+    </g>
+    <path d="M500 478v20h134.4v-20" stroke="#c4b5fd" stroke-width="3" fill="none"/>
+    <text x="567.2" y="534" text-anchor="middle" fill="#c4b5fd" font-size="22">核心转场区间：12 帧</text>
+    <rect x="98" y="574" width="1004" height="58" rx="16" fill="#1e293b"/>
+    <text x="600" y="611" text-anchor="middle" fill="#e2e8f0" font-size="20">转场之前看 A，转场之后看 B；不要让效果占满整段镜头</text>
+  </g>
+</svg>
