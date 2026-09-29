@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/09/29/ae运动跟踪的设计方法/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🎯 AE 运动跟踪的设计方法：让文字真正贴进画面">
+<meta property="og:url" content="http://example.com/2026/09/29/AE%E8%BF%90%E5%8A%A8%E8%B7%9F%E8%B8%AA%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-09-29T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-29T09:12:06.858Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="AE">
+<meta property="article:tag" content="After Effects">
+<meta property="article:tag" content="动态设计">
+<meta property="article:tag" content="视觉合成">
+<meta property="article:tag" content="运动跟踪">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🎯 AE 运动跟踪的设计方法：让文字真正贴进画面 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">28</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">22</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">🎯 AE 运动跟踪的设计方法：让文字真正贴进画面</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/profile-avatar.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-09-29 10:00</span>
+        <span class="mobile">2026-09-29 10:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-09-29 17:12:06</span>
+            <span class="mobile">2026-09-29 17:12:06</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%90%8E%E6%9C%9F/">后期</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/AE/">AE</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/After-Effects/">After Effects</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%8A%A8%E6%80%81%E8%AE%BE%E8%AE%A1/">动态设计</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%BF%90%E5%8A%A8%E8%B7%9F%E8%B8%AA/">运动跟踪</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%A7%86%E8%A7%89%E5%90%88%E6%88%90/">视觉合成</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：运动跟踪不是让软件替你完成合成，而是从素材中提取一条可信的运动轨迹，再把它交给文字、图形或效果使用。好的跟踪点不一定最显眼，但必须在整个镜头中稳定、清楚，并且与要添加的内容属于同一运动平面。</p>
+</blockquote>
+<p>这次继续使用 Adobe After Effects（简称 AE），完成一个常见案例：镜头轻微移动，桌上的产品也在画面中改变位置；我们给产品旁边添加一组文字信息标签，让标签稳定跟随产品，同时保留适当距离，不遮住主体。</p>
+<p>本文使用 AE 自带的 Point Tracker（点跟踪器），不依赖第三方插件。示例以 1920 × 1080、25 fps、5 秒素材为基础，具体尺寸和帧数需要根据实际镜头调整。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/ae-motion-tracking/tracker-anatomy.svg"
+                      alt="AE 跟踪点的三个组成部分"
+                ></p>
+<p><em>图 1：跟踪点不是一个方框。特征区域、搜索区域和附着点分别回答“认什么、去哪找、把结果放哪里”。</em></p>
+<h2 id="一、运动跟踪真正产生了什么？"><a href="#一、运动跟踪真正产生了什么？" class="headerlink" title="一、运动跟踪真正产生了什么？"></a>一、运动跟踪真正产生了什么？</h2><p>AE 会在相邻帧之间比较图像特征，估算同一个特征在新一帧的位置。分析完成后，时间线上得到一组跟踪关键帧。把这些数据应用到其他图层或效果控制点，添加的内容就能继承素材中的运动。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/animate-in-after-effects/track-motion/tracking-stabilizing-motion-cs5.html" >Adobe 官方：跟踪与稳定运动<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>跟踪过程可以拆成四个角色：</p>
+<table>
+<thead>
+<tr>
+<th align="left">角色</th>
+<th align="left">本例中的对象</th>
+<th align="left">职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Motion Source</strong></td>
+<td align="left">原始产品视频</td>
+<td align="left">提供要分析的真实运动</td>
+</tr>
+<tr>
+<td align="left"><strong>Track Point</strong></td>
+<td align="left">产品上的稳定细节</td>
+<td align="left">告诉 AE 每帧寻找什么</td>
+</tr>
+<tr>
+<td align="left"><strong>Target</strong></td>
+<td align="left"><code>TRACK_NULL</code> 空对象</td>
+<td align="left">接收跟踪产生的位置关键帧</td>
+</tr>
+<tr>
+<td align="left"><strong>Graphic</strong></td>
+<td align="left">文字、底板与指示线</td>
+<td align="left">通过父子关系跟随空对象</td>
+</tr>
+</tbody></table>
+<p>把数据先应用到空对象，而不是直接应用到文字图层，是为了分开“素材运动”和“图形设计”。文字大小、位置、入场动画以后都能继续修改，不必重新分析素材。</p>
+<p>AE 的 Null Object（空对象）不会出现在最终渲染里，却拥有位置、缩放、旋转等变换属性，可以作为其他图层的父级控制器。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/work-with-layers/layer-properties/layer-properties.html" >Adobe 官方：空对象图层<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<hr>
+<h2 id="二、先判断该用哪一种跟踪"><a href="#二、先判断该用哪一种跟踪" class="headerlink" title="二、先判断该用哪一种跟踪"></a>二、先判断该用哪一种跟踪</h2><p>开始之前，不要默认勾选所有选项。需要跟踪的运动越复杂，所需特征点越多，对素材质量的要求也越高。</p>
+<table>
+<thead>
+<tr>
+<th align="left">任务</th>
+<th align="left">建议方法</th>
+<th align="left">需要的特征点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">标签跟随物体平移</td>
+<td align="left">Transform：Position</td>
+<td align="left">1 个</td>
+</tr>
+<tr>
+<td align="left">跟随物体平移、旋转和大小变化</td>
+<td align="left">Transform：Position + Rotation + Scale</td>
+<td align="left">2 个</td>
+</tr>
+<tr>
+<td align="left">替换倾斜屏幕、招牌或画框</td>
+<td align="left">Perspective Corner Pin</td>
+<td align="left">4 个</td>
+</tr>
+<tr>
+<td align="left">在有视差的真实空间中放置 3D 元素</td>
+<td align="left">3D Camera Tracker 或平面跟踪</td>
+<td align="left">取决于方法</td>
+</tr>
+<tr>
+<td align="left">让蒙版跟随近似刚体的对象</td>
+<td align="left">Mask Tracker</td>
+<td align="left">已绘制蒙版</td>
+</tr>
+</tbody></table>
+<p>本例只要求标签跟随产品在画面中的 X、Y 位移，因此先用一个点跟踪 Position。产品虽然可能在画面中轻微变大，但如果这种变化肉眼不明显，引入第二个跟踪点反而可能增加抖动。</p>
+<p>如果要替换一块带透视变化的手机屏幕，单点 Position 只能让替换画面平移，无法同步四个角的形变。此时应该使用 Perspective Corner Pin 或更适合平面透视的跟踪方法。AE 在平行或透视角点固定跟踪中，会把数据应用为 Corner Pin（边角固定）效果关键帧。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/in_hi/after-effects/desktop/animate-in-after-effects/track-motion/tracking-stabilizing-motion-cs5.html" >Adobe 官方：应用跟踪数据<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<hr>
+<h2 id="三、理解跟踪点的三个区域"><a href="#三、理解跟踪点的三个区域" class="headerlink" title="三、理解跟踪点的三个区域"></a>三、理解跟踪点的三个区域</h2><h3 id="1-Feature-Region：特征区域"><a href="#1-Feature-Region：特征区域" class="headerlink" title="1. Feature Region：特征区域"></a>1. Feature Region：特征区域</h3><p>内层小方框告诉 AE“要认这个图案”。它应该紧贴一个高反差、形状明确的细节，例如螺丝孔、印刷标记、窗框角点或衣服上的小图案。</p>
+<p>区域太大，会带入背景和其他运动；区域太小，只包含一片纯色，也没有足够信息可比较。理想状态是完整包住特征，但尽量少包含周围无关像素。</p>
+<h3 id="2-Search-Region：搜索区域"><a href="#2-Search-Region：搜索区域" class="headerlink" title="2. Search Region：搜索区域"></a>2. Search Region：搜索区域</h3><p>外层大方框规定下一帧去哪里寻找该特征。它只需要容纳相邻两帧之间可能发生的移动，不需要覆盖物体在整段镜头中的全部路线。</p>
+<p>搜索区域过小，物体快速运动时可能直接跑出去；过大则增加计算量，也更容易在附近找到相似但错误的图案。若物体持续向右运动，可以把搜索区域略向右偏移，给运动方向更多空间。</p>
+<h3 id="3-Attach-Point：附着点"><a href="#3-Attach-Point：附着点" class="headerlink" title="3. Attach Point：附着点"></a>3. Attach Point：附着点</h3><p>十字形附着点表示跟踪数据最终对应的位置。它默认在特征区域中心，但不必与特征重合。</p>
+<p>例如，跟踪产品 Logo，却想让标签停在产品右上方，可以把附着点移动到右上方。AE 仍然追踪 Logo，目标层则跟随偏移后的附着点。官方文档也用“跟踪头部、把云放在头顶”说明这种分工。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/ee/after-effects/desktop/animate-in-after-effects/track-motion/tracking-stabilizing-motion-cs5.html" >Adobe 官方：设置附着点偏移<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<hr>
+<h2 id="四、实战：让信息标签跟随产品"><a href="#四、实战：让信息标签跟随产品" class="headerlink" title="四、实战：让信息标签跟随产品"></a>四、实战：让信息标签跟随产品</h2><h3 id="1-准备合成与图层"><a href="#1-准备合成与图层" class="headerlink" title="1. 准备合成与图层"></a>1. 准备合成与图层</h3><p>新建 5 秒合成，导入产品素材并命名为 <code>PRODUCT_FOOTAGE</code>。先完整播放一次，观察以下问题：</p>
+<ul>
+<li>哪个细节从头到尾都能看见？</li>
+<li>有没有被手、反光或其他物体遮挡？</li>
+<li>特征会不会因为失焦或运动模糊消失？</li>
+<li>该细节是否与产品处在同一个平面，而不是后方背景？</li>
+<li>镜头中是否存在突然的切点？</li>
+</ul>
+<p>“第一帧看起来清楚”并不够。特征需要在整个跟踪区间保持可辨认；角度、光线和周围内容大幅变化时，自动跟踪容易漂移。</p>
+<p>在主合成中创建 <code>Layer → New → Null Object</code>，命名为 <code>TRACK_NULL</code>。再建立信息标签预合成 <code>LABEL_PRECOMP</code>，内部包含：</p>
+<ul>
+<li>一行主文字，例如产品名称；</li>
+<li>一行小号说明文字；</li>
+<li>半透明底板；</li>
+<li>一条短指示线和端点圆点。</li>
+</ul>
+<p>先不要把标签父级连接到空对象，等跟踪数据应用完成后再关联。</p>
+<h3 id="2-打开跟踪器并选择源图层"><a href="#2-打开跟踪器并选择源图层" class="headerlink" title="2. 打开跟踪器并选择源图层"></a>2. 打开跟踪器并选择源图层</h3><p>选中 <code>PRODUCT_FOOTAGE</code>，打开 <code>Window → Tracker</code>（窗口 → 跟踪器），点击 <code>Track Motion</code>（跟踪运动）。AE 会进入素材的 Layer Panel（图层面板），不要在 Composition Panel（合成面板）里误以为跟踪点消失了。</p>
+<p>在 Tracker 面板中确认：</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">本例设置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Motion Source</td>
+<td align="left"><code>PRODUCT_FOOTAGE</code></td>
+</tr>
+<tr>
+<td align="left">Current Track</td>
+<td align="left"><code>Tracker 1</code>，可改名为 <code>Product_Position</code></td>
+</tr>
+<tr>
+<td align="left">Track Type</td>
+<td align="left">Transform</td>
+</tr>
+<tr>
+<td align="left">Position</td>
+<td align="left">开启</td>
+</tr>
+<tr>
+<td align="left">Rotation &#x2F; Scale</td>
+<td align="left">关闭</td>
+</tr>
+</tbody></table>
+<p>AE 开始跟踪时会将运动源图层质量设为 Best，并在合成与图层面板使用 Full 分辨率，以便进行更准确的特征比较。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/gr_en/after-effects/desktop/animate-in-after-effects/track-motion/tracking-stabilizing-motion-cs5.html" >Adobe 官方：运动跟踪工作流<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="3-放置特征区域、搜索区域和附着点"><a href="#3-放置特征区域、搜索区域和附着点" class="headerlink" title="3. 放置特征区域、搜索区域和附着点"></a>3. 放置特征区域、搜索区域和附着点</h3><p>把内层特征区域紧贴产品上的稳定细节。外层搜索区域比它大一圈，宽高足以覆盖一帧内的最大移动。最后把附着点拖到希望标签连接线落下的位置。</p>
+<p>可以先前进 5–10 帧，再回到起始帧，确认选中的细节没有马上改变外观。如果产品会从远处快速靠近，搜索区域不仅要考虑位移，也要考虑特征大小变化。</p>
+<p>本例标签在产品右上方，因此附着点与跟踪特征保留适当偏移。偏移不宜过远：当产品旋转时，一个距离很远的二维附着点更容易暴露“标签只是跟着平移”的假象。</p>
+<h3 id="4-分析前先做短距离测试"><a href="#4-分析前先做短距离测试" class="headerlink" title="4. 分析前先做短距离测试"></a>4. 分析前先做短距离测试</h3><p>不要第一次就让 AE 跑完整段。先点击 Analyze Forward（向前分析）的一帧按钮，连续检查 5–10 帧：</p>
+<ul>
+<li>内框是否仍包着同一个图案？</li>
+<li>外框是否覆盖下一帧可能的位置？</li>
+<li>附着点是否沿着合理路线移动？</li>
+<li>Confidence（置信度）是否突然明显下降？</li>
+</ul>
+<p>短测试稳定后，再启动连续向前分析。复杂镜头宁可分段完成，也不要放任跟踪点漂走几百帧后再统一修复。</p>
+<p>如果镜头中间某一帧最清楚，也可以从那里开始，先向前分析到结尾，再回到同一帧向后分析到开头。两个方向都需要检查交界位置是否连续。</p>
+<h3 id="5-发现漂移时立刻停止"><a href="#5-发现漂移时立刻停止" class="headerlink" title="5. 发现漂移时立刻停止"></a>5. 发现漂移时立刻停止</h3><p>跟踪点开始离开真实特征时，点击 Stop。回到最后一帧准确的位置，重新让特征区域包住同一个细节，并调整搜索范围，再逐帧继续分析。</p>
+<p>常见处理顺序是：</p>
+<ol>
+<li>找到最后一个准确帧，而不是在错误已经积累后硬拉回来。</li>
+<li>调整特征区域，让它仍然识别原来的物理细节。</li>
+<li>根据下一帧移动方向扩大或偏移搜索区域。</li>
+<li>单帧前进，确认恢复稳定后再连续分析。</li>
+</ol>
+<p>不要因为附近有一个“长得差不多”的点就直接换目标。跟踪数据应描述同一个真实位置；中途换到另一处，即使画面上看似接近，也会产生位置跳变。</p>
+<h3 id="6-把数据应用到空对象"><a href="#6-把数据应用到空对象" class="headerlink" title="6. 把数据应用到空对象"></a>6. 把数据应用到空对象</h3><p>分析完成后，在 Tracker 面板点击 <code>Edit Target</code>，选择 <code>TRACK_NULL</code>，再点击 <code>Apply</code>。本例选择 <code>X and Y</code>，让空对象同时接收水平和垂直运动。</p>
+<p>应用后检查 <code>TRACK_NULL</code> 的 Position：时间线上应该出现连续关键帧。隐藏所有辅助显示，单独观察空对象轮廓是否稳定贴在产品上。</p>
+<p>接着在希望标签最终出现的位置摆好 <code>LABEL_PRECOMP</code>，再把它的 Parent &amp; Link（父级和链接）设为 <code>TRACK_NULL</code>。AE 会保留标签当前的视觉位置，同时建立相对于空对象的偏移。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/ae-motion-tracking/tracking-workflow.svg"
+                      alt="从素材到信息标签的跟踪工作流"
+                ></p>
+<p><em>图 2：跟踪数据先交给空对象，再由空对象统一带动文字、底板和指示线。</em></p>
+<hr>
+<h2 id="五、跟得准，不等于贴得真"><a href="#五、跟得准，不等于贴得真" class="headerlink" title="五、跟得准，不等于贴得真"></a>五、跟得准，不等于贴得真</h2><p>自动跟踪解决的是位置数据，合成真实感还需要图形设计配合。</p>
+<h3 id="1-标签不要完全覆盖跟踪点"><a href="#1-标签不要完全覆盖跟踪点" class="headerlink" title="1. 标签不要完全覆盖跟踪点"></a>1. 标签不要完全覆盖跟踪点</h3><p>标签应该与主体保持呼吸空间。用指示线连接目标，文字放在背景相对干净的位置。主体靠近画面边缘时，标签还要避免出框，可以根据镜头分段调整相对偏移。</p>
+<h3 id="2-标签应有自己的入场与退场"><a href="#2-标签应有自己的入场与退场" class="headerlink" title="2. 标签应有自己的入场与退场"></a>2. 标签应有自己的入场与退场</h3><p>跟踪数据可以从第一帧存在，但文字不必从第一帧就显示。可以让 <code>LABEL_PRECOMP</code> 在需要解释信息时用 8–12 帧淡入，并在镜头结束前淡出。</p>
+<p>把入场动画放在标签预合成内部，位置跟随放在父级空对象上。这样“跟随运动”和“自身出现”不会争抢同一组 Position 关键帧。</p>
+<h3 id="3-画面缩放时要决定标签是否一起变大"><a href="#3-画面缩放时要决定标签是否一起变大" class="headerlink" title="3. 画面缩放时要决定标签是否一起变大"></a>3. 画面缩放时要决定标签是否一起变大</h3><p>只跟踪 Position，标签在镜头推进时仍保持固定屏幕大小，像后期界面；同时跟踪 Scale，则标签会随着物体变大，更像贴在物体表面。</p>
+<p>两种都可以成立，区别在于设计意图。数据可视化、纪录片标注通常保持易读；品牌贴纸或表面图形更需要继承缩放与旋转。</p>
+<h3 id="4-运动模糊要匹配原素材"><a href="#4-运动模糊要匹配原素材" class="headerlink" title="4. 运动模糊要匹配原素材"></a>4. 运动模糊要匹配原素材</h3><p>高速移动时，完全锐利的标签可能像悬浮在画面上。可以给跟随图层开启运动模糊，但先确认它的方向和长度与素材一致。慢速信息标签若变得模糊，会直接损害可读性。</p>
+<h3 id="5-锚点决定旋转是否自然"><a href="#5-锚点决定旋转是否自然" class="headerlink" title="5. 锚点决定旋转是否自然"></a>5. 锚点决定旋转是否自然</h3><p>两点跟踪产生旋转数据时，标签自身锚点的位置非常重要。一个需要围绕产品中心旋转的图形，如果锚点停在左上角，会画出很大的圆弧。先设定正确锚点，再建立父子关系。</p>
+<hr>
+<h2 id="六、什么时候需要两个点或四个点？"><a href="#六、什么时候需要两个点或四个点？" class="headerlink" title="六、什么时候需要两个点或四个点？"></a>六、什么时候需要两个点或四个点？</h2><h3 id="两点：Position、Scale-与-Rotation"><a href="#两点：Position、Scale-与-Rotation" class="headerlink" title="两点：Position、Scale 与 Rotation"></a>两点：Position、Scale 与 Rotation</h3><p>两个特征点之间的距离变化可以推导缩放，连线角度变化可以推导旋转。两个点应该：</p>
+<ul>
+<li>都在同一个刚性物体或近似同一平面上；</li>
+<li>相距足够远，减少微小误差造成的角度抖动；</li>
+<li>在全程中都清楚可见；</li>
+<li>不选择会独立运动的两个部位。</li>
+</ul>
+<p>例如，跟踪一本书封面上的两个印刷角点通常有效；同时跟踪人物肩膀和手腕则不稳定，因为手臂会独立运动。</p>
+<h3 id="四点：Perspective-Corner-Pin"><a href="#四点：Perspective-Corner-Pin" class="headerlink" title="四点：Perspective Corner Pin"></a>四点：Perspective Corner Pin</h3><p>替换手机、电脑、招牌或相框内容时，四个点分别跟踪平面四角。目标画面会根据四角位置产生缩放、旋转、倾斜和透视变化。</p>
+<p>四个跟踪点最好放在角附近的高反差细节上，而不是直接压在线条交点中间；边缘反光或被手遮挡时，要逐帧修正。屏幕内容还需要处理亮度、反射、景深、运动模糊和遮挡，仅有 Corner Pin 不会自动让合成真实。</p>
+<h3 id="三维场景：不要勉强使用二维点跟踪"><a href="#三维场景：不要勉强使用二维点跟踪" class="headerlink" title="三维场景：不要勉强使用二维点跟踪"></a>三维场景：不要勉强使用二维点跟踪</h3><p>当摄像机围绕空间移动、前后景产生明显视差时，一个二维跟踪点只能描述画面坐标，不能恢复真实的三维相机运动。要把文字固定在墙面或地面空间中，应考虑 3D Camera Tracker；要替换明显透视变化的平面，可考虑平面跟踪。</p>
+<p>选择正确工具，比在错误工具上增加更多关键帧更重要。</p>
+<hr>
+<h2 id="七、怎样判断跟踪是否真的可靠？"><a href="#七、怎样判断跟踪是否真的可靠？" class="headerlink" title="七、怎样判断跟踪是否真的可靠？"></a>七、怎样判断跟踪是否真的可靠？</h2><h3 id="叠加一个临时测试图形"><a href="#叠加一个临时测试图形" class="headerlink" title="叠加一个临时测试图形"></a>叠加一个临时测试图形</h3><p>在正式设计标签前，先把一个小十字或高反差圆点父级连接到 <code>TRACK_NULL</code>。循环播放并盯住它与真实特征的相对位置。如果测试图形会慢慢滑开，正式文字也会漂。</p>
+<h3 id="正放、倒放各看一次"><a href="#正放、倒放各看一次" class="headerlink" title="正放、倒放各看一次"></a>正放、倒放各看一次</h3><p>正放时注意力容易跟随主体，缓慢漂移不一定明显。倒放一次，位置误差和突然跳点往往更容易被发现。</p>
+<h3 id="检查三个关键区域"><a href="#检查三个关键区域" class="headerlink" title="检查三个关键区域"></a>检查三个关键区域</h3><ul>
+<li>镜头开头：跟踪点是否一开始就选准？</li>
+<li>运动最快或模糊最重的部分：搜索区域是否足够？</li>
+<li>镜头结尾：长期误差是否已经累积？</li>
+</ul>
+<h3 id="不要用平滑掩盖漂移"><a href="#不要用平滑掩盖漂移" class="headerlink" title="不要用平滑掩盖漂移"></a>不要用平滑掩盖漂移</h3><p>真实手持镜头本来就可能有细小抖动。盲目删除关键帧或对整条轨迹做强平滑，会让标签与物体之间产生新的滑动。</p>
+<p>先判断抖动来自真实相机运动，还是跟踪点在纹理之间跳动。后者应该回到分析阶段修正。运动路径通常用更少的关键帧更易编辑，但自动跟踪数据的简化必须以不破坏贴合为前提。<a class="link"   target="_blank" rel="noopener" href="https://helpx.adobe.com/after-effects/desktop/animate-in-after-effects/assorted-animation-tools/assorted-animation-tools.html" >Adobe 官方：运动路径与关键帧<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<hr>
+<h2 id="八、常见失败与排查顺序"><a href="#八、常见失败与排查顺序" class="headerlink" title="八、常见失败与排查顺序"></a>八、常见失败与排查顺序</h2><table>
+<thead>
+<tr>
+<th align="left">现象</th>
+<th align="left">优先检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">跟踪点突然跳到旁边</td>
+<td align="left">特征是否不够独特，搜索区域内是否出现相似纹理</td>
+</tr>
+<tr>
+<td align="left">快速运动时跟丢</td>
+<td align="left">搜索区域是否覆盖相邻帧位移，素材是否存在严重运动模糊</td>
+</tr>
+<tr>
+<td align="left">位置正确但标签持续抖</td>
+<td align="left">特征区域是否包含噪点、反光或细碎重复纹理</td>
+</tr>
+<tr>
+<td align="left">Apply 后空对象没关键帧</td>
+<td align="left">Edit Target 是否选中正确空对象，是否真的点击 Apply</td>
+</tr>
+<tr>
+<td align="left">标签完全不跟随</td>
+<td align="left">Parent &amp; Link 是否连接到 <code>TRACK_NULL</code>，空对象是否有跟踪数据</td>
+</tr>
+<tr>
+<td align="left">标签位置突然偏移</td>
+<td align="left">父子关系建立前后是否改过空对象或标签的 Position</td>
+</tr>
+<tr>
+<td align="left">缩放时标签像漂浮在屏幕上</td>
+<td align="left">是否只跟踪了 Position，而设计目标其实需要 Scale</td>
+</tr>
+<tr>
+<td align="left">替换屏幕只有平移没有透视</td>
+<td align="left">是否误用单点 Transform，而不是 Perspective Corner Pin</td>
+</tr>
+<tr>
+<td align="left">中途被遮挡后数据崩坏</td>
+<td align="left">是否在遮挡前停止、分段修正或选择了更稳定的特征</td>
+</tr>
+</tbody></table>
+<p>排错时，按“源素材 → 跟踪点 → 空对象 → 父子关系 → 图形自身动画”的顺序逐层检查。一次隐藏一组图层，很快就能判断问题发生在哪一级。</p>
+<hr>
+<h2 id="九、发布前检查表"><a href="#九、发布前检查表" class="headerlink" title="九、发布前检查表"></a>九、发布前检查表</h2><h3 id="跟踪数据"><a href="#跟踪数据" class="headerlink" title="跟踪数据"></a>跟踪数据</h3><ul>
+<li>特征从开始到结束是否始终指向同一个真实位置？</li>
+<li>最快运动、最重模糊和被遮挡处是否逐帧检查？</li>
+<li>Track Type 是否只包含项目真正需要的维度？</li>
+<li>空对象是否收到了完整区间的关键帧？</li>
+</ul>
+<h3 id="图形关系"><a href="#图形关系" class="headerlink" title="图形关系"></a>图形关系</h3><ul>
+<li>标签是否通过空对象跟随，而不是直接覆盖原始跟踪数据？</li>
+<li>文字有没有遮住主体、超出安全区或进入复杂背景？</li>
+<li>指示线端点是否稳定落在目标附近？</li>
+<li>入场与退场是否放在图形内部，和跟踪运动分开？</li>
+</ul>
+<h3 id="真实感"><a href="#真实感" class="headerlink" title="真实感"></a>真实感</h3><ul>
+<li>缩放、旋转和透视是否与所处表面相符？</li>
+<li>运动模糊、景深、亮度和色彩是否与素材一致？</li>
+<li>正放、倒放和逐帧检查都没有明显滑动吗？</li>
+<li>换到全分辨率预览后，边缘与位置仍然准确吗？</li>
+</ul>
+<hr>
+<h2 id="📝-结语"><a href="#📝-结语" class="headerlink" title="📝 结语"></a>📝 结语</h2><p>AE 运动跟踪可以归纳成一条清晰流程：先判断运动维度，找到稳定特征；再设置特征区域、搜索区域和附着点；短距离测试后完成分析，把数据交给空对象，最后让文字和图形通过父子关系跟随。</p>
+<p>真正决定质量的不是“分析成功”四个字，而是你是否选对了物理位置，是否在漂移刚开始时修正，以及添加的图形是否尊重原素材的方向、尺度和空间关系。</p>
+<p>把运动数据和图形设计分开管理，跟踪就不只是一次性的技术操作，而会成为可修改、可复用、也更容易排错的合成结构。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 🎯 AE 运动跟踪的设计方法：让文字真正贴进画面</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-09-29 10:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-09-29 17:12:06
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/09/29/AE运动跟踪的设计方法/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/AE/">#AE</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/After-Effects/">#After Effects</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%8A%A8%E6%80%81%E8%AE%BE%E8%AE%A1/">#动态设计</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%BF%90%E5%8A%A8%E8%B7%9F%E8%B8%AA/">#运动跟踪</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%A7%86%E8%A7%89%E5%90%88%E6%88%90/">#视觉合成</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/09/13/AE%E9%81%AE%E7%BD%A9%E8%BD%AC%E5%9C%BA%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">🎭 AE 遮罩转场的设计方法：从形状揭示到无缝衔接</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">🎯 AE 运动跟踪的设计方法：让文字真正贴进画面</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%BF%90%E5%8A%A8%E8%B7%9F%E8%B8%AA%E7%9C%9F%E6%AD%A3%E4%BA%A7%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">一、运动跟踪真正产生了什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E5%88%A4%E6%96%AD%E8%AF%A5%E7%94%A8%E5%93%AA%E4%B8%80%E7%A7%8D%E8%B7%9F%E8%B8%AA"><span class="nav-text">二、先判断该用哪一种跟踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%90%86%E8%A7%A3%E8%B7%9F%E8%B8%AA%E7%82%B9%E7%9A%84%E4%B8%89%E4%B8%AA%E5%8C%BA%E5%9F%9F"><span class="nav-text">三、理解跟踪点的三个区域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Feature-Region%EF%BC%9A%E7%89%B9%E5%BE%81%E5%8C%BA%E5%9F%9F"><span class="nav-text">1. Feature Region：特征区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Search-Region%EF%BC%9A%E6%90%9C%E7%B4%A2%E5%8C%BA%E5%9F%9F"><span class="nav-text">2. Search Region：搜索区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Attach-Point%EF%BC%9A%E9%99%84%E7%9D%80%E7%82%B9"><span class="nav-text">3. Attach Point：附着点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%AE%9E%E6%88%98%EF%BC%9A%E8%AE%A9%E4%BF%A1%E6%81%AF%E6%A0%87%E7%AD%BE%E8%B7%9F%E9%9A%8F%E4%BA%A7%E5%93%81"><span class="nav-text">四、实战：让信息标签跟随产品</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%87%86%E5%A4%87%E5%90%88%E6%88%90%E4%B8%8E%E5%9B%BE%E5%B1%82"><span class="nav-text">1. 准备合成与图层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%89%93%E5%BC%80%E8%B7%9F%E8%B8%AA%E5%99%A8%E5%B9%B6%E9%80%89%E6%8B%A9%E6%BA%90%E5%9B%BE%E5%B1%82"><span class="nav-text">2. 打开跟踪器并选择源图层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%94%BE%E7%BD%AE%E7%89%B9%E5%BE%81%E5%8C%BA%E5%9F%9F%E3%80%81%E6%90%9C%E7%B4%A2%E5%8C%BA%E5%9F%9F%E5%92%8C%E9%99%84%E7%9D%80%E7%82%B9"><span class="nav-text">3. 放置特征区域、搜索区域和附着点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%88%86%E6%9E%90%E5%89%8D%E5%85%88%E5%81%9A%E7%9F%AD%E8%B7%9D%E7%A6%BB%E6%B5%8B%E8%AF%95"><span class="nav-text">4. 分析前先做短距离测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%8F%91%E7%8E%B0%E6%BC%82%E7%A7%BB%E6%97%B6%E7%AB%8B%E5%88%BB%E5%81%9C%E6%AD%A2"><span class="nav-text">5. 发现漂移时立刻停止</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%8A%8A%E6%95%B0%E6%8D%AE%E5%BA%94%E7%94%A8%E5%88%B0%E7%A9%BA%E5%AF%B9%E8%B1%A1"><span class="nav-text">6. 把数据应用到空对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%B7%9F%E5%BE%97%E5%87%86%EF%BC%8C%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%B4%B4%E5%BE%97%E7%9C%9F"><span class="nav-text">五、跟得准，不等于贴得真</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%87%E7%AD%BE%E4%B8%8D%E8%A6%81%E5%AE%8C%E5%85%A8%E8%A6%86%E7%9B%96%E8%B7%9F%E8%B8%AA%E7%82%B9"><span class="nav-text">1. 标签不要完全覆盖跟踪点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A0%87%E7%AD%BE%E5%BA%94%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84%E5%85%A5%E5%9C%BA%E4%B8%8E%E9%80%80%E5%9C%BA"><span class="nav-text">2. 标签应有自己的入场与退场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%94%BB%E9%9D%A2%E7%BC%A9%E6%94%BE%E6%97%B6%E8%A6%81%E5%86%B3%E5%AE%9A%E6%A0%87%E7%AD%BE%E6%98%AF%E5%90%A6%E4%B8%80%E8%B5%B7%E5%8F%98%E5%A4%A7"><span class="nav-text">3. 画面缩放时要决定标签是否一起变大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%BF%90%E5%8A%A8%E6%A8%A1%E7%B3%8A%E8%A6%81%E5%8C%B9%E9%85%8D%E5%8E%9F%E7%B4%A0%E6%9D%90"><span class="nav-text">4. 运动模糊要匹配原素材</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E9%94%9A%E7%82%B9%E5%86%B3%E5%AE%9A%E6%97%8B%E8%BD%AC%E6%98%AF%E5%90%A6%E8%87%AA%E7%84%B6"><span class="nav-text">5. 锚点决定旋转是否自然</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E4%B8%A4%E4%B8%AA%E7%82%B9%E6%88%96%E5%9B%9B%E4%B8%AA%E7%82%B9%EF%BC%9F"><span class="nav-text">六、什么时候需要两个点或四个点？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%82%B9%EF%BC%9APosition%E3%80%81Scale-%E4%B8%8E-Rotation"><span class="nav-text">两点：Position、Scale 与 Rotation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E7%82%B9%EF%BC%9APerspective-Corner-Pin"><span class="nav-text">四点：Perspective Corner Pin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%BB%B4%E5%9C%BA%E6%99%AF%EF%BC%9A%E4%B8%8D%E8%A6%81%E5%8B%89%E5%BC%BA%E4%BD%BF%E7%94%A8%E4%BA%8C%E7%BB%B4%E7%82%B9%E8%B7%9F%E8%B8%AA"><span class="nav-text">三维场景：不要勉强使用二维点跟踪</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%80%8E%E6%A0%B7%E5%88%A4%E6%96%AD%E8%B7%9F%E8%B8%AA%E6%98%AF%E5%90%A6%E7%9C%9F%E7%9A%84%E5%8F%AF%E9%9D%A0%EF%BC%9F"><span class="nav-text">七、怎样判断跟踪是否真的可靠？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A0%E5%8A%A0%E4%B8%80%E4%B8%AA%E4%B8%B4%E6%97%B6%E6%B5%8B%E8%AF%95%E5%9B%BE%E5%BD%A2"><span class="nav-text">叠加一个临时测试图形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E6%94%BE%E3%80%81%E5%80%92%E6%94%BE%E5%90%84%E7%9C%8B%E4%B8%80%E6%AC%A1"><span class="nav-text">正放、倒放各看一次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E4%B8%89%E4%B8%AA%E5%85%B3%E9%94%AE%E5%8C%BA%E5%9F%9F"><span class="nav-text">检查三个关键区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E7%94%A8%E5%B9%B3%E6%BB%91%E6%8E%A9%E7%9B%96%E6%BC%82%E7%A7%BB"><span class="nav-text">不要用平滑掩盖漂移</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%B8%B8%E8%A7%81%E5%A4%B1%E8%B4%A5%E4%B8%8E%E6%8E%92%E6%9F%A5%E9%A1%BA%E5%BA%8F"><span class="nav-text">八、常见失败与排查顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%8F%91%E5%B8%83%E5%89%8D%E6%A3%80%E6%9F%A5%E8%A1%A8"><span class="nav-text">九、发布前检查表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%9F%E8%B8%AA%E6%95%B0%E6%8D%AE"><span class="nav-text">跟踪数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%85%B3%E7%B3%BB"><span class="nav-text">图形关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="nav-text">真实感</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E7%BB%93%E8%AF%AD"><span class="nav-text">📝 结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        22 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
