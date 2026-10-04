@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">AE 标题动画的分层节奏</title>
+  <desc id="desc">标题位置、透明度、缩放与辅助元素使用不同起止时间，形成主次分明的动画节奏。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f172a"/><stop offset="1" stop-color="#172554"/></linearGradient>
+    <linearGradient id="position" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#38bdf8"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="scale" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#f59e0b"/><stop offset="1" stop-color="#f97316"/></linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="600" y="66" text-anchor="middle" fill="#f8fafc" font-size="35" font-weight="700">一个标题，不必让所有属性同时结束</text>
+    <text x="600" y="105" text-anchor="middle" fill="#94a3b8" font-size="19">主运动定义节拍，辅助属性按职责加入</text>
+
+    <rect x="70" y="152" width="1060" height="390" rx="24" fill="#111827" stroke="#334155"/>
+    <g stroke="#334155" stroke-width="1">
+      <path d="M330 188V505M475 188V505M620 188V505M765 188V505M910 188V505M1055 188V505"/>
+      <path d="M245 254H1080M245 326H1080M245 398H1080M245 470H1080"/>
+    </g>
+    <g fill="#94a3b8" font-size="15" text-anchor="middle">
+      <text x="330" y="181">0 帧</text><text x="475" y="181">6 帧</text><text x="620" y="181">12 帧</text><text x="765" y="181">18 帧</text><text x="910" y="181">24 帧</text><text x="1055" y="181">30 帧</text>
+    </g>
+    <g fill="#e2e8f0" font-size="20">
+      <text x="105" y="236" font-weight="700">Position</text><text x="105" y="308" font-weight="700">Opacity</text><text x="105" y="380" font-weight="700">Scale</text><text x="105" y="452" font-weight="700">副标题 / 线</text>
+    </g>
+    <g fill="#64748b" font-size="14">
+      <text x="105" y="258">主要位移</text><text x="105" y="330">建立可见性</text><text x="105" y="402">轻微落位</text><text x="105" y="474">补充层级</text>
+    </g>
+
+    <rect x="330" y="212" width="435" height="31" rx="15.5" fill="url(#position)"/><circle cx="330" cy="227.5" r="8" fill="#e0f2fe"/><circle cx="765" cy="227.5" r="8" fill="#e0f2fe"/>
+    <text x="350" y="234" fill="#fff" font-size="15" font-weight="700">快出</text><text x="710" y="234" fill="#dbeafe" font-size="15" font-weight="700">慢停</text>
+    <rect x="330" y="284" width="242" height="31" rx="15.5" fill="#8b5cf6"/><circle cx="330" cy="299.5" r="8" fill="#ede9fe"/><circle cx="572" cy="299.5" r="8" fill="#ede9fe"/>
+    <text x="350" y="306" fill="#fff" font-size="15">0% → 100%</text>
+    <rect x="330" y="356" width="532" height="31" rx="15.5" fill="url(#scale)"/><circle cx="330" cy="371.5" r="8" fill="#fef3c7"/><circle cx="765" cy="371.5" r="7" fill="#fff7ed"/><circle cx="862" cy="371.5" r="8" fill="#fef3c7"/>
+    <text x="350" y="378" fill="#fff" font-size="15">96%</text><text x="733" y="346" fill="#fed7aa" font-size="14">102%</text><text x="810" y="378" fill="#fff" font-size="15">100%</text>
+    <rect x="475" y="428" width="435" height="31" rx="15.5" fill="#14b8a6"/><circle cx="475" cy="443.5" r="8" fill="#ccfbf1"/><circle cx="910" cy="443.5" r="8" fill="#ccfbf1"/>
+    <text x="495" y="450" fill="#fff" font-size="15">稍后进入，完成信息层级</text>
+
+    <g>
+      <rect x="185" y="574" width="830" height="58" rx="29" fill="#1e293b" stroke="#475569"/>
+      <text x="600" y="611" text-anchor="middle" fill="#e2e8f0" font-size="20">不是为了把时间线排成楼梯，而是建立“主体 → 反馈 → 补充”的因果</text>
+    </g>
+  </g>
+</svg>
