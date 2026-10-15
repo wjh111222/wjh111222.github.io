@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">商业内容中的主张与证据匹配</title>
+  <desc id="desc">能力主张、自身结果和客户结果应分别使用能力演示、自身数据和客户案例支持，并保留适用边界。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f172a"/><stop offset="1" stop-color="#172554"/></linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#60a5fa"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="600" y="66" text-anchor="middle" fill="#f8fafc" font-size="35" font-weight="700">主张说到哪里，证据就要跟到哪里</text>
+    <text x="600" y="105" text-anchor="middle" fill="#93c5fd" font-size="19">先区分“我会做、我做过、客户做到了”</text>
+
+    <g fill="#94a3b8" font-size="17" font-weight="700">
+      <text x="85" y="167">主张</text><text x="440" y="167">匹配证据</text><text x="825" y="167">仍要说明的边界</text>
+    </g>
+    <g>
+      <rect x="65" y="190" width="280" height="100" rx="18" fill="#0c4a6e"/>
+      <rect x="415" y="190" width="330" height="100" rx="18" fill="#1d4ed8"/>
+      <rect x="815" y="190" width="320" height="100" rx="18" fill="#1e293b" stroke="#475569"/>
+      <rect x="65" y="320" width="280" height="100" rx="18" fill="#4c1d95"/>
+      <rect x="415" y="320" width="330" height="100" rx="18" fill="#6d28d9"/>
+      <rect x="815" y="320" width="320" height="100" rx="18" fill="#1e293b" stroke="#475569"/>
+      <rect x="65" y="450" width="280" height="100" rx="18" fill="#115e59"/>
+      <rect x="415" y="450" width="330" height="100" rx="18" fill="#0f766e"/>
+      <rect x="815" y="450" width="320" height="100" rx="18" fill="#1e293b" stroke="#475569"/>
+    </g>
+    <g fill="#fff" font-size="22" font-weight="700">
+      <text x="95" y="234">“我理解并会做”</text><text x="445" y="234">能力演示</text>
+      <text x="95" y="364">“这个方法帮过我”</text><text x="445" y="364">自身数据与过程</text>
+      <text x="95" y="494">“它帮助过客户”</text><text x="445" y="494">客户背景与结果</text>
+    </g>
+    <g fill="#dbeafe" font-size="17">
+      <text x="95" y="266">知识与执行能力</text><text x="445" y="266">现场分析、操作、完整拆解</text>
+      <text x="95" y="396" fill="#ede9fe">个人经历与结果</text><text x="445" y="396" fill="#ede9fe">同口径前后数据、条件、时间</text>
+      <text x="95" y="526" fill="#ccfbf1">他人情境中的结果</text><text x="445" y="526" fill="#ccfbf1">对象、执行过程、结果、范围</text>
+      <text x="845" y="229" fill="#cbd5e1">适用哪些问题？</text><text x="845" y="260" fill="#cbd5e1">是否经过真实执行？</text>
+      <text x="845" y="359" fill="#cbd5e1">其他人能否复现？</text><text x="845" y="390" fill="#cbd5e1">是否还有其他影响因素？</text>
+      <text x="845" y="489" fill="#cbd5e1">结果是否具有代表性？</text><text x="845" y="520" fill="#cbd5e1">什么条件下可能无效？</text>
+    </g>
+    <g fill="none" stroke="#60a5fa" stroke-width="4" marker-end="url(#arrow)">
+      <path d="M345 240h58"/><path d="M345 370h58"/><path d="M345 500h58"/>
+    </g>
+    <rect x="220" y="585" width="760" height="50" rx="25" fill="#3f1d2e" stroke="#be185d"/>
+    <text x="600" y="617" text-anchor="middle" fill="#fbcfe8" font-size="19" font-weight="700">播放量 ≠ 利润　·　粉丝量 ≠ 客户结果　·　案例 ≠ 必然复刻</text>
+  </g>
+</svg>

@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/10/15/讲故事与商业转化/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="📣 讲故事与商业转化：六种让内容建立信任的方法">
+<meta property="og:url" content="http://example.com/2026/10/15/%E8%AE%B2%E6%95%85%E4%BA%8B%E4%B8%8E%E5%95%86%E4%B8%9A%E8%BD%AC%E5%8C%96/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-10-15T10:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-15T09:30:09.305Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="内容营销">
+<meta property="article:tag" content="商业转化">
+<meta property="article:tag" content="故事表达">
+<meta property="article:tag" content="社媒学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            📣 讲故事与商业转化：六种让内容建立信任的方法 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">34</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">24</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">📣 讲故事与商业转化：六种让内容建立信任的方法</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/profile-avatar.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-10-15 18:00</span>
+        <span class="mobile">2026-10-15 18:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-10-15 17:30:09</span>
+            <span class="mobile">2026-10-15 17:30:09</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E7%A4%BE%E5%AA%92%E5%AD%A6%E4%B9%A0/">社媒学习</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%86%85%E5%AE%B9%E8%90%A5%E9%94%80/">内容营销</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%95%85%E4%BA%8B%E8%A1%A8%E8%BE%BE/">故事表达</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%95%86%E4%B8%9A%E8%BD%AC%E5%8C%96/">商业转化</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：服务于商业转化的故事，不是把产品包装得更热闹，而是让目标客户认出自己的问题、理解解决方法，并看到足以支持下一步行动的证据。</p>
+</blockquote>
+<p>这次学习的内容来自 Kallaway 的视频 <a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=W--tE9w_N_A" >How to Become A Master Storyteller (It’ll Blow Up Your Business)<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>。原视频约 20 分钟，围绕“故事如何服务获客和转化”介绍了六种方法。</p>
+<p>本文不是逐字翻译，而是依据英文字幕、音轨转写和个人学习笔记重新整理。原视频提到的收入、粉丝、客户成绩以及“10 倍信任”等固定效果没有在视频中提供可审计资料，因此这里只记录方法，不把案例数字当成普遍结论，也不承诺复刻结果。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/social-storytelling/story-conversion-path.svg"
+                      alt="从目标客户到行动的转化叙事路径"
+                ></p>
+<p><em>图 1：六种方法并不是六个孤立技巧。它们共同回答“为谁讲、怎样讲清、价值在哪里、为什么值得相信”。</em></p>
+<h2 id="一、先确定故事为谁服务"><a href="#一、先确定故事为谁服务" class="headerlink" title="一、先确定故事为谁服务"></a>一、先确定故事为谁服务</h2><p>很多内容一开始就在想“我要讲什么”，却没有回答“谁会需要它”。结果是主题看起来很大，语言也足够专业，但真正需要帮助的人仍然不知道这条内容是不是写给自己。</p>
+<h3 id="方法-1：Avatar-Framing——让目标客户认出自己"><a href="#方法-1：Avatar-Framing——让目标客户认出自己" class="headerlink" title="方法 1：Avatar Framing——让目标客户认出自己"></a>方法 1：Avatar Framing——让目标客户认出自己</h3><p>Avatar Framing 可以理解为“围绕理想客户组织故事”。它的重点不是让每一条内容覆盖最多人，而是让匹配的人快速意识到：这个问题正好与我有关。</p>
+<p>一条用于获客的内容，至少要把四件事对准同一类人：</p>
+<table>
+<thead>
+<tr>
+<th align="left">要素</th>
+<th align="left">要回答的问题</th>
+<th align="left">检查方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">具体痛点</td>
+<td align="left">他正在什么场景里卡住？</td>
+<td align="left">能否写成“谁＋场景＋具体困难”</td>
+</tr>
+<tr>
+<td align="left">表达语言</td>
+<td align="left">他能否听懂，并觉得准确？</td>
+<td align="left">新手少用行话，进阶受众避免过度简化</td>
+</tr>
+<tr>
+<td align="left">支持证据</td>
+<td align="left">什么能证明当前主张？</td>
+<td align="left">证据对象、指标与承诺是否一致</td>
+</tr>
+<tr>
+<td align="left">下一步</td>
+<td align="left">解决这一点后，他该做什么？</td>
+<td align="left">行动是否自然承接刚才的问题</td>
+</tr>
+</tbody></table>
+<p>例如，“教你做短视频”过于宽泛；“每天只有一小时做内容的个体经营者，怎样建立可持续的选题流程”就更容易让目标受众判断相关性。</p>
+<p>这里最容易出现的错误，是用不匹配的指标支持主张：如果内容承诺提高成交，单独展示播放量或涨粉量并不能证明销售结果。每一种主张都需要自己的证据。</p>
+<hr>
+<h2 id="二、按照观众建立理解的顺序表达"><a href="#二、按照观众建立理解的顺序表达" class="headerlink" title="二、按照观众建立理解的顺序表达"></a>二、按照观众建立理解的顺序表达</h2><p>定位解决“讲给谁”，接下来要解决“怎样让他听懂”。</p>
+<h3 id="方法-2：Broad-to-Narrow——由宽到窄解释"><a href="#方法-2：Broad-to-Narrow——由宽到窄解释" class="headerlink" title="方法 2：Broad to Narrow——由宽到窄解释"></a>方法 2：Broad to Narrow——由宽到窄解释</h3><p>原视频给出六层表达结构：</p>
+<ol>
+<li><strong>Context &#x2F; 情境</strong>：现在讨论的是什么问题？</li>
+<li><strong>Stakes &#x2F; 利害</strong>：这个问题为什么与你有关？</li>
+<li><strong>Strategy &#x2F; 策略</strong>：整体上准备怎样处理？</li>
+<li><strong>Tactics &#x2F; 动作</strong>：具体应该怎么执行？</li>
+<li><strong>Examples &#x2F; 示例</strong>：放进一个看得懂的案例。</li>
+<li><strong>Principles &#x2F; 原则</strong>：最后总结可以迁移的规律。</li>
+</ol>
+<p>它的价值在于先给观众一张地图，再进入细节。</p>
+<p>假设一条视频开头直接说“把前 3 秒钩子改成结果前置”，熟悉内容运营的人可能理解，但新手还不知道为什么要改、原来哪里有问题、改完应该观察什么。</p>
+<p>按由宽到窄的方式，可以改成：</p>
+<blockquote>
+<p>很多教程一开头只报菜名，观众还不知道这条视频能解决什么问题。先展示最容易失败的一步，再告诉他接下来会看到完整操作，观看理由会更清楚。比如：“番茄炒蛋做到下锅就慌？看这段连续镜头，把下锅顺序看清楚。”原则是：先让目标观众看见问题，再提供与承诺一致的解决过程。</p>
+</blockquote>
+<p>短视频不需要机械地说完六个标题，但不能因为时长短就丢失上下文。情境和利害可以压缩成一句，策略与动作可以合并，示例则尽量用画面完成。</p>
+<hr>
+<h2 id="三、先兑现价值，再提出下一步"><a href="#三、先兑现价值，再提出下一步" class="headerlink" title="三、先兑现价值，再提出下一步"></a>三、先兑现价值，再提出下一步</h2><h3 id="方法-3：Double-Aha——提供两次真正的新认知"><a href="#方法-3：Double-Aha——提供两次真正的新认知" class="headerlink" title="方法 3：Double Aha——提供两次真正的新认知"></a>方法 3：Double Aha——提供两次真正的新认知</h3><p>这里的 Aha 不是反常识标题，也不是给旧概念换一个名字，而是让目标观众产生一个新的、能够使用的认识。</p>
+<p>原视频建议尽早安排两次价值兑现：</p>
+<ol>
+<li>第一条有用但不显然的认识，帮助观众重新理解问题；</li>
+<li>第二条独立收获，或一次把抽象认识落地的演示；</li>
+<li>在价值兑现之后，提供与前文相关的行动入口。</li>
+</ol>
+<p>比如，第一层新认知可以是“内容不是越广越好，而是要让匹配的人快速认出自己”；第二层可以是“主张与证据必须使用同一个指标”。随后再邀请观众下载一张“主张—证据”检查表，这个 CTA 就与刚获得的价值直接相关。</p>
+<p>需要保留一个重要边界：原视频把两次 Aha 与“10 倍信任”等效果联系起来，但没有给出测量方法或实验数据。这种说法不能当作固定规律。更稳妥的做法是把 Double Aha 当作内容假设，用实际的停留、收藏、具体提问和后续行动去验证。</p>
+<p>如果还没有兑现帮助就要求关注、私信或留资，CTA 会像突然插入的广告；如果前面的内容确实解决了一个小问题，下一步则更像自然延伸。</p>
+<hr>
+<h2 id="四、把产品价值讲成一次真实变化"><a href="#四、把产品价值讲成一次真实变化" class="headerlink" title="四、把产品价值讲成一次真实变化"></a>四、把产品价值讲成一次真实变化</h2><h3 id="方法-4：Emotional-Transformation-Response——让观众看见前后转变"><a href="#方法-4：Emotional-Transformation-Response——让观众看见前后转变" class="headerlink" title="方法 4：Emotional Transformation Response——让观众看见前后转变"></a>方法 4：Emotional Transformation Response——让观众看见前后转变</h3><p>购买者关注的不只是产品功能，还关心自己能否从当前状态 A 走到目标状态 B。</p>
+<p>这种转变不只适用于课程或咨询。工具可以把“没有稳定流程”变成“有一套可重复流程”，服装可以把“不知道怎样搭配”变成“能快速完成符合场合的选择”，教程可以把“知道步骤但总做错”变成“理解关键节点并完成操作”。</p>
+<p>原视频将前后转变拆成五段：</p>
+<ol>
+<li>说清痛点，并准确描述相关情绪；</li>
+<li>交代过去使用的常规方法，以及它为什么没解决问题；</li>
+<li>引出新的解决机制；</li>
+<li>展示真实结果，并说明结果成立的条件；</li>
+<li>给出了解完整方法或继续行动的入口。</li>
+</ol>
+<p>可以把它简化成一句自检：</p>
+<blockquote>
+<p>现在怎样 → 想变成怎样 → 通过什么改变 → 凭什么相信 → 下一步是什么。</p>
+</blockquote>
+<p>“新机制”可以有名字，但名字本身不是证明。真正支撑转变的，是可查看的过程、可复现的操作和与主张一致的结果。</p>
+<p>如果没有真实经历或数据，不要编造失败、客户反馈和收益。可以改为演示一个完整过程，或者明确写成“这是一项准备测试的假设”。</p>
+<hr>
+<h2 id="五、学习别人时，不只模仿表面形式"><a href="#五、学习别人时，不只模仿表面形式" class="headerlink" title="五、学习别人时，不只模仿表面形式"></a>五、学习别人时，不只模仿表面形式</h2><h3 id="方法-5：Double-Zoom-Out——两次抽离，找到信任触发点"><a href="#方法-5：Double-Zoom-Out——两次抽离，找到信任触发点" class="headerlink" title="方法 5：Double Zoom Out——两次抽离，找到信任触发点"></a>方法 5：Double Zoom Out——两次抽离，找到信任触发点</h3><p>这是整套方法里很适合日常练习的一项。</p>
+<p>第一次抽离，是在观看内容时观察自己的变化：</p>
+<blockquote>
+<p>这条内容是否让我更信任作者，甚至愿意继续了解他的产品？</p>
+</blockquote>
+<p>第二次抽离，是继续追问：</p>
+<blockquote>
+<p>具体是哪句话、哪个画面、哪次演示或哪类证据，让这种变化发生？</p>
+</blockquote>
+<p>不要只记录“很专业”“节奏很好”“很有感染力”。这些形容词无法迁移。更有用的记录方式是：</p>
+<table>
+<thead>
+<tr>
+<th align="left">记录项</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">时间点</td>
+<td align="left">02:15</td>
+</tr>
+<tr>
+<td align="left">具体表达</td>
+<td align="left">展示了与目标客户相似的操作过程</td>
+</tr>
+<tr>
+<td align="left">触发的疑问</td>
+<td align="left">这个方法能否在真实场景落地？</td>
+</tr>
+<tr>
+<td align="left">信任变化</td>
+<td align="left">从理解概念变为相信作者做过</td>
+</tr>
+<tr>
+<td align="left">可迁移原则</td>
+<td align="left">用过程演示回答“是否能执行”</td>
+</tr>
+</tbody></table>
+<p>原视频的作者复盘另一位创作者时，注意到对方使用了与其能力水平匹配的术语、反复强调相同目标、拆解相似业务的问题，并在多条内容中持续保持质量。</p>
+<p>这项练习的重点不是照搬对方的身份、语气或业绩，而是找到产生作用的表达原则，再回到自己的受众上测试。你被打动，也不代表你的客户一定会被同一种表达打动。</p>
+<hr>
+<h2 id="六、让证据与主张一一对应"><a href="#六、让证据与主张一一对应" class="headerlink" title="六、让证据与主张一一对应"></a>六、让证据与主张一一对应</h2><h3 id="方法-6：Buyer-Psychology——用证据降低不确定感"><a href="#方法-6：Buyer-Psychology——用证据降低不确定感" class="headerlink" title="方法 6：Buyer Psychology——用证据降低不确定感"></a>方法 6：Buyer Psychology——用证据降低不确定感</h3><p>故事能解释价值，但商业转化最终还需要回答一个更现实的问题：为什么相信你能做到？</p>
+<p>原视频把证据分成三类：</p>
+<ul>
+<li><strong>能力演示</strong>：现场分析、操作或讲清一个真实问题；</li>
+<li><strong>自身证明</strong>：展示自己实际得到的结果，并说明范围和条件；</li>
+<li><strong>客户证明</strong>：展示与目标客户情况相近的结果和反馈。</li>
+</ul>
+<p>三类证据承担的责任不同。能力演示可以证明“我理解并会做”，自身结果可以支持“我曾经做到”，客户结果才更接近“这种能力在他人情境中也产生过结果”。它们不能随意互相替代。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/social-storytelling/claim-proof-map.svg"
+                      alt="商业内容中的主张与证据匹配"
+                ></p>
+<p><em>图 2：先写主张，再寻找恰好能支持它的证据。点赞、播放和粉丝不能自动证明利润、复购或客户结果。</em></p>
+<p>可以建立一张最简单的表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">我的主张</th>
+<th align="left">对应证据</th>
+<th align="left">仍未证明的部分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">我能讲清这套方法</td>
+<td align="left">完整拆解与现场演示</td>
+<td align="left">是否适合所有行业</td>
+</tr>
+<tr>
+<td align="left">这套方法改善了我的内容</td>
+<td align="left">同口径的前后数据与过程记录</td>
+<td align="left">其他人能否获得相同结果</td>
+</tr>
+<tr>
+<td align="left">它帮助了某类客户</td>
+<td align="left">客户背景、执行过程、结果与时间范围</td>
+<td align="left">更广泛人群的平均效果</td>
+</tr>
+</tbody></table>
+<p>主张越重大、价格越高，所需证据也越充分。只展示几张没有背景的好评截图，不能说明适用条件；只展示播放量，也不能证明利润或购买意愿。</p>
+<hr>
+<h2 id="七、把六种方法连成一条主线"><a href="#七、把六种方法连成一条主线" class="headerlink" title="七、把六种方法连成一条主线"></a>七、把六种方法连成一条主线</h2><p>回头看，这六种方法可以串成一个完整流程：</p>
+<ol>
+<li><strong>Avatar Framing</strong>：先确定为谁解决哪个问题；</li>
+<li><strong>Broad to Narrow</strong>：按理解顺序把方法讲清楚；</li>
+<li><strong>Double Aha</strong>：在提出要求前，先兑现具体价值；</li>
+<li><strong>Transformation</strong>：让观众看见从 A 到 B 的改变；</li>
+<li><strong>Double Zoom Out</strong>：复盘信任在哪个表达节点建立；</li>
+<li><strong>Buyer Psychology</strong>：用匹配的证据支持主张和行动。</li>
+</ol>
+<p>它们不是一套必须逐项出现在每条短视频里的模板。更合理的用法，是先判断当前内容缺少哪一环：</p>
+<ul>
+<li>观众看不懂与自己有什么关系，先修定位；</li>
+<li>知道相关却听不懂，先修解释顺序；</li>
+<li>听懂却没有收获，补新认知和演示；</li>
+<li>觉得有用却不相信结果，补证据；</li>
+<li>有兴趣却不知道下一步，重新设计 CTA。</li>
+</ul>
+<hr>
+<h2 id="八、30-分钟练习：写出一版可检验的脚本"><a href="#八、30-分钟练习：写出一版可检验的脚本" class="headerlink" title="八、30 分钟练习：写出一版可检验的脚本"></a>八、30 分钟练习：写出一版可检验的脚本</h2><h3 id="0—5-分钟：锁定一个人和一个问题"><a href="#0—5-分钟：锁定一个人和一个问题" class="headerlink" title="0—5 分钟：锁定一个人和一个问题"></a>0—5 分钟：锁定一个人和一个问题</h3><p>写下“谁＋使用场景＋具体卡点”，准备一个能支持承诺的真实材料。不要先想标题，先确认问题存在。</p>
+<h3 id="5—15-分钟：按六层结构写提纲"><a href="#5—15-分钟：按六层结构写提纲" class="headerlink" title="5—15 分钟：按六层结构写提纲"></a>5—15 分钟：按六层结构写提纲</h3><p>依次检查情境、利害、策略、动作、示例、原则。短内容可以压缩，但目标客户必须知道为什么要继续看。</p>
+<h3 id="15—25-分钟：补价值、证据和下一步"><a href="#15—25-分钟：补价值、证据和下一步" class="headerlink" title="15—25 分钟：补价值、证据和下一步"></a>15—25 分钟：补价值、证据和下一步</h3><p>标出两次可能的新认知，区分能力演示、自身证明和客户证明。CTA 只承接刚才已经解决的问题。</p>
+<h3 id="25—30-分钟：做一次-Double-Zoom-Out"><a href="#25—30-分钟：做一次-Double-Zoom-Out" class="headerlink" title="25—30 分钟：做一次 Double Zoom Out"></a>25—30 分钟：做一次 Double Zoom Out</h3><p>站到观众视角问：哪一句增加了信任？哪一句只是自我夸奖？删除没有证据的确定性承诺，并记下发布后要验证的指标。</p>
+<p>可以使用这份简化模板：</p>
+<div class="code-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">目标客户与具体场景：</span><br><span class="line">他正在卡住的问题：</span><br><span class="line">为什么现在值得解决：</span><br><span class="line">整体策略：</span><br><span class="line">具体动作与演示：</span><br><span class="line">第一条新认知：</span><br><span class="line">第二条新认知：</span><br><span class="line">主张与对应证据：</span><br><span class="line">相关的下一步：</span><br><span class="line">发布后怎样验证：</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="九、发布前检查清单"><a href="#九、发布前检查清单" class="headerlink" title="九、发布前检查清单"></a>九、发布前检查清单</h2><h3 id="定位与表达"><a href="#定位与表达" class="headerlink" title="定位与表达"></a>定位与表达</h3><ul>
+<li><input disabled="" type="checkbox"> 目标客户能在开头认出自己的问题</li>
+<li><input disabled="" type="checkbox"> 使用了与受众能力匹配的语言</li>
+<li><input disabled="" type="checkbox"> 先交代情境和利害，再进入技巧</li>
+<li><input disabled="" type="checkbox"> 至少有一个具体案例或可观察演示</li>
+</ul>
+<h3 id="价值与行动"><a href="#价值与行动" class="headerlink" title="价值与行动"></a>价值与行动</h3><ul>
+<li><input disabled="" type="checkbox"> 新认知能够被理解和使用，而不只是新名词</li>
+<li><input disabled="" type="checkbox"> CTA 与前文解决的问题直接相关</li>
+<li><input disabled="" type="checkbox"> 没有在价值兑现前过早要求关注或留资</li>
+<li><input disabled="" type="checkbox"> 前后转变没有依赖夸张焦虑或虚构结果</li>
+</ul>
+<h3 id="证据与边界"><a href="#证据与边界" class="headerlink" title="证据与边界"></a>证据与边界</h3><ul>
+<li><input disabled="" type="checkbox"> 每项主张都有同口径的证据</li>
+<li><input disabled="" type="checkbox"> 没有用播放量或粉丝量代替收入证明</li>
+<li><input disabled="" type="checkbox"> 案例写清了对象、时间范围和适用条件</li>
+<li><input disabled="" type="checkbox"> 作者观点、个人经验和可验证事实已经区分</li>
+<li><input disabled="" type="checkbox"> 没有承诺固定倍数、必然成交或收益复制</li>
+</ul>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>过去我容易把“会讲故事”理解为更强的开头、更戏剧化的冲突和更流畅的表达。这次学习让我更明确：商业内容里的故事，核心不是修辞，而是信息与信任的组织方式。</p>
+<p>目标客户先认出自己，才愿意继续听；先理解方法，才有机会感受到价值；主张得到匹配证据，下一步行动才不会只依赖情绪。</p>
+<p>真正值得长期练习的，也许不是怎样把每条内容讲得更像广告，而是怎样让每一句承诺都更清楚，让每一份证据都更诚实。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 📣 讲故事与商业转化：六种让内容建立信任的方法</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-10-15 18:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-10-15 17:30:09
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/10/15/讲故事与商业转化/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E7%A4%BE%E5%AA%92%E5%AD%A6%E4%B9%A0/">#社媒学习</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%86%85%E5%AE%B9%E8%90%A5%E9%94%80/">#内容营销</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E6%95%85%E4%BA%8B%E8%A1%A8%E8%BE%BE/">#故事表达</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%95%86%E4%B8%9A%E8%BD%AC%E5%8C%96/">#商业转化</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/10/04/AE%E6%9B%B2%E7%BA%BF%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">📈 AE 曲线编辑器的设计方法：让动画有重量，而不是匀速移动</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">📣 讲故事与商业转化：六种让内容建立信任的方法</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E7%A1%AE%E5%AE%9A%E6%95%85%E4%BA%8B%E4%B8%BA%E8%B0%81%E6%9C%8D%E5%8A%A1"><span class="nav-text">一、先确定故事为谁服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-1%EF%BC%9AAvatar-Framing%E2%80%94%E2%80%94%E8%AE%A9%E7%9B%AE%E6%A0%87%E5%AE%A2%E6%88%B7%E8%AE%A4%E5%87%BA%E8%87%AA%E5%B7%B1"><span class="nav-text">方法 1：Avatar Framing——让目标客户认出自己</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%8C%89%E7%85%A7%E8%A7%82%E4%BC%97%E5%BB%BA%E7%AB%8B%E7%90%86%E8%A7%A3%E7%9A%84%E9%A1%BA%E5%BA%8F%E8%A1%A8%E8%BE%BE"><span class="nav-text">二、按照观众建立理解的顺序表达</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-2%EF%BC%9ABroad-to-Narrow%E2%80%94%E2%80%94%E7%94%B1%E5%AE%BD%E5%88%B0%E7%AA%84%E8%A7%A3%E9%87%8A"><span class="nav-text">方法 2：Broad to Narrow——由宽到窄解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%88%E5%85%91%E7%8E%B0%E4%BB%B7%E5%80%BC%EF%BC%8C%E5%86%8D%E6%8F%90%E5%87%BA%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="nav-text">三、先兑现价值，再提出下一步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-3%EF%BC%9ADouble-Aha%E2%80%94%E2%80%94%E6%8F%90%E4%BE%9B%E4%B8%A4%E6%AC%A1%E7%9C%9F%E6%AD%A3%E7%9A%84%E6%96%B0%E8%AE%A4%E7%9F%A5"><span class="nav-text">方法 3：Double Aha——提供两次真正的新认知</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%8A%8A%E4%BA%A7%E5%93%81%E4%BB%B7%E5%80%BC%E8%AE%B2%E6%88%90%E4%B8%80%E6%AC%A1%E7%9C%9F%E5%AE%9E%E5%8F%98%E5%8C%96"><span class="nav-text">四、把产品价值讲成一次真实变化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-4%EF%BC%9AEmotional-Transformation-Response%E2%80%94%E2%80%94%E8%AE%A9%E8%A7%82%E4%BC%97%E7%9C%8B%E8%A7%81%E5%89%8D%E5%90%8E%E8%BD%AC%E5%8F%98"><span class="nav-text">方法 4：Emotional Transformation Response——让观众看见前后转变</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AD%A6%E4%B9%A0%E5%88%AB%E4%BA%BA%E6%97%B6%EF%BC%8C%E4%B8%8D%E5%8F%AA%E6%A8%A1%E4%BB%BF%E8%A1%A8%E9%9D%A2%E5%BD%A2%E5%BC%8F"><span class="nav-text">五、学习别人时，不只模仿表面形式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-5%EF%BC%9ADouble-Zoom-Out%E2%80%94%E2%80%94%E4%B8%A4%E6%AC%A1%E6%8A%BD%E7%A6%BB%EF%BC%8C%E6%89%BE%E5%88%B0%E4%BF%A1%E4%BB%BB%E8%A7%A6%E5%8F%91%E7%82%B9"><span class="nav-text">方法 5：Double Zoom Out——两次抽离，找到信任触发点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%AE%A9%E8%AF%81%E6%8D%AE%E4%B8%8E%E4%B8%BB%E5%BC%A0%E4%B8%80%E4%B8%80%E5%AF%B9%E5%BA%94"><span class="nav-text">六、让证据与主张一一对应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-6%EF%BC%9ABuyer-Psychology%E2%80%94%E2%80%94%E7%94%A8%E8%AF%81%E6%8D%AE%E9%99%8D%E4%BD%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%84%9F"><span class="nav-text">方法 6：Buyer Psychology——用证据降低不确定感</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%8A%8A%E5%85%AD%E7%A7%8D%E6%96%B9%E6%B3%95%E8%BF%9E%E6%88%90%E4%B8%80%E6%9D%A1%E4%B8%BB%E7%BA%BF"><span class="nav-text">七、把六种方法连成一条主线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%8130-%E5%88%86%E9%92%9F%E7%BB%83%E4%B9%A0%EF%BC%9A%E5%86%99%E5%87%BA%E4%B8%80%E7%89%88%E5%8F%AF%E6%A3%80%E9%AA%8C%E7%9A%84%E8%84%9A%E6%9C%AC"><span class="nav-text">八、30 分钟练习：写出一版可检验的脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0%E2%80%945-%E5%88%86%E9%92%9F%EF%BC%9A%E9%94%81%E5%AE%9A%E4%B8%80%E4%B8%AA%E4%BA%BA%E5%92%8C%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="nav-text">0—5 分钟：锁定一个人和一个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E2%80%9415-%E5%88%86%E9%92%9F%EF%BC%9A%E6%8C%89%E5%85%AD%E5%B1%82%E7%BB%93%E6%9E%84%E5%86%99%E6%8F%90%E7%BA%B2"><span class="nav-text">5—15 分钟：按六层结构写提纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15%E2%80%9425-%E5%88%86%E9%92%9F%EF%BC%9A%E8%A1%A5%E4%BB%B7%E5%80%BC%E3%80%81%E8%AF%81%E6%8D%AE%E5%92%8C%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="nav-text">15—25 分钟：补价值、证据和下一步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25%E2%80%9430-%E5%88%86%E9%92%9F%EF%BC%9A%E5%81%9A%E4%B8%80%E6%AC%A1-Double-Zoom-Out"><span class="nav-text">25—30 分钟：做一次 Double Zoom Out</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%8F%91%E5%B8%83%E5%89%8D%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><span class="nav-text">九、发布前检查清单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E4%B8%8E%E8%A1%A8%E8%BE%BE"><span class="nav-text">定位与表达</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E4%B8%8E%E8%A1%8C%E5%8A%A8"><span class="nav-text">价值与行动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%8D%AE%E4%B8%8E%E8%BE%B9%E7%95%8C"><span class="nav-text">证据与边界</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-text">结语</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        24 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
