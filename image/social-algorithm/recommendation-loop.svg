@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">从候选内容到观看反馈的推荐过程</title>
+  <desc id="desc">用户兴趣和内容线索参与候选召回、排序和展示，观看反馈用于后续推荐。这是简化学习模型，不代表固定流量池。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101b32"/><stop offset="1" stop-color="#252140"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="1200" height="720" rx="28" fill="url(#bg)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="70" y="66" fill="#7dd3fc" font-size="17" letter-spacing="2">社媒学习 / 推荐系统</text>
+    <text x="70" y="119" fill="#f8fafc" font-size="35" font-weight="700">匹配、排序、反馈，共同影响推荐</text>
+    <text x="70" y="157" fill="#a5b4cc" font-size="19">从“为什么推给我”，理解内容与受众如何相遇</text>
+    <rect x="70" y="207" width="500" height="91" rx="18" fill="#16364d" stroke="#36738d"/>
+    <rect x="630" y="207" width="500" height="91" rx="18" fill="#343058" stroke="#7863a5"/>
+    <text x="96" y="245" fill="#e0f2fe" font-size="23" font-weight="700">用户兴趣</text>
+    <text x="96" y="276" fill="#bae6fd" font-size="18">看过什么、搜索什么、喜欢或跳过什么</text>
+    <text x="656" y="245" fill="#ede9fe" font-size="23" font-weight="700">内容线索</text>
+    <text x="656" y="276" fill="#ddd6fe" font-size="18">主题、文案、声音与其他可用信息</text>
+    <g fill="none" stroke="#94a3b8" stroke-width="3"><path d="M320 298v30M880 298v30H320"/><path d="M320 328H185v36" marker-end="url(#arrow)"/></g>
+    <g>
+      <rect x="70" y="374" width="230" height="136" rx="20" fill="#0c4a6e"/>
+      <rect x="348" y="374" width="230" height="136" rx="20" fill="#433286"/>
+      <rect x="626" y="374" width="230" height="136" rx="20" fill="#3b466f"/>
+      <rect x="904" y="374" width="226" height="136" rx="20" fill="#115e59"/>
+    </g>
+    <g fill="#fff" font-size="25" font-weight="700" text-anchor="middle"><text x="185" y="416">候选召回</text><text x="463" y="416">排序与调整</text><text x="741" y="416">展示给用户</text><text x="1017" y="416">观察反馈</text></g>
+    <g fill="#dbeafe" font-size="18" text-anchor="middle"><text x="185" y="451">哪些内容可能相关？</text><text x="185" y="481">从大量内容找候选</text><text x="463" y="451">此刻更适合看什么？</text><text x="463" y="481">组合多种预测</text><text x="741" y="451">不同入口各有侧重</text><text x="741" y="481">展示机会随情境变化</text><text x="1017" y="451">观看、分享、跳过等</text><text x="1017" y="481">帮助后续推荐</text></g>
+    <g fill="none" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"><path d="M308 442h29"/><path d="M586 442h29"/><path d="M864 442h29"/><path d="M1017 510v53H185v-42"/></g>
+    <rect x="425" y="547" width="348" height="34" rx="17" fill="#1b2941"/>
+    <text x="599" y="570" fill="#a7f3d0" font-size="17" text-anchor="middle">反馈继续参与后续的匹配与排序</text>
+    <path d="M70 620h1060" stroke="#475569"/>
+    <text x="70" y="660" fill="#cbd5e1" font-size="18">简化学习模型 · 各平台实现不同 · 不代表固定“200 人 → 2,000 人”阶梯</text>
+  </g>
+</svg>

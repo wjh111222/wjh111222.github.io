@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">用可观察数据定位内容问题</title>
+  <desc id="desc">从选题、开头、解释、实用性和后续行动出发，选择数据和下一次改动。数据提供线索，不单独证明原因。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101b32"/><stop offset="1" stop-color="#172f38"/></linearGradient></defs>
+  <rect width="1200" height="760" rx="28" fill="url(#bg)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="70" y="66" fill="#6ee7b7" font-size="17" letter-spacing="2">社媒学习 / 内容复盘</text>
+    <text x="70" y="119" fill="#f8fafc" font-size="35" font-weight="700">先确定问题，再选数据与改动</text>
+    <text x="70" y="158" fill="#a5b4cc" font-size="19">每轮聚焦一个假设，比较时保留相同口径与观察窗口</text>
+    <rect x="70" y="202" width="1060" height="57" rx="12" fill="#254239"/>
+    <g fill="#a7f3d0" font-size="18" font-weight="700"><text x="96" y="238">这轮要问什么</text><text x="407" y="238">可以观察什么</text><text x="790" y="238">下一次尝试什么</text></g>
+    <g>
+      <rect x="70" y="274" width="1060" height="72" rx="12" fill="#1b2a40"/>
+      <rect x="70" y="356" width="1060" height="72" rx="12" fill="#172639"/>
+      <rect x="70" y="438" width="1060" height="72" rx="12" fill="#1b2a40"/>
+      <rect x="70" y="520" width="1060" height="72" rx="12" fill="#172639"/>
+      <rect x="70" y="602" width="1060" height="72" rx="12" fill="#1b2a40"/>
+    </g>
+    <g fill="#f1f5f9" font-size="21" font-weight="700"><text x="96" y="318">有没有找到相关的人？</text><text x="96" y="400">开头是否兑现承诺？</text><text x="96" y="482">哪段需要重新解释？</text><text x="96" y="564">观众能否拿去使用？</text><text x="96" y="646">是否愿意继续了解？</text></g>
+    <g fill="#cbd5e1" font-size="18"><text x="407" y="318">流量来源、受众、评论中的场景</text><text x="407" y="400">开头留存、跳过与对应画面</text><text x="407" y="482">留存下降点、重看点、具体疑问</text><text x="407" y="564">收藏、操作提问、复刻反馈</text><text x="407" y="646">回访、后续观看、相关点击</text></g>
+    <g fill="#99f6e4" font-size="18"><text x="790" y="318">收窄场景与表达对象</text><text x="790" y="400">更早展示问题与演示</text><text x="790" y="482">补案例、对照或连续镜头</text><text x="790" y="564">给出一个明确步骤</text><text x="790" y="646">连接相关的下一条内容</text></g>
+    <text x="600" y="718" fill="#94a3b8" font-size="17" text-anchor="middle">数据是诊断线索，不能单独证明因果；指标以各平台后台实际定义为准。</text>
+  </g>
+</svg>

@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="吴嘉鸿">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://wjh111222.github.io/2026/10/22/社交媒体算法的工作逻辑/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🧭 社交媒体算法的工作逻辑：从受众匹配到内容复盘">
+<meta property="og:url" content="https://wjh111222.github.io/2026/10/22/%E7%A4%BE%E4%BA%A4%E5%AA%92%E4%BD%93%E7%AE%97%E6%B3%95%E7%9A%84%E5%B7%A5%E4%BD%9C%E9%80%BB%E8%BE%91/index.html">
+<meta property="og:site_name" content="吴南南">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wjh111222.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-10-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-22T14:39:28.411Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="内容营销">
+<meta property="article:tag" content="平台算法">
+<meta property="article:tag" content="社媒学习">
+<meta property="article:tag" content="账号运营">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wjh111222.github.io/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🧭 社交媒体算法的工作逻辑：从受众匹配到内容复盘 | 吴南南
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/tags-polish.css">
+                
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"wjh111222.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Just do it","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"none","icon":null},"首页":{"path":"/","icon":null},"全部文章":{"path":"/articles/","icon":null},"关于我":{"path":"/#profile","icon":null}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.0"><link rel="stylesheet" href="/css/creator-portal.css">
+</head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                吴南南
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/articles/"
+                                        >
+                                    
+                                    全部文章
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/#profile"
+                                        >
+                                    
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/articles/"
+                        >
+                            <span>
+                                全部文章
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/#profile"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">🧭 社交媒体算法的工作逻辑：从受众匹配到内容复盘</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/profile-avatar.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">吴嘉鸿</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-10-22 10:00</span>
+        <span class="mobile">2026-10-22 10:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-10-22 22:39:28</span>
+            <span class="mobile">2026-10-22 22:39:28</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E7%A4%BE%E5%AA%92%E5%AD%A6%E4%B9%A0/">社媒学习</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%86%85%E5%AE%B9%E8%90%A5%E9%94%80/">内容营销</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%B9%B3%E5%8F%B0%E7%AE%97%E6%B3%95/">平台算法</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%B4%A6%E5%8F%B7%E8%BF%90%E8%90%A5/">账号运营</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>核心概念</strong>：理解推荐算法，最有用的起点是研究“什么人会需要这条内容，以及他们看完后有什么反应”。把受众、表达和反馈连起来，才能把播放数据转化成下一次创作的依据。</p>
+</blockquote>
+<p>上一篇<a href="/2026/10/15/%E8%AE%B2%E6%95%85%E4%BA%8B%E4%B8%8E%E5%95%86%E4%B8%9A%E8%BD%AC%E5%8C%96/">《讲故事与商业转化》</a>讨论了如何组织信息、建立信任。这次继续学习内容如何被发现：一条视频为什么会出现在某个人的推荐页，它获得观看后，又会留下哪些可供复盘的信号？</p>
+<p>本文依据《Social Media Algorithm Study Guide》整理。指南将课程来源标为 Kallaway 的《How the Social Media Algorithm Actually Works》。其中的“超级媒人”“数字指纹”等比喻有助于入门；涉及固定人数、算法评分和指标权重的部分，则需要与平台公开资料对照理解。本文补充了 TikTok、YouTube 与 Meta 的官方说明，核对日期为 2026 年 10 月 22 日。</p>
+<h2 id="一、推荐系统在判断什么？"><a href="#一、推荐系统在判断什么？" class="headerlink" title="一、推荐系统在判断什么？"></a>一、推荐系统在判断什么？</h2><p>指南把算法比作“超级媒人”：为用户寻找可能感兴趣的内容。这个比喻适合建立直觉，因为同一条视频面对不同人，价值可能完全不同。</p>
+<p>刚开始做饭的人，会需要看清下锅顺序；熟练的人可能更关心配方变化。素材相同，标题、解释深度和操作镜头不同，就可能服务于不同受众。</p>
+<p>把平台目标概括为“增加停留时间”，只解释了一部分。YouTube 的官方说明同时强调帮助观众找到想看的视频，以及提高长期满意度；停留、互动和用户反馈要结合起来看。<a class="link"   target="_blank" rel="noopener" href="https://support.google.com/youtube/answer/16533387?hl=en" >YouTube 官方：推荐系统的目标<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>而且，“算法”并不是一个适用于所有入口的统一公式。YouTube 首页、接下来播放和 Shorts 都有各自的推荐场景，使用信号的侧重点也会不同。<a class="link"   target="_blank" rel="noopener" href="https://support.google.com/youtube/answer/16089387?hl=en" >YouTube 官方：推荐如何运作<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>因此，“这条视频为什么没起来”需要先补上背景：在哪个平台、哪个入口、面对什么受众、观察了多长时间？脱离这些条件，很容易把一次结果归因给不存在的统一规则。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/social-algorithm/recommendation-loop.svg"
+                      alt="从候选内容到观看反馈的推荐过程"
+                ></p>
+<p><em>图 1：这是用于学习的简化模型。候选召回、排序与反馈共同作用；它不表示所有平台都使用相同流程或固定流量级别。</em></p>
+<h2 id="二、从“数字指纹”理解内容匹配"><a href="#二、从“数字指纹”理解内容匹配" class="headerlink" title="二、从“数字指纹”理解内容匹配"></a>二、从“数字指纹”理解内容匹配</h2><p>指南用“数字指纹”描述系统理解视频的过程：画面、声音、口播、文案和主题信息，共同帮助系统判断这是什么内容。</p>
+<p>这个说法可以当作比喻，但不能据此断言每个平台都会在发布瞬间逐帧分析所有素材，再生成一个叫作 Fit Score 的统一分数。</p>
+<p>TikTok 的公开说明列出了用户互动、视频信息、设备与账号设置等信号；视频信息包括文案、声音和标签。这足以说明，主题表达与内容信息值得认真准备，却不足以还原平台内部的完整计算过程。<a class="link"   target="_blank" rel="noopener" href="https://newsroom.tiktok.com/en-us/how-tiktok-recommends-videos-for-you" >TikTok 官方：For You 推荐说明<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>Meta 在 2023 年公开的 Instagram Explore 工程说明中，描述了候选召回、两阶段排序和最终重排：先从大量内容中找出候选，再逐步估计其对用户的价值。这里的“候选”指内容条目，不是某条视频固定获得的测试观众人数。这份资料说明了一种系统实现，也不等于今天所有推荐入口的完整版本。<a class="link"   target="_blank" rel="noopener" href="https://engineering.fb.com/2023/08/09/ml-applications/scaling-instagram-explore-recommendations-system/" >Meta 工程博客：Instagram Explore 推荐系统<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>对创作者来说，可执行的做法很具体：</p>
+<ul>
+<li>标题和开头说清这条内容解决什么问题；</li>
+<li>画面、口播与字幕围绕同一个承诺展开；</li>
+<li>文案补充场景、对象与关键步骤；</li>
+<li>标签使用与内容相关的词，而不是堆砌热门词。</li>
+</ul>
+<p>这些做法首先帮助观众理解内容。主题清楚，也为平台使用内容信息提供了更一致的线索。</p>
+<h2 id="三、怎样看待“200-人流量池”？"><a href="#三、怎样看待“200-人流量池”？" class="headerlink" title="三、怎样看待“200 人流量池”？"></a>三、怎样看待“200 人流量池”？</h2><p>指南把分发描述为“200 人测试，再扩大到 2,000、20,000 人”。它可以帮助理解反馈可能影响后续分发，但本文核对的官方资料没有给出跨平台通用的固定人数阶梯。</p>
+<p>同样需要保留边界的，还有下面几种说法：</p>
+<table>
+<thead>
+<tr>
+<th align="left">指南中的说法</th>
+<th align="left">更适合用于创作判断的理解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">播放停在 200，就是没通过首轮测试</td>
+<td align="left">单个播放数无法证明内部分发阶段，需要结合来源、观看表现与账号状态查看</td>
+</tr>
+<tr>
+<td align="left">粉丝量已经完全不重要</td>
+<td align="left">非粉丝也可能发现内容；已有受众仍有助于形成观看、反馈和连接</td>
+</tr>
+<tr>
+<td align="left">一条跨题材爆款会污染样本池，让后续必然失败</td>
+<td align="left">受众期待可能变化，但不能据此推断账号受到固定惩罚</td>
+</tr>
+<tr>
+<td align="left">Fit Score 是所有平台共同使用的评分</td>
+<td align="left">可以将其当作“匹配预测”的教学简称，不能当作公开统一的产品指标</td>
+</tr>
+</tbody></table>
+<p>YouTube 明确说明，单次内容实验表现不佳，不一定损害频道后续表现；系统会使用每条视频的新表现数据。持续发布受众不感兴趣的内容则可能影响整体表现。<a class="link"   target="_blank" rel="noopener" href="https://support.google.com/youtube/answer/16533387?hl=en" >YouTube 官方：内容实验与频道表现<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>这给出的启发是：聚焦一个受众问题有助于积累经验，也可以有计划地测试邻近主题。一次结果不够理想时，先看它到底吸引了谁、在哪个环节失去兴趣，再决定如何调整。</p>
+<h2 id="四、受众聚焦，怎样落到选题上？"><a href="#四、受众聚焦，怎样落到选题上？" class="headerlink" title="四、受众聚焦，怎样落到选题上？"></a>四、受众聚焦，怎样落到选题上？</h2><p>指南最值得保留的一点，是持续围绕一类受众的真实需求创作。这样做能让系列内容形成稳定预期，也让不同视频的表现更容易比较。</p>
+<p>可以把账号方向写成一句话：</p>
+<blockquote>
+<p>我帮助【一类人】，在【具体场景】中，解决【反复出现的问题】。</p>
+</blockquote>
+<p>例如，“美食账号”是一个大品类；“帮助下班后只有半小时的新手，把家常菜做熟练”就给出了清楚的选题边界。</p>
+<p>围绕同一个需求，仍然可以做很多内容：备菜顺序、火候判断、食材替换、失败补救、步骤卡片。聚焦不要求每条视频长得一样，而是让受众知道关注之后能持续得到什么。</p>
+<p>筛选选题时，可以问三个问题：</p>
+<ol>
+<li>这个问题是否属于同一类人的日常困难？</li>
+<li>这条内容与已有内容能否形成下一步关系？</li>
+<li>如果吸引了新观众，他们是否也可能需要账号里的其他内容？</li>
+</ol>
+<p>指南也建议研究同行的异常高表现内容。观察时应记录比较基准：同一账号、相近发布时间与内容长度的常态表现。表现异常可以提供选题线索，却不能单独证明是标题、开头或某个剪辑动作带来了增长。</p>
+<h2 id="五、四个内容问题，比追逐隐藏分数更容易改进"><a href="#五、四个内容问题，比追逐隐藏分数更容易改进" class="headerlink" title="五、四个内容问题，比追逐隐藏分数更容易改进"></a>五、四个内容问题，比追逐隐藏分数更容易改进</h2><p>指南提出了四个内容属性，可以转成脚本修改时的具体问题。</p>
+<h3 id="1-与受众有关吗？"><a href="#1-与受众有关吗？" class="headerlink" title="1. 与受众有关吗？"></a>1. 与受众有关吗？</h3><p>“今天分享三个拍摄技巧”没有说明使用场景。改成“在家拍菜，顶灯总把食物拍得油亮怎么办”，相关的人更容易判断是否值得继续看。</p>
+<h3 id="2-有新的、可使用的认识吗？"><a href="#2-有新的、可使用的认识吗？" class="headerlink" title="2. 有新的、可使用的认识吗？"></a>2. 有新的、可使用的认识吗？</h3><p>新认知可以来自一个细节、一组对照，或对旧问题更清楚的解释。例如把同一道菜放在顶光和侧光下拍摄，比只说“注意光线”更容易产生具体理解。</p>
+<h3 id="3-表达容易吸收吗？"><a href="#3-表达容易吸收吗？" class="headerlink" title="3. 表达容易吸收吗？"></a>3. 表达容易吸收吗？</h3><p>抽象概念可以配案例；操作步骤可以用连续镜头；重要差异可以做并排对照。观众不理解的地方，应优先补解释和画面。</p>
+<h3 id="4-看完能做哪一个动作？"><a href="#4-看完能做哪一个动作？" class="headerlink" title="4. 看完能做哪一个动作？"></a>4. 看完能做哪一个动作？</h3><p>把“提高审美”换成“下一次拍摄先关掉顶灯，用一侧窗光拍一张对照”，执行距离就缩短了。一个动作能否带来预期变化，仍需要通过真实拍摄验证。</p>
+<p>这四点与上一篇故事笔记是连在一起的：先让对方看见问题，再讲清方法，用演示兑现价值，最后提供相关的下一步。</p>
+<h2 id="六、看数据之前，先把指标算对"><a href="#六、看数据之前，先把指标算对" class="headerlink" title="六、看数据之前，先把指标算对"></a>六、看数据之前，先把指标算对</h2><p>指南提醒创作者关注观看与互动，这个方向有价值。但“平均观看比例”“完播率”和“互动人数比例”是不同概念。</p>
+<h3 id="1-平均观看时长与完播率"><a href="#1-平均观看时长与完播率" class="headerlink" title="1. 平均观看时长与完播率"></a>1. 平均观看时长与完播率</h3><p>平均观看时长回答平均看了多久，完播率回答多少次观看到达结尾。具体分母要以平台后台定义为准，尤其要留意播放、有效观看和独立观众之间的区别。</p>
+<p>下面是一个<strong>假设示例</strong>：一条 30 秒视频有 100 次观看，50 次看到结尾，另 50 次在第 6 秒离开。</p>
+<ul>
+<li>平均观看时长为 <code>(50 × 30 + 50 × 6) ÷ 100 = 18 秒</code>；</li>
+<li>平均观看比例为 <code>18 ÷ 30 = 60%</code>；</li>
+<li>按此例的统计口径，完播率为 <code>50 ÷ 100 = 50%</code>。</li>
+</ul>
+<p>三个数描述不同的事情。把平均观看时长除以视频长度，不能直接得到“有多少人看完”。</p>
+<p>还应结合留存曲线看问题发生的位置。YouTube 的官方说明指出，留存高点可能来自重看，也可能是某段表达不清，让观众需要回看；应回到对应片段判断原因。<a class="link"   target="_blank" rel="noopener" href="https://support.google.com/youtube/answer/9314415?hl=en" >YouTube 官方：观众留存报告<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="2-互动次数与互动人数"><a href="#2-互动次数与互动人数" class="headerlink" title="2. 互动次数与互动人数"></a>2. 互动次数与互动人数</h3><p>如果自己计算：</p>
+<div class="code-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">每次播放的互动次数 =（点赞数＋评论数＋分享数＋收藏数）÷ 播放量</span><br></pre></td></tr></table></figure></div>
+
+<p>得到的是“互动次数相对播放量的比例”。同一个人可能点赞、评论并收藏，所以这个数不等于“参与互动的独立观众占比”。跨平台比较前，还要确认分享、转发是否重复统计，分母究竟是播放量、触达人数还是粉丝数。</p>
+<p>分析时可以把分享、收藏和具体提问分开看：它们分别为传播价值、留存价值和受众疑问提供线索。把它们加总成一个数，会隐藏这些差别。</p>
+<h3 id="3-“会话观看时长占比”能不能自己推算？"><a href="#3-“会话观看时长占比”能不能自己推算？" class="headerlink" title="3. “会话观看时长占比”能不能自己推算？"></a>3. “会话观看时长占比”能不能自己推算？</h3><p>指南把它列作隐藏指标，但本文核对的资料不足以确认它是各平台共同采用、可由创作者计算的统一指标。缺少完整会话数据时，不宜根据总观看时长反推这个比例。</p>
+<p>可以优先记录后台实际提供的回访观众、后续观看或相关点击，并注明各指标的定义与可用范围。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/social-algorithm/content-review-map.svg"
+                      alt="用可观察数据定位内容问题"
+                ></p>
+<p><em>图 2：一次复盘先提出一个具体问题，再选对应数据和下一次改动。表中是诊断线索，不是数据与原因的一一对应定律。</em></p>
+<h2 id="七、评论、标签与发布时间，该怎么处理？"><a href="#七、评论、标签与发布时间，该怎么处理？" class="headerlink" title="七、评论、标签与发布时间，该怎么处理？"></a>七、评论、标签与发布时间，该怎么处理？</h2><p>指南强调用鲜明立场和情绪促进评论。对知识型内容，更适合从真实选择里提出问题：</p>
+<blockquote>
+<p>你下班做饭最容易卡在备菜、下锅顺序，还是判断火候？说一个具体场景。</p>
+</blockquote>
+<p>这样的评论能继续提供选题资料。有依据的观点与对照实验也值得讨论；评论增加本身并不能说明观看体验或商业效果同步改善。</p>
+<p>Meta 的公开解释指出，系统会组合多种预测与反馈评估内容价值，单一预测并不能完整代表价值。因此，不能把评论量理解成压过其他反馈的通用推流开关。<a class="link"   target="_blank" rel="noopener" href="https://about.fb.com/news/2023/06/how-ai-ranks-content-on-facebook-and-instagram/" >Meta 官方：AI 如何影响内容推荐<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>指南把发布时间、标签等比作“糖霜”，强调内容本身更重要。这可以作为精力分配的提醒，但“完全没用”的说法过于绝对。</p>
+<p>YouTube 表示，没有证据显示发布时间影响视频的长期表现；直播与首播仍要考虑受众活跃时间。TikTok 的公开说明则将文案、声音和标签列作视频信息。<a class="link"   target="_blank" rel="noopener" href="https://support.google.com/youtube/answer/16533387?hl=en" >YouTube 官方说明<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://newsroom.tiktok.com/en-us/how-tiktok-recommends-videos-for-you" >TikTok 官方说明<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>实践中，可以先把内容和受众做好，再选择便于交流、可持续执行的发布时间，写清文案并使用相关标签。</p>
+<h2 id="八、做一次有记录的内容实验"><a href="#八、做一次有记录的内容实验" class="headerlink" title="八、做一次有记录的内容实验"></a>八、做一次有记录的内容实验</h2><p>假设要为“下班做饭的新手”制作一条番茄炒蛋视频，可以这样安排：</p>
+<p><strong>先写目标与假设。</strong> 目标是让新手看清下锅顺序；假设是“开头先指出常见混乱，再直接进入操作”比泛泛报菜名更能建立观看理由。</p>
+<p><strong>再决定演示。</strong> 保留关键动作的连续镜头，用字幕标记顺序，配方与火候使用自己验证过的做法，结尾给出简明步骤卡。</p>
+<p><strong>提前确定复盘口径。</strong> 记录发布时间、视频长度、流量来源、观看指标，以及与操作相关的提问。使用相同观察窗口，例如发布后 24 小时和 7 天，再与自己题材、长度接近的内容比较。这个时间安排是记录习惯，不代表平台固定的分发周期。</p>
+<p><strong>每轮聚焦一个改动。</strong> 第一轮改开头，下一轮再考虑节奏或字幕。不同帖子面对的观众、竞争和时间条件仍然不同，结果只能提供方向性证据，不能当作严格随机实验。</p>
+<p>如果观看提高而相关提问减少，需要继续看是否吸引了更泛的人；如果评论增加但主题偏离操作，也需要检查表达是否带偏了讨论。</p>
+<p>可以用下面的简表持续记录：</p>
+<div class="code-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">目标受众与场景：</span><br><span class="line">本条解决的问题：</span><br><span class="line">本轮只改变什么：</span><br><span class="line">为什么预计它有帮助：</span><br><span class="line">观察窗口与流量来源：</span><br><span class="line">观看数据及统计口径：</span><br><span class="line">分享、收藏与具体提问：</span><br><span class="line">得到的线索与其他可能原因：</span><br><span class="line">下一轮准备验证什么：</span><br></pre></td></tr></table></figure></div>
+
+<p>理解平台算法之后，创作任务反而更具体了：让选题对准一个真实需求，让标题承诺与内容兑现一致，再从可观察的反馈里寻找下一次改进的方向。</p>
+<hr>
+<p><strong>学习来源说明</strong>：本篇根据所提供的《Social Media Algorithm Study Guide》整理，并补充上述平台官方资料。指南未附原视频链接，因此未补写未经核对的原视频地址。“数字指纹”“Fit Score”和固定样本阶梯按教学模型理解；本文的美食脚本、指标算例与实验记录方式为学习应用示例。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 🧭 社交媒体算法的工作逻辑：从受众匹配到内容复盘</li>
+        <li><strong>Author:</strong> 吴嘉鸿</li>
+        <li><strong>Created at
+                :</strong> 2026-10-22 10:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-10-22 22:39:28
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wjh111222.github.io/2026/10/22/社交媒体算法的工作逻辑/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E7%A4%BE%E5%AA%92%E5%AD%A6%E4%B9%A0/">#社媒学习</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%86%85%E5%AE%B9%E8%90%A5%E9%94%80/">#内容营销</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%B9%B3%E5%8F%B0%E7%AE%97%E6%B3%95/">#平台算法</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%B4%A6%E5%8F%B7%E8%BF%90%E8%90%A5/">#账号运营</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/10/15/%E8%AE%B2%E6%95%85%E4%BA%8B%E4%B8%8E%E5%95%86%E4%B8%9A%E8%BD%AC%E5%8C%96/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">📣 讲故事与商业转化：六种让内容建立信任的方法</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">🧭 社交媒体算法的工作逻辑：从受众匹配到内容复盘</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%9C%A8%E5%88%A4%E6%96%AD%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">一、推荐系统在判断什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%8E%E2%80%9C%E6%95%B0%E5%AD%97%E6%8C%87%E7%BA%B9%E2%80%9D%E7%90%86%E8%A7%A3%E5%86%85%E5%AE%B9%E5%8C%B9%E9%85%8D"><span class="nav-text">二、从“数字指纹”理解内容匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%8E%E6%A0%B7%E7%9C%8B%E5%BE%85%E2%80%9C200-%E4%BA%BA%E6%B5%81%E9%87%8F%E6%B1%A0%E2%80%9D%EF%BC%9F"><span class="nav-text">三、怎样看待“200 人流量池”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8F%97%E4%BC%97%E8%81%9A%E7%84%A6%EF%BC%8C%E6%80%8E%E6%A0%B7%E8%90%BD%E5%88%B0%E9%80%89%E9%A2%98%E4%B8%8A%EF%BC%9F"><span class="nav-text">四、受众聚焦，怎样落到选题上？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%9B%9B%E4%B8%AA%E5%86%85%E5%AE%B9%E9%97%AE%E9%A2%98%EF%BC%8C%E6%AF%94%E8%BF%BD%E9%80%90%E9%9A%90%E8%97%8F%E5%88%86%E6%95%B0%E6%9B%B4%E5%AE%B9%E6%98%93%E6%94%B9%E8%BF%9B"><span class="nav-text">五、四个内容问题，比追逐隐藏分数更容易改进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%8E%E5%8F%97%E4%BC%97%E6%9C%89%E5%85%B3%E5%90%97%EF%BC%9F"><span class="nav-text">1. 与受众有关吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9C%89%E6%96%B0%E7%9A%84%E3%80%81%E5%8F%AF%E4%BD%BF%E7%94%A8%E7%9A%84%E8%AE%A4%E8%AF%86%E5%90%97%EF%BC%9F"><span class="nav-text">2. 有新的、可使用的认识吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A1%A8%E8%BE%BE%E5%AE%B9%E6%98%93%E5%90%B8%E6%94%B6%E5%90%97%EF%BC%9F"><span class="nav-text">3. 表达容易吸收吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%9C%8B%E5%AE%8C%E8%83%BD%E5%81%9A%E5%93%AA%E4%B8%80%E4%B8%AA%E5%8A%A8%E4%BD%9C%EF%BC%9F"><span class="nav-text">4. 看完能做哪一个动作？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E7%9C%8B%E6%95%B0%E6%8D%AE%E4%B9%8B%E5%89%8D%EF%BC%8C%E5%85%88%E6%8A%8A%E6%8C%87%E6%A0%87%E7%AE%97%E5%AF%B9"><span class="nav-text">六、看数据之前，先把指标算对</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%B9%B3%E5%9D%87%E8%A7%82%E7%9C%8B%E6%97%B6%E9%95%BF%E4%B8%8E%E5%AE%8C%E6%92%AD%E7%8E%87"><span class="nav-text">1. 平均观看时长与完播率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BA%92%E5%8A%A8%E6%AC%A1%E6%95%B0%E4%B8%8E%E4%BA%92%E5%8A%A8%E4%BA%BA%E6%95%B0"><span class="nav-text">2. 互动次数与互动人数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E2%80%9C%E4%BC%9A%E8%AF%9D%E8%A7%82%E7%9C%8B%E6%97%B6%E9%95%BF%E5%8D%A0%E6%AF%94%E2%80%9D%E8%83%BD%E4%B8%8D%E8%83%BD%E8%87%AA%E5%B7%B1%E6%8E%A8%E7%AE%97%EF%BC%9F"><span class="nav-text">3. “会话观看时长占比”能不能自己推算？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E8%AF%84%E8%AE%BA%E3%80%81%E6%A0%87%E7%AD%BE%E4%B8%8E%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-text">七、评论、标签与发布时间，该怎么处理？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%81%9A%E4%B8%80%E6%AC%A1%E6%9C%89%E8%AE%B0%E5%BD%95%E7%9A%84%E5%86%85%E5%AE%B9%E5%AE%9E%E9%AA%8C"><span class="nav-text">八、做一次有记录的内容实验</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">吴嘉鸿</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        25 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
