@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="手机端往来记录界面演示，支持滚动、时间筛选和查看详情。所有记录均为演示数据，非银行流水。">
+  <title>往来记录 · 手机界面演示</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #25262a;
+      --muted: #828386;
+      --paper: #fff;
+      --canvas: #f4f3f8;
+      --line: #eeedf1;
+      --red: #b93c45;
+      --green: #39785c;
+      --blue: #17658c;
+    }
+    * { box-sizing: border-box; }
+    html { background: #e9e9ee; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { margin: 0; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; -webkit-tap-highlight-color: transparent; }
+    button, input { font: inherit; }
+    button, a { touch-action: manipulation; }
+    button { border: 0; cursor: pointer; }
+    button:disabled { opacity: .4; cursor: default; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #71a58b; outline-offset: 4px; }
+    button, a, input { -webkit-tap-highlight-color: rgba(57,120,92,.1); }
+    svg { display: block; width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    [hidden] { display: none !important; }
+    .app { max-width: 520px; margin: 0 auto; min-height: 100svh; background: var(--canvas); }
+    .top { position: sticky; top: 0; z-index: 10; background: var(--paper); padding-top: env(safe-area-inset-top, 0px); box-shadow: 0 3px 10px #28213b04; }
+    .navbar { height: 62px; display: grid; grid-template-columns: 64px 1fr 64px; align-items: center; padding: 0 10px; }
+    .navbar h1 { font-size: 21px; font-weight: 650; letter-spacing: .5px; text-align: center; margin: 0; white-space: nowrap; }
+    .nav-back, .nav-home { display: grid; place-items: center; color: #333638; width: 44px; height: 44px; text-decoration: none; border-radius: 50%; }
+    .nav-home { justify-self: end; }
+    .nav-back svg { width: 27px; height: 27px; }
+    .demo-note { display: flex; justify-content: center; align-items: center; gap: 6px; min-height: 28px; margin: 0 16px; padding: 4px 8px; color: #726956; background: #f8f5ee; border-radius: 5px; font-size: 11px; letter-spacing: .4px; }
+    .demo-note svg { width: 13px; height: 13px; flex: none; }
+    .toolbar { display: flex; align-items: center; gap: 5px; padding: 6px 13px; height: 57px; }
+    .toolbar button { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 7px 4px; background: transparent; color: var(--ink); font-size: 16px; white-space: nowrap; }
+    .toolbar .account-button { margin-left: 4px; }
+    .caret { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 6px solid #c6c7c8; margin-left: 1px; }
+    .toolbar .filter-button { margin-left: auto; gap: 5px; padding-left: 12px; }
+    .filter-button svg { width: 17px; height: 17px; }
+    .filter-button.active { color: var(--green); }
+    .summary { display: flex; justify-content: space-between; gap: 6px; border-top: 1px solid #f7f7f8; padding: 14px 17px 15px; color: #77797c; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+    .summary span { white-space: nowrap; }
+    .summary strong { font-weight: 400; }
+    main { padding: 0 13px; }
+    .relationship { padding: 15px 4px 11px; }
+    .relationship p { margin: 0; font-size: 16px; line-height: 1.5; }
+    .relationship .account-line { color: #89888e; font-size: 12px; margin-top: 4px; letter-spacing: .1px; }
+    .month-group h2 { font-size: 15px; line-height: 1.4; margin: 0 4px 8px; padding-top: 3px; font-weight: 400; }
+    .record { display: grid; grid-template-columns: 31px minmax(0, 1fr) auto; column-gap: 11px; row-gap: 13px; align-items: center; width: 100%; padding: 19px 15px 17px; margin: 0 0 7px; border-radius: 15px; background: var(--paper); text-align: left; color: inherit; min-height: 94px; transition: background .15s, transform .15s; }
+    .record:active { background: #fafafa; transform: scale(.99); }
+    .record-icon { grid-row: 1 / 3; width: 31px; height: 31px; display: grid; place-items: center; background: var(--blue); border-radius: 50%; color: #fff; }
+    .record-icon svg { width: 20px; height: 20px; stroke-width: 1.7; }
+    .record-person { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 15px; font-weight: 500; }
+    .record-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .record-tail { white-space: nowrap; font-size: 14px; font-weight: 400; }
+    .record-amount { color: var(--red); font-size: 19px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: -.4px; }
+    .record-time { color: #858487; font-size: 13px; white-space: nowrap; letter-spacing: -.3px; }
+    .record-kind { justify-self: end; font-size: 13px; color: #858487; white-space: nowrap; }
+    .list-end { padding: 27px 0 31px; text-align: center; color: #9b9b9e; font-size: 13px; line-height: 1.9; }
+    .text-button { padding: 0 3px; border-radius: 3px; font-size: inherit; color: var(--green); background: transparent; min-height: 32px; }
+    .empty { text-align: center; padding: 56px 18px 35px; color: var(--muted); }
+    .empty svg { width: 42px; height: 42px; margin: 0 auto 15px; color: #b3b5bc; }
+    .empty p { font-size: 15px; line-height: 1.8; margin: 0 0 10px; }
+    .tips { color: #96959a; padding: 7px 4px max(30px, env(safe-area-inset-bottom, 0px)); font-size: 13px; line-height: 1.6; }
+    .tips h2 { margin: 0 0 3px; font-weight: 400; font-size: 14px; }
+    .tips ol { margin: 0; padding-left: 18px; }
+    .tips li { padding-left: 0; }
+    .site-link { color: #7a7e87; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; font-size: 12px; margin-top: 18px; min-height: 32px; }
+    .site-link svg { width: 12px; height: 12px; }
+    dialog { position: fixed; inset: auto 0 0; margin: auto auto 0; border: 0; width: min(100%, 520px); max-width: 520px; max-height: 88svh; padding: 0; border-radius: 22px 22px 0 0; background: #fff; color: var(--ink); overflow: auto; overscroll-behavior: contain; box-shadow: 0 -15px 50px #0000000b; }
+    dialog::backdrop { background: #1c202962; }
+    .sheet-content { padding: 9px 20px max(22px, env(safe-area-inset-bottom, 0px)); }
+    .handle { width: 34px; height: 4px; background: #dedee2; margin: 0 auto 9px; border-radius: 5px; }
+    .sheet-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .sheet-heading h2 { font-size: 18px; font-weight: 600; margin: 0; }
+    .close { display: grid; place-items: center; width: 40px; height: 40px; background: #f6f6f8; color: #72767b; border-radius: 50%; }
+    .close svg { width: 19px; height: 19px; }
+    fieldset { padding: 0; margin: 0 0 23px; border: 0; min-width: 0; }
+    legend, .field-heading { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
+    .choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+    .choice { display: flex; align-items: center; justify-content: center; position: relative; min-height: 43px; background: #f5f5f7; border: 1px solid transparent; border-radius: 7px; font-size: 14px; text-align: center; cursor: pointer; padding: 8px 3px; }
+    .choice:has(input:checked) { background: #f0f7f2; border-color: #82a58d; color: var(--green); }
+    .choice:has(input:focus-visible) { outline: 2px solid var(--green); outline-offset: 2px; }
+    .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .date-row { display: grid; grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); gap: 6px; align-items: center; color: #999; }
+    .date-field { display: grid; gap: 6px; color: #84848b; font-size: 12px; min-width: 0; }
+    .date-field input { width: 100%; min-width: 0; height: 44px; padding: 8px; border-radius: 6px; border: 1px solid #e8e8ec; background: #fafafb; color: #333; font-size: 13px; }
+    .form-error { color: #aa333d; font-size: 12px; margin: 12px 0 0; line-height: 1.5; }
+    .sheet-actions { display: flex; gap: 10px; margin-top: 8px; }
+    .primary, .secondary { min-height: 47px; padding: 11px 15px; border-radius: 8px; font-size: 16px; }
+    .primary { color: #fff; background: var(--green); flex: 1; }
+    .secondary { color: #666; background: #f3f3f6; flex: 0 0 86px; }
+    .sheet-note { font-size: 12px; color: #94949a; text-align: center; line-height: 1.6; margin: 16px 0 0; }
+    .account-option { display: flex; align-items: center; gap: 12px; width: 100%; padding: 17px 13px; background: #f6f7f8; border: 1px solid #9cbaa5; border-radius: 10px; text-align: left; color: var(--ink); }
+    .account-option > svg { color: var(--green); flex: none; }
+    .account-option strong { font-size: 16px; font-weight: 500; display: block; }
+    .account-option small { color: #909095; display: block; margin-top: 6px; font-size: 12px; }
+    .account-option .check { margin-left: auto; width: 20px; }
+    .detail-amount { text-align: center; color: var(--red); font-size: 34px; font-weight: 600; padding: 9px 0 5px; font-variant-numeric: tabular-nums; }
+    .detail-label { text-align: center; font-size: 13px; color: #8c8c94; margin: 0 0 21px; }
+    .detail-rows { margin: 0 0 20px; font-size: 14px; }
+    .detail-row { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 15px; padding: 13px 0; border-bottom: 1px solid #f2f2f5; line-height: 1.5; }
+    .detail-row dt { color: #92929a; }
+    .detail-row dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+    noscript p { color: #843b3b; padding: 20px; line-height: 1.8; }
+    @media (min-width: 560px) { .app { box-shadow: 0 0 50px #25243d10; } }
+    @media (max-width: 359px) {
+      .navbar h1 { font-size: 19px; }
+      .toolbar button { font-size: 14px; gap: 6px; }
+      .summary { font-size: 13px; padding-left: 13px; padding-right: 13px; }
+      main { padding: 0 11px; }
+      .record { padding: 17px 12px; column-gap: 8px; grid-template-columns: 28px minmax(0, 1fr) auto; }
+      .record-icon { width: 28px; height: 28px; }
+      .record-person, .record-tail { font-size: 13px; gap: 3px; }
+      .record-amount { font-size: 17px; }
+      .record-time, .record-kind { font-size: 11px; }
+      .list-end { font-size: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .record { transition: none; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <nav class="navbar" aria-label="页面导航">
+        <a class="nav-back" href="/" aria-label="返回个人网站"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></a>
+        <h1>往来转账记录</h1>
+        <a class="nav-home" href="/" aria-label="个人网站首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v11h14V9M9 20v-7h6v7"/></svg></a>
+      </nav>
+      <div class="demo-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6m0 4h.01"/></svg>界面演示 · 全部为示例数据，非银行交易凭证</div>
+      <div class="toolbar" aria-label="记录筛选">
+        <button type="button" id="range-button" aria-haspopup="dialog" aria-controls="filter-dialog"><span id="range-label">近一年</span><span class="caret" aria-hidden="true"></span></button>
+        <button type="button" class="account-button" id="account-button" aria-haspopup="dialog" aria-controls="account-dialog">演示卡7587<span class="caret" aria-hidden="true"></span></button>
+        <button type="button" class="filter-button" id="filter-button" aria-haspopup="dialog" aria-controls="filter-dialog"><span>筛选</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16l-6 8v7l-4 2V12Z"/></svg></button>
+      </div>
+      <div class="summary" role="status" aria-live="polite" aria-atomic="true">
+        <span>收入 ¥<strong id="total-income">35,669.26</strong></span>
+        <span>支出 ¥<strong id="total-expense">0</strong></span>
+        <span>共<strong id="total-count">5</strong>笔交易</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="relationship" aria-label="往来账户说明">
+        <p>与 深圳市示例科技有限公司 的往来转账记录</p>
+        <p class="account-line">对方演示账户：4420 ****** 2361</p>
+      </section>
+      <section id="records" aria-label="按月排列的演示记录"></section>
+      <div class="empty" id="empty-state" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H5V3ZM14 3v5h5M9 13h6m-6 4h4"/></svg>
+        <p>这个范围内暂无演示记录<br>换个时间或交易类型试试</p>
+        <button type="button" class="text-button" id="empty-reset">查看全部演示记录</button>
+      </div>
+      <div class="list-end" id="list-end">所选时间范围无更多数据，<button type="button" class="text-button" id="change-range">点此切换时间范围</button></div>
+      <footer class="tips">
+        <h2>温馨提示：</h2>
+        <ol>
+          <li>默认展示近一年的演示记录，支持上下滑动和点击查看详情。</li>
+          <li>可调整时间与交易类型；单次查询间隔不超过一年。</li>
+          <li>此页仅供界面体验，数据为虚构示例，不接入银行，不代表实际收付款。</li>
+        </ol>
+        <a class="site-link" href="/">个人网站 · 返回首页<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+      </footer>
+      <noscript><p>此演示页面需要启用 JavaScript 才能展示记录和使用筛选。</p></noscript>
+    </main>
+  </div>
+
+  <dialog id="filter-dialog" aria-labelledby="filter-title">
+    <form class="sheet-content" id="filter-form">
+      <div class="handle" aria-hidden="true"></div>
+      <div class="sheet-heading"><h2 id="filter-title">筛选演示记录</h2><button type="button" class="close" data-close aria-label="关闭筛选"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
+      <fieldset>
+        <legend>时间范围</legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="range" value="year" checked>近一年</label>
+          <label class="choice"><input type="radio" name="range" value="quarter">近三个月</label>
+          <label class="choice"><input type="radio" name="range" value="month">近一个月</label>
+          <label class="choice"><input type="radio" name="range" value="custom">自定义时间</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>起止日期</legend>
+        <div class="date-row">
+          <label class="date-field">开始日期<input type="date" name="start" id="start-date" required min="2021-10-30" max="2026-10-30"></label>
+          <span aria-hidden="true">—</span>
+          <label class="date-field">结束日期<input type="date" name="end" id="end-date" required min="2021-10-30" max="2026-10-30"></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>交易类型</legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="type" value="all" checked>全部</label>
+          <label class="choice"><input type="radio" name="type" value="income">收入</label>
+          <label class="choice"><input type="radio" name="type" value="expense">支出</label>
+        </div>
+      </fieldset>
+      <p class="form-error" id="filter-error" role="alert" hidden></p>
+      <div class="sheet-actions"><button type="button" class="secondary" id="filter-reset">重置</button><button type="submit" class="primary">确定</button></div>
+      <p class="sheet-note">固定演示日期：2026-10-30 · 仅筛选本页示例数据</p>
+    </form>
+  </dialog>
+
+  <dialog id="account-dialog" aria-labelledby="account-title">
+    <div class="sheet-content">
+      <div class="handle" aria-hidden="true"></div>
+      <div class="sheet-heading"><h2 id="account-title">选择演示账户</h2><button type="button" class="close" data-close aria-label="关闭账户选择"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
+      <button type="button" class="account-option" id="select-account"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18m-13 5h4"/></svg><span><strong>演示卡 · 尾号7587</strong><small>虚构账户，仅用于界面展示</small></span><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></button>
+      <p class="sheet-note">不连接真实银行，不收集卡号或个人信息。</p>
+    </div>
+  </dialog>
+
+  <dialog id="detail-dialog" aria-labelledby="detail-title">
+    <div class="sheet-content">
+      <div class="handle" aria-hidden="true"></div>
+      <div class="sheet-heading"><h2 id="detail-title">演示记录详情</h2><button type="button" class="close" data-close aria-label="关闭记录详情"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
+      <div class="demo-note">虚构示例 · 非银行交易凭证</div>
+      <p class="detail-amount" id="detail-amount"></p>
+      <p class="detail-label">他行汇入 · 演示数据</p>
+      <dl class="detail-rows">
+        <div class="detail-row"><dt>对方户名</dt><dd>深圳市示例科技有限公司</dd></div>
+        <div class="detail-row"><dt>对方账户</dt><dd>4420 ****** 2361（演示）</dd></div>
+        <div class="detail-row"><dt>本方账户</dt><dd>演示卡（尾号7587）</dd></div>
+        <div class="detail-row"><dt>记录时间</dt><dd id="detail-time"></dd></div>
+      </dl>
+      <div class="sheet-actions"><button type="button" class="primary" data-close>我知道了</button></div>
+    </div>
+  </dialog>
+
+  <script>
+    (() => {
+      'use strict';
+      // Fictional UI fixtures only: no bank connection or financial transactions.
+      const demoDate = '2026-10-30';
+      const records = [
+        { id: 'demo-oct', date: '2026-10-19', time: '21:42:06', cents: 841926, type: 'income' },
+        { id: 'demo-sep', date: '2026-09-15', time: '14:15:22', cents: 765000, type: 'income' },
+        { id: 'demo-aug', date: '2026-08-09', time: '09:33:45', cents: 650000, type: 'income' },
+        { id: 'demo-jul', date: '2026-07-10', time: '11:21:18', cents: 660000, type: 'income' },
+        { id: 'demo-jun', date: '2026-06-09', time: '16:04:59', cents: 650000, type: 'income' }
+      ];
+      const presets = {
+        year: { start: '2025-10-31', end: demoDate, label: '近一年' },
+        quarter: { start: '2026-07-31', end: demoDate, label: '近三个月' },
+        month: { start: '2026-10-01', end: demoDate, label: '近一个月' }
+      };
+      let filters = { range: 'year', ...presets.year, type: 'all' };
+      const byId = id => document.getElementById(id);
+      const filterDialog = byId('filter-dialog');
+      const filterForm = byId('filter-form');
+      const error = byId('filter-error');
+      const list = byId('records');
+      const money = cents => (cents / 100).toLocaleString('en-US', { maximumFractionDigits: 2 });
+      const wallet = '<span class="record-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18m-13 5h4"/></svg></span>';
+      let dialogOpener = null;
+
+      function openDialog(dialog, opener) {
+        dialogOpener = opener;
+        document.body.style.overflow = 'hidden';
+        dialog.showModal();
+      }
+
+      document.querySelectorAll('dialog').forEach(dialog => {
+        dialog.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => dialog.close()));
+        dialog.addEventListener('click', event => {
+          const box = dialog.getBoundingClientRect();
+          if (event.target === dialog && (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom)) dialog.close();
+        });
+        dialog.addEventListener('close', () => {
+          document.body.style.overflow = '';
+          if (dialogOpener && dialogOpener.isConnected) dialogOpener.focus({ preventScroll: true });
+          dialogOpener = null;
+        });
+      });
+
+      function render() {
+        const shown = records.filter(record => record.date >= filters.start && record.date <= filters.end && (filters.type === 'all' || record.type === filters.type));
+        const months = new Map();
+        for (const record of shown) {
+          const month = record.date.slice(0, 7);
+          if (!months.has(month)) months.set(month, []);
+          months.get(month).push(record);
+        }
+        list.replaceChildren();
+        for (const [month, monthlyRecords] of months) {
+          const group = document.createElement('section');
+          group.className = 'month-group';
+          const heading = document.createElement('h2');
+          heading.textContent = month;
+          group.append(heading);
+          for (const record of monthlyRecords) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'record';
+            button.dataset.record = record.id;
+            button.setAttribute('aria-label', `${record.date} ${record.time}，深圳市示例科技有限公司，演示收入${money(record.cents)}元，查看详情`);
+            button.innerHTML = `${wallet}<span class="record-person"><span class="record-name">深圳市示例科技</span><span class="record-tail">(尾号2361)</span></span><span class="record-amount">+ ¥${money(record.cents)}</span><time class="record-time" datetime="${record.date}T${record.time}+08:00">${record.date} ${record.time}</time><span class="record-kind">他行汇入</span>`;
+            button.addEventListener('click', () => {
+              byId('detail-amount').textContent = '+ ¥' + money(record.cents);
+              byId('detail-time').textContent = `${record.date} ${record.time}`;
+              openDialog(byId('detail-dialog'), button);
+            });
+            group.append(button);
+          }
+          list.append(group);
+        }
+        byId('total-income').textContent = money(shown.filter(record => record.type === 'income').reduce((sum, record) => sum + record.cents, 0));
+        byId('total-expense').textContent = money(shown.filter(record => record.type === 'expense').reduce((sum, record) => sum + record.cents, 0));
+        byId('total-count').textContent = shown.length;
+        byId('range-label').textContent = filters.range === 'custom' ? '自定义时间' : presets[filters.range].label;
+        byId('filter-button').classList.toggle('active', filters.range !== 'year' || filters.type !== 'all');
+        byId('empty-state').hidden = shown.length !== 0;
+        byId('list-end').hidden = shown.length === 0;
+      }
+
+      function syncForm(state) {
+        filterForm.elements.range.value = state.range;
+        filterForm.elements.type.value = state.type;
+        byId('start-date').value = state.start;
+        byId('end-date').value = state.end;
+        error.hidden = true;
+      }
+
+      function openFilters(event) {
+        syncForm(filters);
+        openDialog(filterDialog, event.currentTarget);
+      }
+      ['range-button', 'filter-button', 'change-range'].forEach(id => byId(id).addEventListener('click', openFilters));
+      byId('account-button').addEventListener('click', event => openDialog(byId('account-dialog'), event.currentTarget));
+      byId('select-account').addEventListener('click', () => byId('account-dialog').close());
+      filterForm.querySelectorAll('input[name="range"]').forEach(input => input.addEventListener('change', () => {
+        if (presets[input.value]) {
+          byId('start-date').value = presets[input.value].start;
+          byId('end-date').value = presets[input.value].end;
+        }
+        error.hidden = true;
+      }));
+      ['start-date', 'end-date'].forEach(id => byId(id).addEventListener('input', () => {
+        filterForm.elements.range.value = 'custom';
+        error.hidden = true;
+      }));
+      byId('filter-reset').addEventListener('click', () => syncForm({ range: 'year', ...presets.year, type: 'all' }));
+      filterForm.addEventListener('submit', event => {
+        event.preventDefault();
+        const start = byId('start-date').value;
+        const end = byId('end-date').value;
+        let message = '';
+        if (!start || !end) message = '请选择开始日期和结束日期。';
+        else if (start > end) message = '开始日期不能晚于结束日期。';
+        else if (start < '2021-10-30' || end > demoDate) message = '请选择演示日期之前、最近五年内的时间。';
+        else if (Date.parse(end + 'T00:00:00Z') - Date.parse(start + 'T00:00:00Z') > 365 * 86400000) message = '单次查询间隔不能超过一年，请缩小时间范围。';
+        if (message) {
+          error.textContent = message;
+          error.hidden = false;
+          return;
+        }
+        filters = { range: filterForm.elements.range.value, start, end, type: filterForm.elements.type.value };
+        render();
+        filterDialog.close();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+      byId('empty-reset').addEventListener('click', () => {
+        filters = { range: 'year', ...presets.year, type: 'all' };
+        render();
+        byId('range-button').focus({ preventScroll: true });
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>
