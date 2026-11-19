@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>顶级内容策略七讲 | 视频学习笔记</title>
+<style>
+  :root{
+    --bg:#faf8f4;
+    --card:#ffffff;
+    --ink:#26262e;
+    --ink-soft:#5c5c66;
+    --line:#e9e4da;
+    --accent:#c0392b;
+    --gold:#b8860b;
+    --s1:#7c3aed; --s2:#e5484d; --s3:#46a758; --s4:#f76b15; --s5:#0891b2; --s6:#b8860b; --s7:#64748b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","HarmonyOS Sans SC",system-ui,sans-serif;
+    line-height:1.75;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px 80px}
+
+  .hero{padding:64px 0 40px;text-align:center}
+  .kicker{
+    display:inline-block;font-size:13px;letter-spacing:4px;color:var(--gold);
+    border:1px solid #e3d6b8;background:#fdf9ef;border-radius:100px;padding:4px 18px;margin-bottom:22px;
+  }
+  h1{font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:1px;line-height:1.3}
+  h1 .hl{color:var(--accent)}
+  .underline{width:72px;height:5px;border-radius:3px;margin:22px auto 0;
+    background:linear-gradient(90deg,var(--accent),var(--gold))}
+  .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .chip{font-size:13px;color:var(--ink-soft);background:var(--card);
+    border:1px solid var(--line);border-radius:100px;padding:5px 16px}
+  .chip b{color:var(--ink)}
+  .oneliner{
+    margin:34px auto 0;max-width:660px;font-size:16px;color:var(--ink-soft);
+    background:#f4efe4;border-left:4px solid var(--gold);border-radius:0 12px 12px 0;
+    padding:16px 22px;text-align:left;
+  }
+  .oneliner b{color:var(--ink)}
+
+  .sec{margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-size:15px;font-weight:700;color:var(--gold);letter-spacing:2px}
+  .sec h2{font-size:24px;font-weight:800}
+  .sec-sub{color:var(--ink-soft);font-size:14px;margin-bottom:24px}
+
+  /* overview */
+  .ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:640px){.ov-grid{grid-template-columns:1fr}}
+  .ov{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+  .ov .n{flex:0 0 34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px}
+  .ov .t b{display:block;font-size:15px}
+  .ov .t span{font-size:12.5px;color:var(--ink-soft)}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px}
+  .card-head{display:flex;align-items:center;gap:14px;padding:18px 24px;color:#fff}
+  .card-head .n{font-size:26px;font-weight:900;line-height:1}
+  .card-head .tt b{display:block;font-size:18px;font-weight:800}
+  .card-head .tt span{font-size:12.5px;opacity:.9}
+  .card-body{padding:20px 26px 24px}
+  .what{font-size:15px}
+  .lab{font-size:12px;font-weight:800;letter-spacing:2px;color:#b3ad9f;display:block;margin-bottom:4px}
+  .howto{margin-top:16px;background:#eef6f0;border:1px solid #d5e8da;border-radius:12px;padding:14px 18px}
+  .howto p{font-size:14.5px;color:#274c34}
+  .howto b{color:#175c33}
+  ul.steps{margin-top:10px;padding-left:4px}
+  ul.steps li{list-style:none;position:relative;padding-left:22px;margin-top:8px;font-size:14.5px;color:#274c34}
+  ul.steps li::before{content:"";position:absolute;left:2px;top:11px;width:7px;height:7px;border-radius:2px;
+    background:currentColor;opacity:.35;transform:rotate(45deg)}
+  .example{margin-top:14px;background:#fdf4ee;border:1px solid #ecd9c4;border-radius:12px;padding:14px 18px}
+  .example .lab{color:#c08a4e}
+  .example p{font-size:14.5px;color:#5c4326}
+  .example .bad{color:#a15c3c;text-decoration:line-through;text-decoration-color:rgba(161,92,60,.45)}
+  .example .good{color:#3f6b32;font-weight:700}
+  .quote{margin-top:16px;font-size:14px;color:#8a6d1f;background:#fdf8ec;
+    border-left:3px solid #e3c55a;border-radius:0 10px 10px 0;padding:10px 16px}
+  .quote em{display:block;font-size:12px;color:#c2a86a;font-style:normal;margin-top:4px}
+  .formula{
+    display:inline-block;font-size:15px;font-weight:700;color:var(--ink);
+    background:#f6f0ff;border:1px dashed #c9b8ec;border-radius:10px;padding:6px 16px;margin-top:10px;
+  }
+  .note{font-size:12.5px;color:#a09a8c;margin-top:10px}
+  .golden{
+    margin-top:14px;background:#fffbe8;border:1px solid #eadc9e;border-radius:12px;padding:14px 18px;
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .golden .ic{flex:0 0 36px;height:36px;border-radius:50%;background:#f5c518;color:#6b4d00;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px}
+  .golden p{font-size:14.5px;color:#6b5a1a}
+  .golden b{color:#4d3f00}
+
+  /* series */
+  .series{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px}
+  .series p{font-size:14.5px;color:var(--ink-soft);margin-top:8px}
+  .series b{color:var(--ink)}
+  .series .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media (max-width:640px){.series .pair{grid-template-columns:1fr}}
+  .pair .p{background:#f6f4ee;border-radius:10px;padding:12px 16px;font-size:13.5px}
+  .pair .p b{display:block;font-size:13px;color:var(--accent)}
+  .clash{margin-top:12px;background:#fdf0ee;border:1px solid #eccfc9;border-radius:10px;padding:14px 18px;font-size:14px;color:#7a4034}
+  .clash b{color:#a12c1c}
+
+  /* interview */
+  .q-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:640px){.q-grid{grid-template-columns:1fr}}
+  .q-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .q-card p{font-size:14.5px;font-weight:600}
+  .q-card em{display:block;font-style:normal;font-size:12.5px;color:#a09a8c;margin-top:10px}
+  .q-card .use{display:inline-block;margin-top:10px;font-size:12px;color:#8a6d1f;background:#fdf8ec;border-radius:100px;padding:2px 12px}
+
+  footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);
+    font-size:12.5px;color:#a09a8c;text-align:center}
+  footer b{color:var(--ink-soft)}
+  #top{position:fixed;right:26px;bottom:26px;width:42px;height:42px;border-radius:50%;
+    background:var(--ink);color:#fff;border:none;font-size:17px;cursor:pointer;opacity:0;
+    pointer-events:none;transition:.25s;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+  #top.show{opacity:.85;pointer-events:auto}
+  #top:hover{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="kicker">VIDEO STUDY NOTES · 03 · 系列学习笔记</span>
+    <h1>让别人追不上的<br><span class="hl">7 条内容策略</span></h1>
+    <div class="underline"></div>
+    <div class="meta">
+      <span class="chip">作者 <b>Joanna Wiebe</b> · 转化文案开创者</span>
+      <span class="chip">十年帮品牌靠内容赚数百万</span>
+      <span class="chip">时长约 <b>14 分钟</b></span>
+      <span class="chip"><b>7 条</b>策略 + 1 个结尾彩蛋</span>
+    </div>
+    <div class="oneliner">
+      <b>一句话总结：</b>90% 的人还在用几年前就失效的老打法。真正奏效的思路是——<b>内容也给 AI 看、用信息代替漏斗、先镜像痛点再谈方案、把定位窄到一句话</b>，以及：质量永远优先于频率。
+    </div>
+  </header>
+
+  <!-- Overview -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">01</span><h2>七条策略一览</h2></div>
+    <p class="sec-sub">前三条管"在哪说、说什么"，后四条管"怎么说、说多少"</p>
+    <div class="ov-grid">
+      <div class="ov"><span class="n" style="background:var(--s1)">1</span><div class="t"><b>为 AI 创作内容</b><span>AEO：AI 抓取源里的存在感</span></div></div>
+      <div class="ov"><span class="n" style="background:var(--s2)">2</span><div class="t"><b>用信息思考，不是漏斗</b><span>观众走自己的路径</span></div></div>
+      <div class="ov"><span class="n" style="background:var(--s3)">3</span><div class="t"><b>问题镜像</b><span>停止推销，开始镜像痛点</span></div></div>
+      <div class="ov"><span class="n" style="background:var(--s4)">4</span><div class="t"><b>造一只更大的恶鼠</b><span>放大问题，别急着端方案</span></div></div>
+      <div class="ov"><span class="n" style="background:var(--s5)">5</span><div class="t"><b>"XX 的 XX"定位</b><span>一句话说清你为谁服务</span></div></div>
+      <div class="ov"><span class="n" style="background:var(--s6)">6</span><div class="t"><b>人格驱动</b><span>真人感是信任的货币</span></div></div>
+      <div class="ov"><span class="n" style="background:var(--s7)">7</span><div class="t"><b>质量优先于频率</b><span>算法数的是"多少人在乎"</span></div></div>
+      <div class="ov" style="border-style:dashed;background:#fdfaf3"><span class="n" style="background:#c9b8ec">+1</span><div class="t"><b>结尾钩子</b><span>作者预告：追原创想法正在拖垮你（见文末）</span></div></div>
+    </div>
+  </section>
+
+  <!-- Cards -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">02</span><h2>逐条拆解</h2></div>
+    <p class="sec-sub">每条按"核心观点 → 怎么用 → 对照示例"展开</p>
+
+    <!-- 1 -->
+    <article class="card">
+      <div class="card-head" style="background:linear-gradient(120deg,#6d28d9,var(--s1))">
+        <span class="n">01</span>
+        <div class="tt"><b>为 AI 创作内容</b><span>AEO · Ask Engine Optimization</span></div>
+      </div>
+      <div class="card-body">
+        <p class="what"><span class="lab">核心观点</span>内容不再只给人看——<b>AI 也是你的读者</b>。ChatGPT、Perplexity 等平台主要从 Wikipedia、Reddit、YouTube 抓取信息。当你的目标客户用 AI 调研解决方案（他们一定在用），而你不在这类源头里，对他们来说<b>你根本不存在</b>。</p>
+        <p class="what" style="margin-top:14px">有人"坚持发了一年内容零结果"，第一个该问的问题不是发得够不够勤，而是：<b>AI 能不能找到你的内容？</b></p>
+        <div class="howto">
+          <p><b>怎么做：</b></p>
+          <ul class="steps">
+            <li>用 <b>SparkToro</b> 查你的潜在客户实际上在哪消费信息、在哪找答案——别再"猜"受众在哪</li>
+            <li>逐个审计现有渠道，问两个问题：① AI 在索引这里吗？② 我的潜在客户在这里搜索吗？<b>两个都否 → 直接砍掉</b></li>
+            <li>把资源集中在"AI 关心的 × 受众所在的"这个交集上</li>
+          </ul>
+        </div>
+        <div class="quote">"你在受众根本不在的平台上每花一小时，竞争对手就在他们真正在的地方多花一小时——你一直在跟错误的房间说话。"</div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="card">
+      <div class="card-head" style="background:linear-gradient(120deg,#be123c,var(--s2))">
+        <span class="n">02</span>
+        <div class="tt"><b>用信息思考，不是漏斗</b><span>Messages, not Funnels</span></div>
+      </div>
+      <div class="card-body">
+        <p class="what"><span class="lab">核心观点</span>按漏斗阶段组织内容（顶部涨认知、中部养兴趣、底部促成交）是旧地图。<b>人们不按你的漏斗走，他们走自己的、混乱的、凭感觉的路径</b>——可能从 Google 直接落到你的首页，已经准备掏钱，而你最好的内容却因为按"漏斗阶段"分层被埋没了。</p>
+        <div class="howto">
+          <p><b>怎么做：</b>改为"信息驱动"——按顺序映射出<b>受众必须听到的话</b>，无论他们从哪进来：</p>
+          <ul class="steps">
+            <li>他们需要你理解<b>什么问题</b>？</li>
+            <li>他们在<b>怪什么、怪谁</b>？</li>
+            <li>他们必须先承认<b>哪些失败的方案</b>，才能往前走？</li>
+          </ul>
+          <p style="margin-top:10px">让每条信息在任何入口都成立：无论从哪条视频进来，看到的都是你的<b>权威 + 独特视角</b>，而不是"恰好处于漏斗某层"的内容。</p>
+        </div>
+        <div class="quote">"如果一条内容不能独立成立、不能无论从哪里看到都传递价值——你就在流失人。"</div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="card">
+      <div class="card-head" style="background:linear-gradient(120deg,#15803d,var(--s3))">
+        <span class="n">03</span>
+        <div class="tt"><b>问题镜像</b><span>Problem Match · 先镜像，再推销</span></div>
+      </div>
+      <div class="card-body">
+        <p class="what"><span class="lab">核心观点</span>想卖更多？<b>停止推销，开始镜像</b>。最常见的错误：开场全是资历、年限、战绩——技术上很唬人，却对受众正在经历的痛苦只字不提。</p>
+        <div class="example">
+          <span class="lab">对照示例</span>
+          <p><span class="bad">"大家好，我是有 50 万订阅的内容策略师……"</span><br>
+          <span class="good">"你做内容好几个月了，根本没人在看。"</span><br>
+          镜像痛点的版本让人脱口而出："对，这就是我"——先证明你懂TA的问题，才有资格谈方案。</p>
+        </div>
+        <div class="howto">
+          <p><b>怎么做：</b></p>
+          <ul class="steps">
+            <li>用受众的<b>原话</b>，不用行话/专家术语——他们说 "overwhelmed（喘不过气）"，你就不许说"资源分配挑战"</li>
+            <li>把问题镜像放在<b>每条内容的第一位</b>（例：健身创作者开场说"你受够了永远挤不进日程的训练计划"）</li>
+            <li>拿着你的问题陈述去找目标受众测试，打磨到对方说<b>"对！就是这句！"</b>为止</li>
+          </ul>
+        </div>
+        <div class="quote">"跳过问题镜像，你后面说的一切都只是噪音。"</div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="card">
+      <div class="card-head" style="background:linear-gradient(120deg,#c2410c,var(--s4))">
+        <span class="n">04</span>
+        <div class="tt"><b>造一只更大的恶鼠</b><span>Mega Mean Mouse · 业余内容与专业内容的分水岭</span></div>
+      </div>
+      <div class="card-body">
+        <p class="what"><span class="lab">核心观点</span>直复文案界的老话：<b>"别卖更好的捕鼠器，卖一只更大、更吓人的老鼠。"</b>人们下单不是因为你的方案快了 40%，而是因为<b>现状正在杀他们，且试过的办法全失败了</b>。世界对"更好"已经麻木——人人自称更好更快更便宜；只有痛、恐惧和"原来我的处境比想象的糟"能让人停下来。</p>
+        <div class="example">
+          <span class="lab">对照示例</span>
+          <p><span class="bad">"我来教你更好的剪辑技巧。"</span><br>
+          <span class="good">"你现在的剪辑流程每条要 6 小时，其实 2 小时就够——这正在让你损失数千元的机会。"</span></p>
+        </div>
+        <div class="howto">
+          <p><b>怎么做（先让老鼠变大，再提捕鼠器）：</b></p>
+          <ul class="steps">
+            <li>认定你解决的核心问题，然后放大：他们忽略了什么连锁后果？放着不管，6–12 个月后会怎样？</li>
+            <li><b>找到反派</b>——不是人，而是"旧方法""坏掉的系统""害你过劳的 hustle culture 迷思"这类行业现状</li>
+            <li>展示那些<b>失败过的方案</b>，讲清它们为什么没用</li>
+          </ul>
+        </div>
+        <div class="quote">"如果你的内容不先搅动问题，就端出解决方案——它不会有效。"</div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="card">
+      <div class="card-head" style="background:linear-gradient(120deg,#0e7490,var(--s5))">
+        <span class="n">05</span>
+        <div class="tt"><b>"XX 的 XX"定位</b><span>Blank-for-Blank Positioning · 大多数业务塌掉的地方</span></div>
+      </div>
+      <div class="card-body">
+        <p class="what"><span class="lab">核心观点</span>现在让你一句话说出"你以什么闻名"，能做到吗？多数人不能——这就是问题。定位公式简单到离谱：</p>
+        <div class="formula">[ 你做什么 ] for [ 你服务谁 ]</div>
+        <p class="what" style="margin-top:12px">"给创意团队的项目管理工具""给围绝经女性的生发精华""给个人理财创作者的 YouTube 增长顾问"。说出口的瞬间：对的人知道<b>这是为我做的</b>，其他人自动退出——<b>清晰就是力量</b>。你从和一万个品牌竞争，变成只和大约五个竞争。</p>
+        <div class="howto">
+          <p><b>怎么做：</b></p>
+          <ul class="steps">
+            <li>先用简单的话说你做什么，再把"谁"说具体——不是"企业"，而是"创意机构""远程团队"</li>
+            <li>测试：对方能<b>立刻</b>判断自己是不是你的客户吗？<b>会犹豫 = 还不够窄，继续收</b></li>
+            <li>把定位铺满所有触点：首页、简介、每一条内容</li>
+          </ul>
+        </div>
+        <div class="quote">"定位不清，你的内容想跟所有人说话——结果谁也没听进去。你成了通用款，而通用款是会被遗忘的。"</div>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="card">
+      <div class="card-head" style="background:linear-gradient(120deg,#92610a,var(--s6))">
+        <span class="n">06</span>
+        <div class="tt"><b>人格驱动，而不是产品驱动</b><span>Personality-driven Content</span></div>
+      </div>
+      <div class="card-body">
+        <p class="what"><span class="lab">核心观点</span>内容越像产品说明书，越没人信。CEO 们常说"不想出镜，不够精致"——而他们的对手每周在 LinkedIn/YouTube 露脸、输出观点、讲故事，赢的<b>永远是愿意做个真人的那位</b>（如 Dan Martell）。信任是现代商业的货币，faceless 企业腔和过度打磨的完美建立不了信任。</p>
+        <div class="example">
+          <span class="lab">对照示例</span>
+          <p><span class="bad">"五个效率提升技巧"</span><br>
+          <span class="good">"我在失败的效率系统上浪费了三年，真正管用的是这些。"</span></p>
+        </div>
+        <div class="howto">
+          <p><b>怎么做：</b>展示<b>真实过程、犯过的错、幕后</b>，而不是只给完美成品；用第一人称讲"踩坑换来的教训"。当人们能看到你是谁、听到你怎么想，才会觉得"我认识你"——而<b>人只和自己认识并喜欢的人做生意</b>。</p>
+        </div>
+        <div class="quote">"人们共鸣的是真实，不是精致。"</div>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="card">
+      <div class="card-head" style="background:linear-gradient(120deg,#475569,var(--s7))">
+        <span class="n">07</span>
+        <div class="tt"><b>质量优先于频率</b><span>Quality over Frequency · 反"日更教"</span></div>
+      </div>
+      <div class="card-body">
+        <p class="what"><span class="lab">核心观点</span>所有"内容大师"都在喊日更、坚持、无论如何都出现——但<b>发更少，可能效果更好</b>。关键在于算法的运作真相：</p>
+        <div class="quote" style="margin-top:10px">"算法不数你发了几条，它衡量的是——<b>你发布的时候，有多少人在乎。</b>"</div>
+        <p class="what" style="margin-top:14px">真实案例：一位客户听信建议每天在 Instagram 发 16 条，互动惨不忍睹——算法判定为垃圾，把她发的一切降权。为凑数而发，不是在积累受众，而是在<b>训练算法忽略你</b>。</p>
+        <div class="golden">
+          <span class="ic">60'</span>
+          <p><b>黄金一小时（Golden Hour）：</b>发布后的前 60 分钟决定算法是否继续推。发布前清空日程，发完<b>立刻回复每一条评论</b>，并养一个会在黄金一小时里互动的小群体——向算法证明"这条内容有人在乎"。</p>
+        </div>
+        <div class="howto" style="margin-top:14px">
+          <p><b>结论：</b>停止为任意指标凑量，只在你真正有东西可说时发布。一条精心研究、互动强劲的周更视频，赢过天天发但零评论的账号。</p>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Series -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">03</span><h2>系列笔记联动</h2></div>
+    <p class="sec-sub">前两篇是 Callaway（讲"怎么在平台上跑赢"），本篇是 Joanna Wiebe（讲"说什么、对谁说"）——拼起来正好是完整方法论</p>
+    <div class="series">
+      <div class="pair">
+        <div class="p"><b>高度互补</b>Callaway 管"执行层"：选题数据、视觉护城河、表达节奏、生产系统；Joanna 管"信息层"：定位、信息地图、痛点文案。一个回答 How，一个回答 What & Who。</div>
+        <div class="p"><b>多处同源</b>"XX 的 XX"窄定位 ≈ Callaway 的"别追泛爆款，做窄"；"问题镜像 + 先搅痛点" ≈ Callaway 的"先戳痛点再给解法的原生 CTA"；"人格驱动" ≈ "表达节奏/视觉护城河"——都是复制成本高的人类差异。</div>
+      </div>
+      <div class="clash">
+        <b>⚠ 唯一的正面分歧——发量：</b>Callaway 说"质量不变的前提下，发量翻倍是最快增长"（3 条/周 → 7 条/周）；Joanna 说"发更少可能效果更好，别凑数"。两人的共同底线其实一致：<b>垃圾发量会被算法降权</b>。怎么选：已有保质量的流水线 → 按 Callaway 上量；还没有 → 先按 Joanna 降频保质。
+      </div>
+      <p style="margin-top:12px">配套笔记：<b>社交媒体增长攻略_视频学习笔记.html</b>（Callaway · 13 条建议分级）、<b>AI时代增长Alpha_视频学习笔记.html</b>（Callaway · 六个 Alpha 机会）</p>
+    </div>
+  </section>
+
+  <!-- Interview -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">04</span><h2>面试可引用的观点</h2></div>
+    <p class="sec-sub">Joanna 是文案出身，这几条特别适合回答"内容策划 / 文案 / 运营思路"类问题</p>
+    <div class="q-grid">
+      <div class="q-card">
+        <p>算法不数你发了几条，它衡量你发布时有多少人在乎。为凑数而发，是在训练算法忽略你。</p>
+        <em>The algorithm isn't counting posts; it's measuring who cares</em>
+        <span class="use">适用：聊更新频率 / 平台机制</span>
+      </div>
+      <div class="q-card">
+        <p>内容也是给 AI 看的：当客户用 AI 调研方案而你不出现在抓取源里，你对他来说就不存在（AEO）。</p>
+        <em>Ask Engine Optimization</em>
+        <span class="use">适用：聊内容分发 / 2026 新趋势</span>
+      </div>
+      <div class="q-card">
+        <p>别卖更好的捕鼠器，卖一只更大更吓人的老鼠——先放大问题的代价，再端出方案。</p>
+        <em>Sell a bigger, scarier mouse</em>
+        <span class="use">适用：聊转化文案 / 痛点营销</span>
+      </div>
+      <div class="q-card">
+        <p>用受众的原话镜像他们的痛点，打磨到对方说"对，就是这句"——跳过这步，后面全是噪音。</p>
+        <em>Problem match before pitch</em>
+        <span class="use">适用：聊开场设计 / 文案方法</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ending hook -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">05</span><h2>结尾彩蛋 · 作者留下的钩子</h2></div>
+    <p class="sec-sub">视频最后 10 秒预告的下一条内容，值得单独留意</p>
+    <div class="series">
+      <p>Joanna 在结尾说：<b>"拖住你品牌的，是'追原创想法'——原创想法已经不重要了。"</b>她想讲的是"什么才真正有效"（提示：更接近"验证过的想法 × 你的执行"，与 Callaway 的"数据瞄准、人来执行"殊途同归）。如果后面找到那条视频，可以做成系列第四篇，正好把两位作者的"原创观"对照着看。</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>整理自视频 <b>The Top 7 Content Strategies To Get Ahead of Everyone Else</b>（Joanna Wiebe，视频 ID：HGZnMJFLuqE，约 14 分钟）· 本笔记为要点归纳与中文意译，观点归属原作者</p>
+  </footer>
+</div>
+
+<button id="top" title="回到顶部">↑</button>
+<script>
+  const scrollTopButton=document.getElementById('top');
+  addEventListener('scroll',()=>scrollTopButton.classList.toggle('show',scrollY>600),{passive:true});
+  scrollTopButton.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
